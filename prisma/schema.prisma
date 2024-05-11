@@ -1,6 +1,10 @@
 // Install Prisma VSCODE extension
 
 // Whenever you update your schema, you will have to update your DB using "prisma migrate dev"
+
+// prisma db push
+
+// prisma studio
 generator client {
   provider = "prisma-client-js"
 }
