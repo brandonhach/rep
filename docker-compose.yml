@@ -11,7 +11,12 @@ services:
         develop:
             watch:
                 - action: sync
-                  path: ./app
+                  path: ./src
+                  target: /app/src
+                  ignore:
+                      - node_modules/
+                - action: sync
+                  path: ./
                   target: /app
                   ignore:
                       - node_modules/
