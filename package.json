@@ -12,9 +12,11 @@
 		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
 	},
 	"dependencies": {
+		"@hookform/resolvers": "^3.3.4",
 		"@prisma/client": "^5.13.0",
 		"@react-three/drei": "^9.105.6",
 		"@react-three/fiber": "^8.16.4",
+		"argon2": "^0.40.1",
 		"clsx": "^2.1.1",
 		"framer-motion": "^11.1.9",
 		"next": "14.2.3",
