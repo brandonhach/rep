@@ -31,6 +31,5 @@ EOF
 
 
 echo "Starting the project..."
-npm run dev &
-docker compose up
+docker compose up --watch
 
