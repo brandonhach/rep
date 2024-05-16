@@ -15,6 +15,10 @@ const Navbar = () => {
 					<Link href={'/learn'}>Learn more</Link>
 				</li>
 				<div className='divider divider-horizontal'></div>
+				<li>
+					<Link href={'/dashboard'}>Dashboard</Link>
+				</li>
+				<div className='divider divider-horizontal'></div>
 				<li className='pr-8'>
 					<Link href={'/login'}>Login</Link>
 				</li>
