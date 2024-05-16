@@ -5,7 +5,7 @@ import { signIn } from '@/auth';
 import * as z from 'zod';
 import { AuthError } from 'next-auth';
 
-export const login = async (values: z.infer<typeof signInSchema>) => {
+export const login = async (values: z.infer<typeof signInSchema>, callbackUrl?: string | null) => {
 	const validatedFields = signInSchema.safeParse(values);
 
 	if (!validatedFields.success) {
@@ -18,7 +18,7 @@ export const login = async (values: z.infer<typeof signInSchema>) => {
 		await signIn('credentials', {
 			email,
 			password,
-			redirectTo: DEFAULT_LOGIN_REDIRECT,
+			redirectTo: callbackUrl || DEFAULT_LOGIN_REDIRECT,
 		});
 	} catch (error) {
 		if (error instanceof AuthError) {
@@ -30,5 +30,6 @@ export const login = async (values: z.infer<typeof signInSchema>) => {
 					return { error: 'Internal error', STATUS_CODES: 500 };
 			}
 		}
+		throw error;
 	}
 };
