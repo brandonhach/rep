@@ -5,6 +5,9 @@
 // prisma db push
 
 // prisma studio
+
+//IMPORTANT!!!!!!!!!!!!!!!!!
+// ADD current country, nationality
 generator client {
   provider = "prisma-client-js"
 }
