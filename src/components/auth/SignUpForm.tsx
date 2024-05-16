@@ -1,12 +1,14 @@
 'use client'; // Specify
-import { signup } from '@/actions/signup';
+import { Signup } from '@/actions/signup';
 import { signUpSchema, TSignUpSchema } from '@/types/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/navigation';
 
 // Specify Form Schema first in @types/types.ts
 
 const SignUpForm = () => {
+	const router = useRouter();
 	// React Hook Form for forms + Zod for validation
 	const {
 		register,
@@ -16,7 +18,7 @@ const SignUpForm = () => {
 	} = useForm<TSignUpSchema>({ resolver: zodResolver(signUpSchema) });
 
 	const onSubmit = async (data: TSignUpSchema) => {
-		signup(data);
+		Signup(data).then(() => router.push('/login?success=Email%20sent'));
 	};
 	return (
 		<div>

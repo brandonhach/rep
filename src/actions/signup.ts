@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 import { db } from '@/lib/prisma';
 import { getUserByEmail } from '@/model/user';
 
-export const signup = async (values: z.infer<typeof signUpSchema>) => {
+export const Signup = async (values: z.infer<typeof signUpSchema>) => {
 	const validatedFields = signUpSchema.safeParse(values);
 
 	if (!validatedFields.success) {
