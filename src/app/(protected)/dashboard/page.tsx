@@ -2,6 +2,7 @@ import { auth, signOut } from '@/auth';
 
 const Dashboard = async () => {
 	const session = await auth();
+
 	return (
 		<div>
 			{JSON.stringify(session)}
@@ -9,7 +10,7 @@ const Dashboard = async () => {
 				action={async () => {
 					'use server';
 
-					await signOut();
+					await signOut({ redirectTo: '/' });
 				}}>
 				<button type='submit' className='btn btn-ghost'>
 					Sign out
