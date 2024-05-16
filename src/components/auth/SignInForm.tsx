@@ -1,10 +1,17 @@
 'use client';
 import { login } from '@/actions/login';
+import { signIn } from 'next-auth/react';
+import { DEFAULT_LOGIN_REDIRECT } from '@/route';
 import { TSignInSchema, signInSchema } from '@/types/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
 const SignInForm = () => {
+	const onClick = (provider: 'google' | 'discord') => {
+		signIn(provider, {
+			callbackURL: DEFAULT_LOGIN_REDIRECT,
+		});
+	};
 	const {
 		register,
 		handleSubmit,
@@ -14,42 +21,6 @@ const SignInForm = () => {
 
 	const onSubmit = async (data: TSignInSchema) => {
 		login(data);
-		// const response = await fetch('/api/user', {
-		// 	method: 'POST',
-		// 	body: JSON.stringify(data),
-		// 	headers: {
-		// 		'Content-Type': 'application/json',
-		// 	},
-		// });
-		// const responseData = await response.json();
-		// if (!response.ok) {
-		// 	// Custom validation for duplications
-		// 	if (responseData.errors.username) {
-		// 		setError('username', {
-		// 			type: 'server',
-		// 			message: responseData.errors.username,
-		// 		});
-		// 	}
-		// 	if (responseData.errors.password) {
-		// 		setError('password', {
-		// 			type: 'server',
-		// 			message: responseData.errors.password,
-		// 		});
-		// 	}
-
-		// 	// Standard Zod validation check
-		// 	if (errors.username) {
-		// 		setError('username', {
-		// 			type: 'server',
-		// 			message: errors.username?.message ?? 'Server error username',
-		// 		});
-		// 	} else if (errors.password) {
-		// 		setError('password', {
-		// 			type: 'server',
-		// 			message: errors.password?.message ?? 'Server error password',
-		// 		});
-		// 	}
-		// }
 	};
 	return (
 		<div>
@@ -63,6 +34,20 @@ const SignInForm = () => {
 					Login
 				</button>
 			</form>
+			<button
+				className='btn btn-ghost px-4 py-2 rounded'
+				onClick={() => {
+					onClick('google');
+				}}>
+				Google
+			</button>
+			<button
+				className='btn btn-ghost px-4 py-2 rounded'
+				onClick={() => {
+					onClick('discord');
+				}}>
+				Discord
+			</button>
 		</div>
 	);
 };
