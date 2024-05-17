@@ -1,5 +1,11 @@
+import Navbar from '@/components/ui/Navbar';
 const LearnPage = () => {
-	return <div>Learn more</div>;
+	return (
+		<div>
+			<Navbar></Navbar>
+			Learn more
+		</div>
+	);
 };
 
 export default LearnPage;
