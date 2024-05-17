@@ -13,7 +13,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Rep is a platform focused on helping people build track records & reducing frauds online.
+Rep is a platform focused on helping people build track records & reducing fraud online.
 
 ### Built With
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
