@@ -8,6 +8,11 @@ services:
             - '5555:5555'
         environment:
             NODE_ENV: development
+        deploy:
+            resources:
+                limits:
+                    cpus: '3'
+                    memory: 3g
         volumes:
             - ./package.json:/app/package.json
         command:
@@ -40,6 +45,11 @@ services:
             - POSTGRES_USER=postgres
             - POSTGRES_PASSWORD=abc
             - POSTGRES_HOST_AUTH_METHOD=trust
+        deploy:
+            resources:
+                limits:
+                    cpus: '2'
+                    memory: 2g
         volumes:
             - postgres_data:/var/lib/postgresql/data
 
