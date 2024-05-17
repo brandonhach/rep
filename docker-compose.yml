@@ -8,6 +8,8 @@ services:
             - '5555:5555'
         environment:
             NODE_ENV: development
+        volumes:
+            - app-data:/app
         develop:
             watch:
                 - action: sync
@@ -37,3 +39,4 @@ services:
 
 volumes:
     postgres_data:
+    app-data:
