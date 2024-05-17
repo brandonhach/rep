@@ -29,6 +29,10 @@ const Navbar = () => {
 							<Link href={`/profile/${session.data?.user.id}`}>Profile</Link>
 						</li>
 						<div className='divider divider-horizontal'></div>
+						<li>
+							<Link href={'/setting'}>Settings</Link>
+						</li>
+						<div className='divider divider-horizontal'></div>
 						<li className='btn btn-outline rounded-xl'>
 							<button onClick={() => signOut()}>Logout</button>
 						</li>
