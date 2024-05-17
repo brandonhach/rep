@@ -30,7 +30,7 @@ const Navbar = () => {
 						</li>
 						<div className='divider divider-horizontal'></div>
 						<li>
-							<Link href={'/setting'}>Settings</Link>
+							<Link href={'/settings'}>Settings</Link>
 						</li>
 						<div className='divider divider-horizontal'></div>
 						<li className='btn btn-outline rounded-xl'>
