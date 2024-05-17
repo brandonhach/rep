@@ -27,7 +27,7 @@ Rep is a platform focused on helping people build track records & reducing fraud
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
 ## Team
-![image](https://github.com/brandonhach/Rep/assets/58790036/7a852dfd-31b1-4f4b-b6c3-86d3868a0f0e)
+![image](https://github.com/brandonhach/Rep/assets/58790036/5dc2ac86-d6b4-455c-906c-183012fc5b38)
 
 ## Screenshots
 ![image](https://github.com/brandonhach/Rep/assets/58790036/9eddf25d-2943-47b7-b82e-42d6819a3571)
