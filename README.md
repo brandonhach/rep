@@ -19,6 +19,7 @@ Rep is a platform focused on helping people build track records & reducing fraud
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 [![Tailwind][Tailwind]][Tailwind-url]
 [![Postgres][Postgres]][Postgres-url]
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 
 ### Language used
 
