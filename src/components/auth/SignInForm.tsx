@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import FormWrapper from './ui/FormWrapper';
 import { FcGoogle } from 'react-icons/fc';
 import { BsDiscord } from 'react-icons/bs';
-import { FaUser } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
 import { FaKey } from 'react-icons/fa6';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -39,7 +39,7 @@ const SignInForm = () => {
 					</div>
 					<form onSubmit={handleSubmit(onSubmit)} className='w-1/2 h-fit flex flex-col gap-y-4'>
 						<label className='relative input input-bordered flex items-center gap-2'>
-							<FaUser />
+							<MdEmail />
 							<input
 								{...register('email')}
 								type='email'
