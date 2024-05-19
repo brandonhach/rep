@@ -1,23 +1,9 @@
-import { auth, signOut } from '@/auth';
+import { auth } from '@/auth';
 
 const Dashboard = async () => {
 	const session = await auth();
 
-	return (
-		<div>
-			{JSON.stringify(session)}
-			<form
-				action={async () => {
-					'use server';
-
-					await signOut({ redirectTo: '/' });
-				}}>
-				<button type='submit' className='btn btn-ghost'>
-					Sign out
-				</button>
-			</form>
-		</div>
-	);
+	return <div>{JSON.stringify(session)}</div>;
 };
 
 export default Dashboard;
