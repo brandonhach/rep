@@ -3,7 +3,7 @@ import SignInForm from '@/components/auth/SignInForm';
 
 const Login = () => {
 	return (
-		<div>
+		<div className='flex flex-row w-full h-full items-center justify-center'>
 			<SignInForm></SignInForm>
 		</div>
 	);
