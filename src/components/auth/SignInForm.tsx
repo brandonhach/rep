@@ -23,7 +23,6 @@ const SignInForm = () => {
 		register,
 		handleSubmit,
 		formState: { errors, isSubmitting },
-		setError,
 	} = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
 
 	const onSubmit = async (data: TSignInSchema) => {
@@ -32,14 +31,14 @@ const SignInForm = () => {
 	return (
 		<div className='w-full h-full flex flex-row items-center justify-center'>
 			<FormWrapper>
-				<div className='relative w-full h-full flex flex-col items-center justify-center gap-2 pb-14'>
+				<div className='relative w-full h-full flex flex-col items-center justify-center gap-2 pb-16'>
 					<div className='flex flex-col items-center justify-center pb-10'>
 						<Image src={'/logo/elephant.png'} width={64} height={64} alt={'elephant'}></Image>
 						<h1 className='text-3xl font-semibold'>Welcome back!</h1>
 						<h3 className='text-md font-thin'>The faster you fill up, the faster you go.</h3>
 					</div>
 					<form onSubmit={handleSubmit(onSubmit)} className='w-1/2 h-fit flex flex-col gap-y-4'>
-						<label className='input input-bordered flex items-center gap-2'>
+						<label className='relative input input-bordered flex items-center gap-2'>
 							<FaUser />
 							<input
 								{...register('email')}
@@ -47,9 +46,11 @@ const SignInForm = () => {
 								placeholder='Email'
 								className='px-4 py-2 rounded'
 							/>
-							{errors.email && <p className='text-red-500'>{`${errors.email.message}`}</p>}
+							{errors.email && (
+								<p className='absolute right-4 text-red-500 text-xs font-semibold'>{`${errors.email.message}`}</p>
+							)}
 						</label>
-						<label className='input input-bordered flex items-center gap-2'>
+						<label className='relative input input-bordered flex items-center gap-2'>
 							<FaKey />
 							<input
 								{...register('password')}
@@ -57,13 +58,18 @@ const SignInForm = () => {
 								placeholder='Password'
 								className='px-4 py-2 rounded'
 							/>
-							{errors.password && <p className='text-red-500'>{`${errors.password.message}`}</p>}
+							{errors.password && (
+								<p className='absolute right-4 text-red-500 text-xs font-semibold'>{`${errors.password.message}`}</p>
+							)}
 						</label>
 
-						<button disabled={isSubmitting} type='submit' className='btn '>
+						<button disabled={isSubmitting} type='submit' className='btn hover:bg-neutral-800/95'>
 							Sign In
 						</button>
 					</form>
+					<div className='w-full flex flex-row items-center justify-center'>
+						<div className='divider w-1/2'>OR</div>
+					</div>
 					<div className='w-1/2'>
 						<button
 							className='btn btn-ghost px-4 py-2 rounded-sm w-1/2'
@@ -81,7 +87,7 @@ const SignInForm = () => {
 						</button>
 					</div>
 					<div className='absolute bottom-10'>
-						<p>
+						<p className='text-neutral-500'>
 							Don&apos;t have an account?
 							<span>
 								{' '}
