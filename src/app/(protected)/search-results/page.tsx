@@ -1,7 +1,11 @@
-import React from 'react';
+import SearchResults from '@/components/search-results/SearchResults'
 
-const SearchResults = () => {
-	return <div>SearchResults</div>;
+const SearchResultsPage = () => {
+	return (
+		<div className='h-full w-full flex justify-center'>
+			<SearchResults></SearchResults>
+		</div>
+	);
 };
 
-export default SearchResults;
+export default SearchResultsPage;
