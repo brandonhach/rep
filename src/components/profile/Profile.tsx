@@ -61,7 +61,7 @@ const ProfileComponent = ({ profile }: any) => {
 							</div>
 							<div className="flex flex-col gap-4">
 								<div className="rounded-2xl min-h-48 bg-stone-900 p-4">
-									<h1 className="font-bold">{profile.username}'s bio:</h1>
+									<h1 className="font-bold">{profile.username}&apos;s bio:</h1>
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad aliquid
 										aspernatur consequatur deserunt dignissimos dolorum eius eum, fugiat in sequi
 										unde, ut voluptate? Accusamus eveniet ex hic ipsum nemo!</p>
