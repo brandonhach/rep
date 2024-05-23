@@ -11,9 +11,9 @@ const Profile = async ({ params }: any) => {
 
 	return (
 		<div>
-			{params.id}
+			{/*{params.id}*/}
 			{/* Client component */}
-			<ProfileComponent profile={profile} />
+			<ProfileComponent profile={profile}/>
 		</div>
 	);
 };
