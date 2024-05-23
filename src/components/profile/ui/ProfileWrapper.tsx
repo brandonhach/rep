@@ -1,7 +1,7 @@
 'use client';
 import React, { ReactNode } from 'react';
 
-const ContentWrapper = ({ children }: {children: ReactNode}) => {
+const ProfileWrapper = ({ children }: {children: ReactNode}) => {
     return (
         <div className="flex justify-center">
             {children}
@@ -9,4 +9,4 @@ const ContentWrapper = ({ children }: {children: ReactNode}) => {
     );
 };
 
-export default ContentWrapper;
+export default ProfileWrapper;

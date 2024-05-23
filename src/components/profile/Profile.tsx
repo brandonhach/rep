@@ -1,13 +1,13 @@
 'use client';
 import React from 'react';
-import ContentWrapper from './ui/ContentWrapper';
+import ProfileWrapper from './ui/ProfileWrapper';
 import { FaXTwitter, FaReddit, FaDiscord, FaSteam, FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa6";
 
 
 const ProfileComponent = ({ profile }: any) => {
 	return (
-		<ContentWrapper>
-		<div className="flex items-center justify-center gap-4 max-w-6xl">
+		<ProfileWrapper>
+		<div className="flex items-center justify-center gap-4">
 			<div className="flex flex-row  items-start gap-4">
 				<div className="flex flex-col border-amber-200/90 shadow-amber-200/50 shadow-2xl transition border-[1px] rounded-2xl p-4 gap-4 sticky top-4">
 					<div className="flex gap-4">
@@ -40,27 +40,27 @@ const ProfileComponent = ({ profile }: any) => {
 								</div>
 
 							</div>
-							<div className="flex flex-col rounded-md bg-stone-900 p-4 gap-4">
+							<div className="flex flex-col rounded-2xl bg-stone-900 p-4 gap-4">
 								<div>
 									<h1 className="font-bold">Connected accounts:</h1>
 								</div>
-								<div className="flex flex-wrap rounded-md bg-stone-900 gap-4">
+								<div className="flex flex-wrap rounded-2xl bg-stone-900 gap-4">
 									<button>
-										<div className="bg-[#7289da] rounded-md p-2 text-white"><FaDiscord/></div>
+										<div className="bg-[#7289da] rounded-full p-2 text-white"><FaDiscord/></div>
 									</button>
 									<button>
-										<div className="bg-stone-950 rounded-md p-2 text-white"><FaSteam/></div>
+										<div className="bg-stone-950 rounded-full p-2 text-white"><FaSteam/></div>
 									</button>
 									<button>
-										<div className="bg-[#FF4500] rounded-md p-2 text-white"><FaReddit/></div>
+										<div className="bg-[#FF4500] rounded-full p-2 text-white"><FaReddit/></div>
 									</button>
 									<button>
-										<div className="bg-stone-950 rounded-md p-2 text-white"><FaXTwitter/></div>
+										<div className="bg-stone-950 rounded-full p-2 text-white"><FaXTwitter/></div>
 									</button>
 								</div>
 							</div>
 							<div className="flex flex-col gap-4">
-								<div className="rounded min-h-48 bg-stone-900 p-4">
+								<div className="rounded-2xl min-h-48 bg-stone-900 p-4">
 									<h1 className="font-bold">{profile.username}'s bio:</h1>
 									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad aliquid
 										aspernatur consequatur deserunt dignissimos dolorum eius eum, fugiat in sequi
@@ -69,10 +69,8 @@ const ProfileComponent = ({ profile }: any) => {
 							</div>
 						</div>
 					</div>
-
 				</div>
-
-				<div className="flex flex-col min-h-full w-[1000px] bg-stone-900 rounded-md p-4 gap-4">
+				<div className="flex flex-col min-h-full w-[1000px] bg-stone-900 rounded-2xl p-4 gap-4">
 					<div className="overflow-x-auto">
 						<table className="table">
 							{/* head */}
@@ -85,27 +83,36 @@ const ProfileComponent = ({ profile }: any) => {
 							</thead>
 							<tbody>
 							<tr>
-								<td>127e6fbfe24a750e72930c220a8e138275656b8e5d8f48a98c3c92df2caba935</td>
+								<td>
+									<div
+										className="text-base">127e6fbfe24a750e72930c220a8e138275656b8e5d8f48a98c3c92df2caba935
+									</div>
+								</td>
 								<td scope="row"
 									className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
 									<img className="w-10 h-10 rounded-full"
-										 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Jese image"/>
+										 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+										 alt="Jese image"/>
 									<div className="ps-4">
-										<div className="text-base font-semibold">Jane Doe</div>
+										<div className="text-base font-semibold"><a href="">Jane Doe</a></div>
 									</div>
 								</td>
 								<td className="text-xl">
-									<FaRegThumbsUp />
+									<FaRegThumbsUp/>
 								</td>
 							</tr>
 							<tr>
-								<td>127e6fbfe24a750e72930c220a8e138275656b8e5d8f48a98c3c92df2caba935</td>
+								<td>
+									<div
+										className="text-base">127e6fbfe24a750e72930c220a8e138275656b8e5d8f48a98c3c92df2caba935
+									</div>
+								</td>
 								<td scope="row"
 									className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
 									<img className="w-10 h-10 rounded-full"
 										 src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" alt="Jese image"/>
 									<div className="ps-4">
-										<div className="text-base font-semibold">John Doe</div>
+										<div className="text-base font-semibold"><a href="">John Doe</a></div>
 									</div>
 								</td>
 								<td className="text-xl">
@@ -118,7 +125,7 @@ const ProfileComponent = ({ profile }: any) => {
 				</div>
 			</div>
 		</div>
-		</ContentWrapper>
+		</ProfileWrapper>
 	);
 };
 
