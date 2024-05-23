@@ -1,5 +1,5 @@
 // Arrays of routes accessible to the public
-export const publicRoutes = ['/', '/learn'];
+export const publicRoutes = ['/', '/learn', '/search-results'];
 
 // Array of routes used for authentication (redirect user to /dashboard)
 export const authRoutes = ['/login', '/signup', '/error'];
