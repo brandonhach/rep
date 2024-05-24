@@ -3,9 +3,15 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
+import { MdOutlineDashboard } from 'react-icons/md';
+import { RiProfileLine } from 'react-icons/ri';
+import { IoSettingsOutline } from 'react-icons/io5';
+import { IoIosLogOut } from 'react-icons/io';
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
 	const session = useSession();
+	const pathname = usePathname();
 	return (
 		<div className='navbar flex flex-row items-center justify-between px-8 h-24'>
 			<div className='btn btn-ghost text-xl h-full flex flex-col items-center justify-center'>
@@ -14,34 +20,67 @@ const Navbar = () => {
 				</Link>
 			</div>
 			<div className='menu menu-horizontal'>
-				<li>
-					<Link href={'/learn'}>Learn more</Link>
-				</li>
-				<div className='divider divider-horizontal'></div>
-
 				{session.status === 'authenticated' ? (
-					<>
-						<li>
-							<Link href={'/dashboard'}>Dashboard</Link>
-						</li>
-						<div className='divider divider-horizontal'></div>
-						<li className=''>
-							<Link href={`/profile/${session.data?.user.id}`}>Profile</Link>
-						</li>
-						<div className='divider divider-horizontal'></div>
-						<li>
-							<Link href={'/settings'}>Settings</Link>
-						</li>
-						<div className='divider divider-horizontal'></div>
-						<li className='btn btn-outline rounded-xl'>
-							<button onClick={() => signOut()}>Logout</button>
-						</li>
-					</>
+					<div className='flex flex-row'>
+						{pathname !== '/' && (
+							<>
+								<div className='form-control'>
+									<input
+										type='text'
+										placeholder='Search profile...'
+										className='input input-bordered w-24 md:w-auto'
+									/>
+								</div>
+							</>
+						)}
+
+						<div className='dropdown'>
+							<div
+								tabIndex={0}
+								role='button'
+								className='flex flex-row justify-center items-center btn btn-ghost'>
+								<div className='avatar'>
+									<div className='w-10 rounded-full'>
+										<Image
+											src={`${session.data.user.image}`}
+											height={128}
+											width={128}
+											alt='avatar'></Image>
+									</div>
+								</div>
+								<h1>{`${session.data.user.name}`}</h1>
+							</div>
+							<ul
+								tabIndex={0}
+								className='menu menu-sm dropdown-content z-[1] p-2 shadow rounded-box bg-transparent w-full'>
+								<li>
+									<Link href={'/dashboard'}>
+										<MdOutlineDashboard /> Dashboard <span className='badge'>New</span>
+									</Link>
+								</li>
+								<li>
+									<Link href={`/profile/${session.data?.user.id}`}>
+										<RiProfileLine />
+										Profile
+									</Link>
+								</li>
+								<li>
+									<Link href={'/settings'}>
+										<IoSettingsOutline />
+										Settings
+									</Link>
+								</li>
+								<li>
+									<div onClick={() => signOut()}>
+										<IoIosLogOut />
+										Logout
+									</div>
+								</li>
+							</ul>
+						</div>
+					</div>
 				) : (
 					<>
-						<li className='pr-8'>
-							<Link href={'/login'}>Login</Link>
-						</li>
 						<li className='btn btn-outline rounded-xl'>
 							<Link href={'/signup'}>Start now</Link>
 						</li>
