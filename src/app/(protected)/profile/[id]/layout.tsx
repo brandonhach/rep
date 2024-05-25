@@ -9,13 +9,8 @@ export default function ProfileLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang='en'>
-			<body className={inter.className}>
-				<div className='flex flex-col h-screen w-screen'>
-					<Navbar />
-					<main className='flex flex-grow'>{children}</main>
-				</div>
-			</body>
-		</html>
+		<div className='flex flex-col flex-grow h-full'>
+			<main className='flex-grow'>{children}</main>
+		</div>
 	);
 }

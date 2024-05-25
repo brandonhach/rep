@@ -9,11 +9,11 @@ export default function ProtectedLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang='en'>
-			<body className={inter.className}>
+		<div className={inter.className}>
+			<div className='flex flex-col h-screen'>
 				<Navbar />
 				{children}
-			</body>
-		</html>
+			</div>
+		</div>
 	);
 }
