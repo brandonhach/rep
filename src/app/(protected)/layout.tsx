@@ -10,10 +10,10 @@ export default function ProtectedLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<div className={inter.className}>
+			<body className={inter.className}>
 				<Navbar />
 				{children}
-			</div>
+			</body>
 		</html>
 	);
 }
