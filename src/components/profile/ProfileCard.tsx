@@ -50,14 +50,14 @@ const ProfileCard = ({ profile }: any) => {
 			</div>
 			<div className='flex flex-row items-center justify-center gap-2 pt-32'>
 				<button className='btn btn-outline rounded-xl'>
-					Follow <IoSparkles />
+					Follow <IoSparkles className='text-amber-200' />
 				</button>
 				<button className='btn btn-outline rounded-xl'>
-					Add as Contact <IoPersonAddSharp />
+					Add as Contact <IoPersonAddSharp className='text-amber-200' />
 				</button>
 				<button className='btn btn-outline rounded-xl'>
 					Rep
-					<MdCompareArrows />
+					<MdCompareArrows className='text-amber-200' />
 				</button>
 			</div>
 			<div className='flex flex-row items-center justify-center pt-10'>
