@@ -11,7 +11,7 @@ const Showcase = () => {
 		setActiveTab(tab);
 	};
 	return (
-		<div className='w-full h-full overflow-hidden'>
+		<div className='w-full h-full'>
 			<div role='tablist' className='tabs tabs-lifted'>
 				<a
 					role='tab'
@@ -32,7 +32,7 @@ const Showcase = () => {
 					Posts
 				</a>
 			</div>
-			<div className='w-full h-full p-4'>
+			<div className='w-full h-[22rem] p-4 '>
 				{activeTab === 'moodboard' && <Moodboard></Moodboard>}
 				{activeTab === 'achievements' && <Achievements></Achievements>}
 				{activeTab === 'posts' && <Posts></Posts>}

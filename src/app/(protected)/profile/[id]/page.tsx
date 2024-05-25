@@ -12,14 +12,14 @@ const Profile = async ({ params }: any) => {
 	}
 
 	return (
-		<div className='grid grid-cols-3 grid-rows-2 w-full h-full'>
+		<div className='w-full h-full grid grid-cols-3 grid-rows-2'>
 			<div className='row-span-2 p-4'>
 				<ProfileCard profile={profile}></ProfileCard>
 			</div>
-			<div className='col-span-2 p-4'>
+			<div className='col-span-2 row-span-1 p-4'>
 				<Showcase></Showcase>
 			</div>
-			<div className='col-span-2 p-4'>
+			<div className='col-span-2 row-span-1 p-4'>
 				<Feeds></Feeds>
 			</div>
 		</div>
