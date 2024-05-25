@@ -28,7 +28,7 @@ const Navbar = () => {
 									<input
 										type='text'
 										placeholder='Search profile...'
-										className='input input-bordered w-24 md:w-auto'
+										className='input input-bordered w-24 md:w-auto rounded-xl'
 									/>
 								</div>
 							</>
@@ -52,7 +52,7 @@ const Navbar = () => {
 							</div>
 							<ul
 								tabIndex={0}
-								className='menu menu-sm dropdown-content z-[1] p-2 shadow rounded-box bg-transparent w-full'>
+								className='menu menu-sm dropdown-content z-[1] p-2 shadow rounded-box w-full bg-black'>
 								<li>
 									<Link href={'/dashboard'}>
 										<MdOutlineDashboard /> Dashboard <span className='badge'>New</span>
