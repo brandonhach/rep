@@ -43,3 +43,106 @@ export const MoodboardImages = [
 export const MoodboardConfig = {
 	images: MoodboardImages,
 };
+
+const Reps = [
+	{
+		image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		name: 'Hart',
+		rep: '12',
+		business: 'Bought a few keys for cheap with cash in CSGO & TF2.',
+		transaction: ['Trading', 'CSGO', 'TF2'],
+		rating: '',
+		country: 'US',
+	},
+	{
+		image: 'https://images.unsplash.com/photo-1485394735640-56c0356b62cf?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTA2fHxqYXBhbiUyMGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D',
+		name: 'Kiryu',
+		rep: '31',
+		business: 'sold my Rolex with a middleman for cash. went smooth',
+		transaction: ['OTC'],
+		rating: '',
+		country: 'JP',
+	},
+	{
+		image: 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		name: 'GERMAN',
+		rep: '5',
+		business: 'DANKE SCHÖN!!! Transaction on Paypal ',
+		transaction: ['Paypal', 'OTC'],
+		rating: '',
+		country: 'DE',
+	},
+	{
+		image: 'https://images.unsplash.com/photo-1690988021906-72999a1711ec?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8dGltJTIwaG9ydG9ufGVufDB8fDB8fHww',
+		name: 'TimHorton',
+		rep: '27',
+		business: 'Traded in-game items for a rare skin.',
+		transaction: ['Trading', 'Skins'],
+		rating: '',
+		country: 'CA',
+	},
+	{
+		image: 'https://images.unsplash.com/photo-1487309078313-fad80c3ec1e5?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		name: 'SquidSashimi',
+		rep: '321',
+		business: 'Bought a couple of rolexes. Recommended!',
+		transaction: ['OTC'],
+		rating: '',
+		country: 'KR',
+	},
+	{
+		image: 'https://images.unsplash.com/photo-1668042583100-15aa5e323238?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		name: 'Mindaco',
+		rep: '122',
+		business: 'Sold a couple of CD keys of Cyberpunk 2077 & more. Trade was quick and easy. Highly recommend',
+		transaction: ['Trading', 'CD keys'],
+		rating: '',
+		country: 'MX',
+	},
+	{
+		image: 'https://images.unsplash.com/photo-1597851065532-055f97d12e47?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		name: 'Sihanouk',
+		rep: '4',
+		business: 'Bought a rolex through a middleman. Fast & Smooth thank you',
+		transaction: ['OTC', 'Crypto'],
+		rating: '',
+		country: 'KHM',
+	},
+];
+
+export const RepConfig = {
+	Reps: Reps,
+};
+
+const Affiliation = [
+	{
+		affiliationTitle: 'Rolex Central',
+		role: 'Discord Moderator',
+		service: 'Discord',
+		serviceImage:
+			'https://banner2.cleanpng.com/20180130/rlq/kisspng-rolex-datejust-rolex-submariner-watch-colored-gold-rolex-watch-png-file-5a713e486b2244.8477442915173709524388.jpg',
+
+		verfied: false,
+	},
+	{
+		affiliationTitle: 'Esport City',
+		role: 'Discord Moderator',
+		service: 'Discord',
+		serviceImage:
+			'https://png.pngtree.com/png-clipart/20230508/original/pngtree-vector-esports-gaming-logo-png-image_9150467.png',
+
+		verfied: false,
+	},
+	{
+		affiliationTitle: 'BondstreetGaming[BG]',
+		role: 'Admin',
+		service: 'CSGO',
+		serviceImage:
+			'https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		verfied: false,
+	},
+];
+
+export const AffiliationConfig = {
+	Affiliation: Affiliation,
+};
