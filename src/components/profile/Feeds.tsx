@@ -39,7 +39,7 @@ const Feeds = () => {
 					Contacts
 				</a>
 			</div>
-			<div className='w-full h-full p-4'>
+			<div className='w-full h-[21rem] p-4'>
 				{activeTab === 'rep' && <Rep></Rep>}
 				{activeTab === 'comments' && <Comments></Comments>}
 				{activeTab === 'follows' && <Follows></Follows>}

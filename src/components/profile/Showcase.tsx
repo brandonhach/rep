@@ -1,8 +1,8 @@
 'use client';
 import React, { useState } from 'react';
 import Moodboard from './ui/Showcase/Moodboard';
-import Achievements from './ui/Showcase/Achievements';
 import Posts from './ui/Showcase/Posts';
+import Affiliation from './ui/Showcase/Affiliation';
 
 const Showcase = () => {
 	const [activeTab, setActiveTab] = useState('moodboard');
@@ -21,9 +21,9 @@ const Showcase = () => {
 				</a>
 				<a
 					role='tab'
-					className={`tab ${activeTab === 'achievements' ? 'tab-active' : ''}`}
-					onClick={() => handleTabClick('achievements')}>
-					Achievements
+					className={`tab ${activeTab === 'affiliation' ? 'tab-active' : ''}`}
+					onClick={() => handleTabClick('affiliation')}>
+					Affiliation
 				</a>
 				<a
 					role='tab'
@@ -32,9 +32,9 @@ const Showcase = () => {
 					Posts
 				</a>
 			</div>
-			<div className='w-full h-[22rem] p-4 '>
+			<div className='w-full h-[23rem] p-4 '>
 				{activeTab === 'moodboard' && <Moodboard></Moodboard>}
-				{activeTab === 'achievements' && <Achievements></Achievements>}
+				{activeTab === 'affiliation' && <Affiliation></Affiliation>}
 				{activeTab === 'posts' && <Posts></Posts>}
 			</div>
 		</div>

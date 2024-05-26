@@ -8,6 +8,7 @@ import { RiProfileLine } from 'react-icons/ri';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { IoIosLogOut } from 'react-icons/io';
 import { usePathname } from 'next/navigation';
+import { MdOutlineSearch } from 'react-icons/md';
 
 const Navbar = () => {
 	const session = useSession();
@@ -24,13 +25,10 @@ const Navbar = () => {
 					<div className='flex flex-row'>
 						{pathname !== '/' && (
 							<>
-								<div className='form-control'>
-									<input
-										type='text'
-										placeholder='Search profile...'
-										className='input input-bordered w-24 md:w-auto rounded-xl'
-									/>
-								</div>
+								<label className='input input-bordered flex items-center gap-2 rounded-xl'>
+									<input type='text' className='grow' placeholder='Search profile...' />
+									<MdOutlineSearch />
+								</label>
 							</>
 						)}
 

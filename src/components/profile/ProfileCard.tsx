@@ -6,6 +6,7 @@ import { MdCompareArrows } from 'react-icons/md';
 import { IoPersonAddSharp } from 'react-icons/io5';
 import { IoSparkles } from 'react-icons/io5';
 import { MdOutlineQuestionMark } from 'react-icons/md';
+import { PiThumbsUpLight } from 'react-icons/pi';
 
 const ProfileCard = ({ profile }: any) => {
 	return (
@@ -34,12 +35,15 @@ const ProfileCard = ({ profile }: any) => {
 						<div className='stat-desc'>Public</div>
 					</div>
 					<div className='stat w-fit'>
-						<div className='stat-title'>Feedback</div>
-						<div className='stat-value'>50%</div>
+						<div className='stat-title'>Rep</div>
+						<div className='stat-value flex flex-row items-center justify-start gap-1'>
+							<h1>18</h1>
+							<PiThumbsUpLight className='text-4xl text-green-500' />
+						</div>
 						<div className='stat-desc'>Positive</div>
 					</div>
 					<div className='stat w-fit'>
-						<div className='stat-title pb-1'>Reputation</div>
+						<div className='stat-title pb-1'>Status</div>
 						<div className='stat-value flex flex-row justify-center items-center'>
 							<VscWorkspaceTrusted className='text-green-500' />
 						</div>
