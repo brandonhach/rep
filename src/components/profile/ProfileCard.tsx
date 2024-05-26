@@ -6,7 +6,7 @@ import { MdCompareArrows } from 'react-icons/md';
 import { IoPersonAddSharp } from 'react-icons/io5';
 import { IoSparkles } from 'react-icons/io5';
 import { MdOutlineQuestionMark } from 'react-icons/md';
-import { PiThumbsUpLight } from 'react-icons/pi';
+import { PiThumbsUpLight, PiThumbsDownLight } from 'react-icons/pi';
 
 const ProfileCard = ({ profile }: any) => {
 	return (
@@ -34,14 +34,7 @@ const ProfileCard = ({ profile }: any) => {
 						<div className='stat-value'>152</div>
 						<div className='stat-desc'>Public</div>
 					</div>
-					<div className='stat w-fit'>
-						<div className='stat-title'>Rep</div>
-						<div className='stat-value flex flex-row items-center justify-start gap-1'>
-							<h1>18</h1>
-							<PiThumbsUpLight className='text-4xl text-green-500' />
-						</div>
-						<div className='stat-desc'>Positive</div>
-					</div>
+
 					<div className='stat w-fit'>
 						<div className='stat-title pb-1'>Status</div>
 						<div className='stat-value flex flex-row justify-center items-center'>
@@ -49,10 +42,28 @@ const ProfileCard = ({ profile }: any) => {
 						</div>
 						<div className='stat-desc text-center'>Safe</div>
 					</div>
+					<div className='stat w-fit'>
+						<div className='pb-4'>
+							<div className='stat-title'>Rep</div>
+							<div className='stat-value flex flex-row items-center justify-start'>
+								<div className='flex flex-row badge badge-ghost h-9 rounded-xl'>
+									<span className='w-14 flex flex-row items-center justify-end text-2xl gap-1'>
+										<h1>17</h1>
+										<PiThumbsUpLight className='text-2xl text-green-500' />
+									</span>
+
+									<span className='w-14 flex flex-row items-center justify-end text-2xl gap-1'>
+										<h1>1</h1>
+										<PiThumbsDownLight className='text-2xl text-red-500' />
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 				<div className='px-4 leading-5 w-full h-1/3 '>{ProfileConfig.description}</div>
 			</div>
-			<div className='flex flex-row items-center justify-center gap-2 pt-32'>
+			<div className='flex flex-row items-center justify-center gap-2 pt-28'>
 				<button className='btn btn-outline rounded-xl'>
 					Follow <IoSparkles className='text-amber-200' />
 				</button>

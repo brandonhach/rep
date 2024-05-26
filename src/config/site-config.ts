@@ -51,7 +51,7 @@ const Reps = [
 		rep: '12',
 		business: 'Bought a few keys for cheap with cash in CSGO & TF2.',
 		transaction: ['Trading', 'CSGO', 'TF2'],
-		rating: '',
+		rating: true,
 		country: 'US',
 	},
 	{
@@ -60,7 +60,7 @@ const Reps = [
 		rep: '31',
 		business: 'sold my Rolex with a middleman for cash. went smooth',
 		transaction: ['OTC'],
-		rating: '',
+		rating: true,
 		country: 'JP',
 	},
 	{
@@ -69,7 +69,7 @@ const Reps = [
 		rep: '5',
 		business: 'DANKE SCHÖN!!! Transaction on Paypal ',
 		transaction: ['Paypal', 'OTC'],
-		rating: '',
+		rating: true,
 		country: 'DE',
 	},
 	{
@@ -78,7 +78,7 @@ const Reps = [
 		rep: '27',
 		business: 'Traded in-game items for a rare skin.',
 		transaction: ['Trading', 'Skins'],
-		rating: '',
+		rating: true,
 		country: 'CA',
 	},
 	{
@@ -87,7 +87,7 @@ const Reps = [
 		rep: '321',
 		business: 'Bought a couple of rolexes. Recommended!',
 		transaction: ['OTC'],
-		rating: '',
+		rating: true,
 		country: 'KR',
 	},
 	{
@@ -96,8 +96,18 @@ const Reps = [
 		rep: '122',
 		business: 'Sold a couple of CD keys of Cyberpunk 2077 & more. Trade was quick and easy. Highly recommend',
 		transaction: ['Trading', 'CD keys'],
-		rating: '',
+		rating: true,
 		country: 'MX',
+	},
+	{
+		image: 'https://images.unsplash.com/photo-1589254066213-a0c9dc853511?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHJvYm90fGVufDB8fDB8fHww',
+		name: 'Mahaluto',
+		rep: '189',
+		business:
+			'Backing out of a trade agreement: unadded me and then listing item for sale on website https://imgur.com/a/fHRGZmW',
+		transaction: ['Trading', 'OTC'],
+		rating: false,
+		country: 'CA',
 	},
 	{
 		image: 'https://images.unsplash.com/photo-1597851065532-055f97d12e47?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -105,7 +115,7 @@ const Reps = [
 		rep: '4',
 		business: 'Bought a rolex through a middleman. Fast & Smooth thank you',
 		transaction: ['OTC', 'Crypto'],
-		rating: '',
+		rating: true,
 		country: 'KHM',
 	},
 ];
@@ -121,7 +131,7 @@ const Affiliation = [
 		service: 'Discord',
 		serviceImage:
 			'https://banner2.cleanpng.com/20180130/rlq/kisspng-rolex-datejust-rolex-submariner-watch-colored-gold-rolex-watch-png-file-5a713e486b2244.8477442915173709524388.jpg',
-
+		serviceUrl: '',
 		verfied: false,
 	},
 	{
@@ -130,7 +140,7 @@ const Affiliation = [
 		service: 'Discord',
 		serviceImage:
 			'https://png.pngtree.com/png-clipart/20230508/original/pngtree-vector-esports-gaming-logo-png-image_9150467.png',
-
+		serviceUrl: '',
 		verfied: false,
 	},
 	{
@@ -139,7 +149,26 @@ const Affiliation = [
 		service: 'CSGO',
 		serviceImage:
 			'https://images.unsplash.com/photo-1549924231-f129b911e442?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		serviceUrl: '',
 		verfied: false,
+	},
+	{
+		affiliationTitle: `Joe's Drivestream`,
+		role: 'Community Manager',
+		service: 'Twitch',
+		serviceImage:
+			'https://images.unsplash.com/photo-1709417904995-cdc49ade98b5?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cG9yc2NoZSUyMHN5bWJvbHxlbnwwfHwwfHx8MA%3D%3D',
+		serviceUrl: '',
+		verified: true,
+	},
+	{
+		affiliationTitle: 'r/water',
+		role: 'Subreddit Moderator',
+		service: 'Reddit',
+		serviceImage:
+			'https://images.unsplash.com/photo-1563374928-66e57628d1b6?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fHdhdGVyJTIwZ2xhc3N8ZW58MHx8MHx8fDA%3D',
+		serviceUrl: '',
+		verified: true,
 	},
 ];
 

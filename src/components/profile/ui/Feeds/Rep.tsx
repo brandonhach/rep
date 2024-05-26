@@ -68,7 +68,11 @@ const Rep = () => {
 										</div>
 									</td>
 									<td>
-										<h3 className='text-green-600 font-extrabold text-2xl'>+rep</h3>
+										{user.rating ? (
+											<h3 className='text-green-600 font-extrabold text-2xl'>+rep</h3>
+										) : (
+											<h3 className='text-red-600 font-extrabold text-2xl'>-rep</h3>
+										)}
 									</td>
 									<th className=''>
 										<button className='btn rounded-xl indicator' data-tip='Click to view logs'>
