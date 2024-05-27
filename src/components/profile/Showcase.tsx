@@ -5,7 +5,8 @@ import Posts from './ui/Showcase/Posts';
 import Affiliation from './ui/Showcase/Affiliation';
 import { TbMoodSmileFilled } from 'react-icons/tb';
 import { FaHandshake } from 'react-icons/fa';
-import { FaNoteSticky } from 'react-icons/fa6';
+
+import { FaSignsPost } from 'react-icons/fa6';
 
 const Showcase = () => {
 	const [activeTab, setActiveTab] = useState('moodboard');
@@ -40,9 +41,9 @@ const Showcase = () => {
 					onClick={() => handleTabClick('posts')}>
 					{' '}
 					<span className='pr-1'>
-						<FaNoteSticky className='text-xl' />
+						<FaSignsPost className='text-xl' />
 					</span>
-					Posts
+					TradePosts
 				</a>
 			</div>
 			<div className='w-[69rem] h-[23rem] p-4'>
