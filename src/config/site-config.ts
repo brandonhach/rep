@@ -175,3 +175,58 @@ const Affiliation = [
 export const AffiliationConfig = {
 	Affiliation: Affiliation,
 };
+
+const comments = [
+	{
+		name: 'GamerGuy2024',
+		image: 'https://images.unsplash.com/photo-1597851065532-055f97d12e47?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		datetime: '05/27/2024 10:48AM',
+		comment: 'yo dm me',
+		emotes: ['✉️', '👀'],
+	},
+	{
+		name: 'PixelPusher',
+		image: 'https://images.unsplash.com/photo-1716583731424-45c32c2ad63b?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		datetime: '04/11/2024 9:48PM',
+		comment: 'this guy mane',
+		emotes: ['😎'],
+	},
+	{
+		name: 'SneakyNinja',
+		image: 'https://images.unsplash.com/photo-1542282088-fe8426682b8f?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		datetime: '04/10/2024 1:48PM',
+		comment: 'good',
+		emotes: ['🎃', '🙀', '👍'],
+	},
+	{
+		name: 'RolexHunter',
+		image: 'https://images.unsplash.com/photo-1611243705491-71487c2ed137?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		datetime: '03/21/2024 3:48AM',
+		comment: `⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠋⠉⠁⠄⠄⠈⠙⠻⣿⣿⣿⣿
+  ⣿⣿⣿⣿⣿⣿⠟⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠙⢿⣿
+  ⣿⣿⣿⣿⡿⠃⠄⠄⠄⢀⣀⣀⡀⠄⠄⠄⠄⠄⠄⠄⠈⢿
+  ⣿⣿⣿⡟⠄⠄⠄⠄⠐⢻⣿⣿⣿⣷⡄⠄⠄⠄⠄⠄⠄⠄⠈
+  ⣿⣿⣿⠃⠄⠄⠄⢀⠴⠛⠙⣿⣿⡿⣿⣦⠄⠄⠄⠄⠄⠄
+  ⣿⣿⠃⠄⢠⡖⠉⠄⠄⠄⣠⣿⡏⠄⢹⣿⠄⠄⠄⠄⠄⢠
+  ⣿⠃⠄⠄⢸⣧⣤⣤⣤⢾⣿⣿⡇⠄⠈⢻⡆⠄⠄⠄⠄⣾
+  ⠁⠄⠄⠄⠈⠉⠛⢿⡟⠉⠉⣿⣷⣀⠄⠄⣿⡆⠄⠄⢠⣿
+  ⠄⠄⠄⠄⠄⠄⢠⡿⠿⢿⣷⣿⣿⣿⣿⣿⠿⠃⠄⠄⣸⣿
+  ⠄⠄⠄⠄⠄⢀⡞⠄⠄⠄⠈⣿⣿⣿⡟⠁⠄⠄⠄⠄⣿⣿
+  ⠄⠄⠄⠄⠄⢸⠄⠄⠄⠄⢀⣿⣿⡟⠄⠄⠄⠄⠄⢠⣿⣿
+  ⠄⠄⠄⠄⠄⠘⠄⠄⠄⢀⡼⠛⠉⠄⠄⠄⠄⠄⠄⣼⣿⣿
+  ⠄⠄⠄⠄⠄⡇⠄⠄⢀⠎⠄⠄⠄⠄⠄HAVE. ⠙⢿⣿
+  ⠄⠄⠄⠄⢰⠃⠄⢀⠎⠄⠄⠄⠄FUN.TODAY. ⠙`,
+		emotes: [],
+	},
+	{
+		name: 'CSGOKing',
+		image: 'https://images.unsplash.com/photo-1578925518470-4def7a0f08bb?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		datetime: '02/27/2024 10:48AM',
+		comment: 'yo check your trades',
+		emotes: ['📬'],
+	},
+];
+
+export const CommentsConfig = {
+	comments: comments,
+};
