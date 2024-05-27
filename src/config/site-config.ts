@@ -15,7 +15,7 @@ export const ProfileConfig = {
 
 export const MoodboardImages = [
 	{
-		image: 'https://images.unsplash.com/photo-1609587312208-cea54be969e7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		image: 'https://images.unsplash.com/photo-1606391376625-24f312264fe9?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
 	},
 	{
 		image: 'https://images.unsplash.com/photo-1627860284764-c92502f39afb?q=80&w=1335&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -229,4 +229,48 @@ const comments = [
 
 export const CommentsConfig = {
 	comments: comments,
+};
+
+const posts = [
+	{
+		title: 'Rolex Confetti Duo',
+		image: 'https://images.unsplash.com/photo-1609587312208-cea54be969e7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		description: 'Shade of brown & Black. Looking for offers instead.',
+		price: 'Offers',
+		postType: 'Selling',
+	},
+	{
+		title: 'Seiko Black&Silver',
+		image: 'https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		description: 'Seiko Black&Silver SARB033, looking to add to my collection.',
+		price: '$5,000',
+		postType: 'Buying',
+	},
+
+	{
+		title: 'Mcclaren 720s',
+		image: 'https://images.unsplash.com/photo-1594950195709-a14f66c242d7?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		description: 'Second owner of this mad car.',
+		price: '$213,200',
+		postType: 'Selling',
+	},
+
+	{
+		title: 'K-Pop tickets in Osaka, JP',
+		image: 'https://images.unsplash.com/photo-1515139372923-c923c9e9a18c?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		description: 'Two tickets, $500 cheaper than market price',
+		price: '$2,200',
+		postType: 'Selling',
+	},
+	{
+		title: 'Orient Mako II USA',
+		image: 'https://images.unsplash.com/photo-1620421895918-b4e8c86648fb?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+		description: 'Orient Mako II USA White Dial dive watch on a black leather nato strap.',
+		price: '$13,200',
+		postType: 'Buying',
+	},
+];
+
+export const PostsConfig = {
+	posts: posts,
 };
