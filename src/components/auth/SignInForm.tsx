@@ -76,14 +76,14 @@ const SignInForm = () => {
 							onClick={() => {
 								onClick('google');
 							}}>
-							<FcGoogle /> Sign in with Google
+							<FcGoogle /> Continue with Google
 						</button>
 						<button
 							className='btn btn-ghost px-4 py-2 rounded-sm w-1/2'
 							onClick={() => {
 								onClick('discord');
 							}}>
-							<BsDiscord /> Sign in with Discord
+							<BsDiscord /> Continue with Discord
 						</button>
 					</div>
 					<div className='absolute bottom-10'>

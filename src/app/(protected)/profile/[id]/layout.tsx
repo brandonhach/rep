@@ -3,17 +3,14 @@ import Navbar from '@/components/ui/Navbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function ProtectedLayout({
+export default function ProfileLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
 	return (
-		<div className={inter.className}>
-			<div className='flex flex-col h-screen'>
-				<Navbar />
-				{children}
-			</div>
+		<div className='flex flex-col flex-grow h-full'>
+			<main className='flex-grow'>{children}</main>
 		</div>
 	);
 }

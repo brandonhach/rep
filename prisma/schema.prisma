@@ -27,16 +27,17 @@ enum UserRole {
 
 model User {
   id            String          @id @default(cuid())
-  username      String?
   name          String?
   image         String?
+  country       String?
   email         String          @unique
   emailVerified DateTime?
   password      String?
   avatar        Bytes? @db.ByteA 
   accounts      Account[]
   role          UserRole @default(USER)
-  createdAt DateTime @default(now())
+  createdAt     DateTime @default(now())
+  profile       Profile?
 
   @@map("users")
 }
@@ -61,3 +62,16 @@ model Account {
  
   @@id([provider, providerAccountId])
 }
+
+model Profile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  description    String?
+  backgroundImage String?
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("profiles")
+}
+
