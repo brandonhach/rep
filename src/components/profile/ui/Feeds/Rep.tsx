@@ -27,7 +27,7 @@ const Rep = () => {
 									<td>
 										<div className='flex flex-row items-center justify-start gap-3 btn btn-ghost w-full h-16 rounded-xl'>
 											<div className='avatar'>
-												<div className='avatar rounded-full w-14'>
+												<div className='avatar rounded-full w-14 ring-black ring-offset-black ring-offset-1'>
 													<Image
 														src={`${user.image}`}
 														height={48}
