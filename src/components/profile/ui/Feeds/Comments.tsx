@@ -6,11 +6,11 @@ import { CommentsConfig } from '@/config/site-config';
 const Comments = () => {
 	return (
 		<div className='w-full h-full overflow-auto'>
-			<div className='w-full h-full grid grid-cols-1 auto-rows-max overflow-auto'>
+			<div className='w-full h-full grid grid-cols-1 auto-rows-max overflow-auto scrollbar-hide'>
 				{CommentsConfig.comments.map((comment, index) => (
 					<div
 						key={index}
-						className='col-span-1 m-2 rounded-xl relative overflow-hidden py-4 pb-6 hover:bg-base-200'>
+						className='col-span-1 m-2 rounded-xl relative overflow-hidden py-4 pb-6 hover:bg-base-200 duration-200 '>
 						<div className='flex flex-row justify-start items-center w-full p-2'>
 							<div className='avatar'>
 								<div className='rounded-full w-14 ring ring-black ring-offset-black ring-offset-1'>
@@ -45,6 +45,16 @@ const Comments = () => {
 						</div>
 					</div>
 				))}
+				<form action='' className='px-4 flex flex-col gap-4 items-start size-full'>
+					<label className='form-control size-full'>
+						<textarea
+							className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
+							placeholder='Comment'></textarea>
+					</label>
+					<button className='btn btn-outline rounded-xl h-4' type='submit'>
+						Comment
+					</button>
+				</form>
 			</div>
 		</div>
 	);
