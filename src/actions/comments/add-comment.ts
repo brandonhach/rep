@@ -2,6 +2,7 @@
 import * as z from 'zod';
 import { db } from '@/lib/prisma';
 import { addCommentSchema } from '@/types/types';
+import { revalidatePath } from 'next/cache';
 
 export const addComment = async (formData: FormData) => {
 	const profileId = formData.get('profileId');
@@ -15,6 +16,8 @@ export const addComment = async (formData: FormData) => {
 			content: content as string,
 		},
 	});
+
+	revalidatePath(`/profile/${profileId}`); // profile check for data change and reloads
 
 	return {
 		success: true,
