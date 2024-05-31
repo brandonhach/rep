@@ -10,28 +10,29 @@ import { addComment } from '@/actions/comments/add-comment';
  * TODO:
  * 1. Suspend button click after comment action
  * 2. Pagination (10 rows)
- * 3. Type case the forms.
+ * 3. Type case the forms (including refactor form as react-hook-form, form validation with zod).
  * 4. Documentation
  */
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-const Comments = ({ params }: any) => {
+const Comments = ({ params, comments }: any) => {
 	const session = useSession();
 
-	const url = params.id ? `/api/profile/${params.id}/comment` : null;
-	const { data, error, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false });
-	if (error) return <div>Failed to load</div>;
-	if (isLoading)
-		return (
-			<div className='size-full flex flex-col items-center justify-center'>
-				<span className='loading loading-dots loading-lg'></span>
-			</div>
-		);
+	// const url = params.id ? `/api/profile/${params.id}/comment` : null;
+	// const { data, error, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false });
+	// if (error) return <div>Failed to load</div>;
+	// if (isLoading)
+	// 	return (
+	// 		<div className='size-full flex flex-col items-center justify-center'>
+	// 			<span className='loading loading-dots loading-lg'></span>
+	// 		</div>
+	// 	);
+
 	return (
 		<div className='w-full h-full overflow-auto'>
 			<div className='w-full h-5/6 grid grid-cols-1 auto-rows-max overflow-auto scrollbar-hide'>
-				{data.length === 0 ? (
+				{comments.length === 0 ? (
 					<div className='w-full h-32 px-4 flex flex-row items-center justify-start gap-4'>
 						<h1 className='text-6xl font-bold'>No comments.</h1>
 						<div className='size-24 relative'>
@@ -39,7 +40,7 @@ const Comments = ({ params }: any) => {
 						</div>
 					</div>
 				) : (
-					data.map((comment: TComment) => (
+					comments.map((comment: TComment) => (
 						<div
 							key={comment.id}
 							className='col-span-1 m-2 rounded-xl relative overflow-hidden py-4 pb-6 hover:bg-base-200 duration-200 '>
@@ -57,7 +58,9 @@ const Comments = ({ params }: any) => {
 								</div>
 								<div className='flex flex-col pl-4'>
 									<h1 className='text-lg font-semibold'>{comment.name}</h1>
-									<p className='text-sm text-gray-500'>{comment.createdAt}</p>
+									<p className='text-sm text-gray-500'>
+										{new Date(comment.createdAt).toLocaleDateString()}
+									</p>
 								</div>
 							</div>
 							<div className='w-full h-auto px-4 flex flex-row items-start justify-between'>
@@ -102,7 +105,7 @@ const Comments = ({ params }: any) => {
 								type='submit'
 								onClick={() => {
 									(document.getElementById('comment_modal') as HTMLDialogElement).close();
-									mutate(url);
+									// mutate(url);
 								}}>
 								Comment
 							</button>

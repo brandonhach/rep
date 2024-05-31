@@ -9,7 +9,7 @@ import { BiSolidCommentDetail } from 'react-icons/bi';
 import { RiContactsBook3Fill } from 'react-icons/ri';
 import { RiUserFollowFill } from 'react-icons/ri';
 
-const Feeds = ({ params }: any) => {
+const Feeds = ({ params, comments }: any) => {
 	const [activeTab, setActiveTab] = useState('rep');
 
 	const handleTabClick = (tab: React.SetStateAction<string>) => {
@@ -61,7 +61,7 @@ const Feeds = ({ params }: any) => {
 			</div>
 			<div className='w-[69rem] h-[23rem] p-4'>
 				{activeTab === 'rep' && <Rep></Rep>}
-				{activeTab === 'comments' && <Comments params={params}></Comments>}
+				{activeTab === 'comments' && <Comments params={params} comments={comments}></Comments>}
 				{activeTab === 'follows' && <Follows></Follows>}
 				{activeTab === 'contacts' && <Contacts></Contacts>}
 			</div>
