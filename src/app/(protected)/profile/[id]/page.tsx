@@ -20,7 +20,7 @@ const Profile = async ({ params }: any) => {
 				<Showcase></Showcase>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				<Feeds></Feeds>
+				<Feeds params={params}></Feeds>
 			</div>
 		</div>
 	);
