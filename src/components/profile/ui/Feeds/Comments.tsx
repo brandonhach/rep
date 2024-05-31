@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { MdOutlineAddReaction } from 'react-icons/md';
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 import { TComment } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { addComment } from '@/actions/comments/add-comment';
@@ -18,8 +18,9 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Comments = ({ params }: any) => {
 	const session = useSession();
+
 	const url = params.id ? `/api/profile/${params.id}/comment` : null;
-	const { data, error, isLoading } = useSWR(url, fetcher, { refreshInterval: 1000 });
+	const { data, error, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false });
 	if (error) return <div>Failed to load</div>;
 	if (isLoading)
 		return (
@@ -29,7 +30,7 @@ const Comments = ({ params }: any) => {
 		);
 	return (
 		<div className='w-full h-full overflow-auto'>
-			<div className='w-full h-full grid grid-cols-1 auto-rows-max overflow-auto scrollbar-hide'>
+			<div className='w-full h-5/6 grid grid-cols-1 auto-rows-max overflow-auto scrollbar-hide'>
 				{data.length === 0 ? (
 					<div className='w-full h-32 px-4 flex flex-row items-center justify-start gap-4'>
 						<h1 className='text-6xl font-bold'>No comments.</h1>
@@ -38,9 +39,9 @@ const Comments = ({ params }: any) => {
 						</div>
 					</div>
 				) : (
-					data.map((comment: TComment, index: number) => (
+					data.map((comment: TComment) => (
 						<div
-							key={index}
+							key={comment.id}
 							className='col-span-1 m-2 rounded-xl relative overflow-hidden py-4 pb-6 hover:bg-base-200 duration-200 '>
 							<div className='flex flex-row justify-start items-center w-full p-2'>
 								<div className='avatar'>
@@ -77,19 +78,46 @@ const Comments = ({ params }: any) => {
 						</div>
 					))
 				)}
-				<form action={addComment} className='px-2 flex flex-col gap-4 items-start size-full'>
-					<label className='form-control size-full'>
-						<input type='hidden' name='profileId' value={params.id} />
-						<input type='hidden' name='userId' value={session.data?.user.id!} />
-						<textarea
-							className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
-							name='content'
-							placeholder='Leave a comment'></textarea>
-					</label>
-					<button className='btn btn-outline rounded-xl h-4' type='submit'>
-						Comment
-					</button>
-				</form>
+			</div>
+			{/* Open modal using comment modal id (daisy ui) */}
+			<div className='w-full z-50 h-1/6 flex flex-row items-end justify-between px-3'>
+				<button
+					className='btn rounded-xl'
+					onClick={() => (document.getElementById('comment_modal') as HTMLDialogElement).showModal()}>
+					Leave a comment
+				</button>
+				<dialog id='comment_modal' className='modal'>
+					<div className='modal-box rounded-xl'>
+						<form action={addComment} className='px-2 flex flex-col gap-4 items-end size-full'>
+							<label className='form-control size-full'>
+								<input type='hidden' name='profileId' value={params.id} />
+								<input type='hidden' name='userId' value={session.data?.user.id!} />
+								<textarea
+									className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
+									name='content'
+									placeholder='Leave a comment'></textarea>
+							</label>
+							<button
+								className='btn btn-outline rounded-xl btn-sm'
+								type='submit'
+								onClick={() => {
+									(document.getElementById('comment_modal') as HTMLDialogElement).close();
+									mutate(url);
+								}}>
+								Comment
+							</button>
+						</form>
+					</div>
+					<form method='dialog' className='modal-backdrop'>
+						<button>close</button>
+					</form>
+				</dialog>
+				<div className='join'>
+					<button className='join-item btn btn-sm btn-active'>1</button>
+					<button className='join-item btn btn-sm'>2</button>
+					<button className='join-item btn btn-sm'>3</button>
+					<button className='join-item btn btn-sm'>4</button>
+				</div>
 			</div>
 		</div>
 	);
