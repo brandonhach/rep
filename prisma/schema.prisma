@@ -38,6 +38,7 @@ model User {
   role          UserRole @default(USER)
   createdAt     DateTime @default(now())
   profile       Profile?
+  affiliation   Affiliation[]
 
   @@map("users")
 }
@@ -75,3 +76,17 @@ model Profile {
   @@map("profiles")
 }
 
+model Affiliation {
+  id               String @id @default(cuid())
+  affiliationTitle String
+  affiliationRole  String
+  platform         String
+  platformImage    String
+  platformURL      String
+  verified         Boolean @default(false)
+  userId           String
+  profileId        String
+  user             User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("affiliations")
+}
