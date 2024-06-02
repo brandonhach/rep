@@ -12,7 +12,7 @@ export const Signup = async (values: z.infer<typeof signUpSchema>) => {
 		return { error: 'Invalid fields' };
 	}
 
-	const { email, password, username } = validatedFields.data;
+	const { email, password, name } = validatedFields.data;
 
 	const existingUser = await getUserByEmail(email);
 	if (existingUser) return { error: 'Email already in use!' };
@@ -20,7 +20,7 @@ export const Signup = async (values: z.infer<typeof signUpSchema>) => {
 
 	await db.user.create({
 		data: {
-			username,
+			name,
 			email,
 			password: hashedPassword,
 		},
