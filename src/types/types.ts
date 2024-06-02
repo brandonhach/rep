@@ -20,3 +20,21 @@ export const signInSchema = z.object({
 });
 
 export type TSignInSchema = z.infer<typeof signInSchema>;
+
+export const addAffiliationSchema = z.object({
+	profileId: z.string().min(1, 'Require profileId'),
+	userId: z.string().min(1, 'Require userId'),
+});
+
+export type TAddAffiliationSchema = z.infer<typeof addAffiliationSchema>;
+
+export type TAffiliation = {
+	id: string;
+	affiliationTitle: string;
+	affiliationRole: string;
+	platform: string;
+	platformImage: string;
+	platformURL: string;
+	verified: string;
+	userId: string;
+}
