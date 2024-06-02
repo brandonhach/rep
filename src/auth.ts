@@ -33,17 +33,18 @@ export const {
 			}
 			if (token.role && session.user) {
 				session.user.role = token.role as UserRole;
-				session.user.username = token.username;
 			}
 			return session;
 		},
-		async jwt({ token }) {
+		async jwt({ token, user }) {
+			if (user) {
+				token.sub = user.id;
+			}
 			if (!token.sub) return token;
 			const existingUser = await getUserById(token.sub);
 			if (!existingUser) return token;
 
 			token.role = existingUser.role;
-			token.username = existingUser.username;
 			return token;
 		},
 	},

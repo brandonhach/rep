@@ -47,13 +47,13 @@ const SignUpForm = () => {
 						<label className='relative input input-bordered flex items-center gap-2'>
 							<FaUser />
 							<input
-								{...register('username')}
+								{...register('name')}
 								type='username'
 								placeholder='Username'
 								className='px-4 py-2 rounded'
 							/>
-							{errors.username && (
-								<p className='absolute right-4 text-red-500 text-xs font-semibold'>{`${errors.username.message}`}</p>
+							{errors.name && (
+								<p className='absolute right-4 text-red-500 text-xs font-semibold'>{`${errors.name.message}`}</p>
 							)}
 						</label>
 
