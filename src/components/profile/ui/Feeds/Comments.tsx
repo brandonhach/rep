@@ -48,7 +48,7 @@ const Comments = ({ params, comments }: any) => {
 								<div className='avatar'>
 									<div className='rounded-full w-14 ring ring-black ring-offset-black ring-offset-1'>
 										<Image
-											src={comment.image}
+											src={comment.user.image}
 											height={48}
 											width={48}
 											alt='avatar'
@@ -57,7 +57,7 @@ const Comments = ({ params, comments }: any) => {
 									</div>
 								</div>
 								<div className='flex flex-col pl-4'>
-									<h1 className='text-lg font-semibold'>{comment.name}</h1>
+									<h1 className='text-lg font-semibold'>{comment.user.name}</h1>
 									<p className='text-sm text-gray-500'>
 										{new Date(comment.createdAt).toLocaleDateString()}
 									</p>

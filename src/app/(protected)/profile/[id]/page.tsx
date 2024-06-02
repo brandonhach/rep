@@ -20,14 +20,7 @@ async function getComments(profileId: string) {
 		},
 	});
 
-	const modifiedComments = comments.map((comment) => ({
-		...comment,
-		name: comment.user?.name,
-		image: comment.user?.image,
-		user: undefined,
-	}));
-
-	return modifiedComments;
+	return comments;
 }
 const Profile = async ({ params }: any) => {
 	// Profile page for example is a server component

@@ -6,7 +6,7 @@ import z from 'zod';
 
 // SignUp form
 export const signUpSchema = z.object({
-	username: z.string().min(3, '3 characters min.').max(20, '20 characters max.'),
+	name: z.string().min(3, '3 characters min.').max(20, '20 characters max.'),
 	email: z.string().min(1, 'Email required.').email('Invalid email'),
 	password: z.string().min(1, 'Password required.').min(8, '8 characters min.'),
 });
@@ -38,4 +38,8 @@ export type TComment = {
 	createdAt: string;
 	updatedAt: string;
 	image: string;
+	user: {
+		name: string;
+		image: string;
+	};
 };
