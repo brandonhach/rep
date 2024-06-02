@@ -1,8 +1,10 @@
 import { AffiliationConfig } from '@/config/site-config';
 import React from 'react';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 
-const Affiliation = () => {
+const Affiliation = ({ params, affiliations }: any) => {
+	const session = useSession();
 	return (
 		<div className='w-full h-full overflow-x-auto'>
 			<div className='grid auto-cols-[21.8rem] grid-flow-col gap-4 p-4'>
