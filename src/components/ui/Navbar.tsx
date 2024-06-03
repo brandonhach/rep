@@ -9,6 +9,7 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { IoIosLogOut } from 'react-icons/io';
 import { usePathname } from 'next/navigation';
 import { MdOutlineSearch } from 'react-icons/md';
+import { IoIosArrowDown } from 'react-icons/io';
 
 const Navbar = () => {
 	const session = useSession();
@@ -47,6 +48,7 @@ const Navbar = () => {
 									</div>
 								</div>
 								<h1>{`${session.data.user.name}`}</h1>
+								<IoIosArrowDown />
 							</div>
 							<ul
 								tabIndex={0}
