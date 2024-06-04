@@ -8,7 +8,7 @@ import { addAffiliation } from '@/actions/affiliations/add-affiliations';
 const Affiliation = ({ params, affiliations }: any) => {
 	const session = useSession();
 	return (
-		<div className='w-full h-full overflow-x-auto relative'>
+		<div className='w-full h-full overflow-x-auto'>
 			<div className='grid auto-cols-[21.8rem] grid-flow-col gap-4 p-4'>
 				{affiliations.length === 0 ? (
 					<div className='w-full h-full flex flex-row items-center justify-start'>
@@ -16,7 +16,7 @@ const Affiliation = ({ params, affiliations }: any) => {
 					</div>
 				) : (
 					affiliations.map((affiliation: TAffiliation) => (
-						<div key={affiliation.id} className='row-span-1 m-4 rounded-xl relative overflow-hidden'>
+						<div key={affiliation.id} className='row-span-1 m-2 rounded-xl relative overflow-hidden'>
 							<div className='flex flex-col justify-center items-center pt-2'>
 								<div className='flex items-center justify-center'>
 									<div className='avatar'>
@@ -38,9 +38,10 @@ const Affiliation = ({ params, affiliations }: any) => {
 					))
 				)}
 			</div>
+			<div className='flex flex-row justify-end items-end -mt-2'>
 				{/*Display create affiliation button if user id equal the profile id*/}
-				{affiliations.length === 0 && params.id === session.data?.user.id && (
-					<div>
+				{(affiliations.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? (
+					<div className='flex-1 -mt-3'>
 						<button className="btn rounded-xl"
 							onClick={() => (document.getElementById('affiliation_modal') as HTMLDialogElement).showModal()}>
 							Add an affiliation
@@ -53,8 +54,8 @@ const Affiliation = ({ params, affiliations }: any) => {
 								</form>
 								<form action={addAffiliation} className='px-2 py-2 flex flex-col gap-4 items-end size-full'>
 									<label className='form-control size-full'>
-									<input type='hidden' name='profileId' value={params.id} />
-									<input type='hidden' name='userId' value={session.data?.user.id!} />
+										<input type='hidden' name='profileId' value={params.id} />
+										<input type='hidden' name='userId' value={session.data?.user.id!} />
 										<input
 											className="input input-bordered w-full rounded-xl whitespace-pre-line mb-2"
 											type="text"
@@ -98,12 +99,13 @@ const Affiliation = ({ params, affiliations }: any) => {
 							</div>
 						</dialog>
 					</div>
-				)}
-				<div className="join flex flex-row justify-end absolute">
+				) : null)}
+				<div className="join flex flex-row">
 					<button className="join-item btn btn-active">1</button>
 					<button className="join-item btn">2</button>
 					<button className="join-item btn">3</button>
 					<button className="join-item btn">4</button>
+				</div>
 			</div>
 		</div>
 	);
