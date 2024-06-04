@@ -30,8 +30,6 @@ async function getComments(profileId: string) {
 	return modifiedComments;
 }
 
-import { db } from '@/lib/prisma';
-
 async function getAffiliations(profileId: string) {
 	const affiliations = await db.affiliation.findMany({
 		where: {
