@@ -38,7 +38,7 @@ const config: Config = {
 	daisyui: {
 		themes: ['black'],
 	},
-	plugins: [require('daisyui'), addVariablesForColors],
+	plugins: [require('daisyui'), addVariablesForColors, require('tailwind-scrollbar-hide')],
 };
 function addVariablesForColors({ addBase, theme }: any) {
 	let allColors = flattenColorPalette(theme('colors'));
