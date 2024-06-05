@@ -29,6 +29,22 @@ async function getComments(profileId: string) {
 
 	return modifiedComments;
 }
+
+async function getAffiliations(profileId: string) {
+	const affiliations = await db.affiliation.findMany({
+		where: {
+			profileId: profileId,
+		},
+	});
+
+	const modifiedAffiliations = affiliations.map((affiliation) => ({
+		...affiliation,
+		user: undefined,
+	}));
+
+	return modifiedAffiliations;
+}
+
 const Profile = async ({ params }: any) => {
 	// Profile page for example is a server component
 	const profile = await getUserById(params.id);
@@ -38,13 +54,15 @@ const Profile = async ({ params }: any) => {
 
 	const comments = await getComments(params.id);
 
+	const affiliations = await getAffiliations(params.id);
+
 	return (
 		<div className='w-full h-full grid grid-cols-3 grid-rows-2'>
 			<div className='row-span-2 p-4'>
 				<ProfileCard profile={profile}></ProfileCard>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				<Showcase></Showcase>
+				<Showcase params={params} affiliations={affiliations}></Showcase>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
 				<Feeds params={params} comments={comments}></Feeds>
