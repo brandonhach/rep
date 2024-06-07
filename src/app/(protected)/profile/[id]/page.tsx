@@ -23,21 +23,17 @@ async function getComments(profileId: string) {
 	return comments;
 }
 
-async function getTradePosts(profileID: string){
+async function getTradePosts(profileId: string){
 	const tradePosts = await db.tradePost.findMany({
 		where: {
-			profileID: profileID,
+			profileId: profileId,
 		},
-		include: {
-			user: {
-				select: {
-					title: true,
-					image: true,
-					description: true,
-					price: true,
-					postType: true,
-				},
-			},
+		select: {
+			title: true,
+			image: true,
+			description: true,
+			price: true,
+			postType: true,
 		},
 	});
 
@@ -60,7 +56,7 @@ const Profile = async ({ params }: any) => {
 				<ProfileCard profile={profile}></ProfileCard>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				<Showcase></Showcase>
+				<Showcase params={ params } tradePosts={ tradePosts }></Showcase>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
 				{/*<Feeds params={params} comments={comments}></Feeds>*/}

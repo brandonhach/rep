@@ -64,6 +64,7 @@ const Feeds = ({ params, comments }: any) => {
 				{activeTab === 'comments' && <Comments params={params} comments={comments}></Comments>}
 				{activeTab === 'follows' && <Follows></Follows>}
 				{activeTab === 'contacts' && <Contacts></Contacts>}
+
 			</div>
 		</div>
 	);
