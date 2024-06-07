@@ -21,6 +21,7 @@ const Posts = () => {
 								<p className='font-normal text-sm'>
 									{post.price} / {post.description}
 								</p>
+								<div className='absolute top-0 right-0'><a className='rounded-full p-2 bg-slate-500' href='#'>edit</a></div>
 							</DirectionAwareHover>
 						</div>
 					);

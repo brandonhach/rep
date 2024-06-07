@@ -22,6 +22,27 @@ async function getComments(profileId: string) {
 
 	return comments;
 }
+
+async function getTradePosts(profileID: string){
+	const tradePosts = await db.tradePost.findMany({
+		where: {
+			profileID: profileID,
+		},
+		include: {
+			user: {
+				select: {
+					title: true,
+					image: true,
+					description: true,
+					price: true,
+					postType: true,
+				},
+			},
+		},
+	});
+
+	return tradePosts;
+}
 const Profile = async ({ params }: any) => {
 	// Profile page for example is a server component
 	const profile = await getUserById(params.id);
@@ -30,6 +51,8 @@ const Profile = async ({ params }: any) => {
 	}
 
 	const comments = await getComments(params.id);
+
+	const tradePosts = await getTradePosts(params.id);
 
 	return (
 		<div className='w-full h-full grid grid-cols-3 grid-rows-2'>
@@ -40,7 +63,7 @@ const Profile = async ({ params }: any) => {
 				<Showcase></Showcase>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				<Feeds params={params} comments={comments}></Feeds>
+				{/*<Feeds params={params} comments={comments}></Feeds>*/}
 			</div>
 		</div>
 	);
