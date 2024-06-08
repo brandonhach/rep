@@ -7,7 +7,9 @@ import { revalidatePath } from 'next/cache';
 export const addTradePost = async (formData: FormData) => {
     const profileId = formData.get('profileId');
     const userId = formData.get('userId');
-    const content = formData.get('content');
+    const title = formData.get('title');
+    const image = formData.get('image');
+    const description = formData.get('description');
 
     await db.tradePost.create({
         data: {
