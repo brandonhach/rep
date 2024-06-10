@@ -57,3 +57,17 @@ export type TAffiliation = {
 	verified: string;
 	userId: string;
 }
+
+export const addMoodboardSchema = z.object({
+	profileId: z.string().min(1, 'Require profileId'),
+	userId: z.string().min(1, 'Require userId'),
+});
+
+export type TAddMoodboardSchema = z.infer<typeof addMoodboardSchema>;
+
+export type TMoodboard = {
+	id: string;
+	moodboardImage: string;
+	userId: string;
+	profileId: string;
+}

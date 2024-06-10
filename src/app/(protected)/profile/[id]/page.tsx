@@ -45,6 +45,21 @@ async function getAffiliations(profileId: string) {
 	return modifiedAffiliations;
 }
 
+async function getMoodboards(profileId: string) {
+	const moodboards = await db.moodboard.findMany({
+		where: {
+			profileId: profileId,
+		},
+	});
+
+	const modifiedMoodboards = moodboards.map((moodboard) => ({
+		...moodboard,
+		user: undefined,
+	}));
+
+	return modifiedMoodboards
+}
+
 const Profile = async ({ params }: any) => {
 	// Profile page for example is a server component
 	const profile = await getUserById(params.id);
@@ -56,16 +71,18 @@ const Profile = async ({ params }: any) => {
 
 	const affiliations = await getAffiliations(params.id);
 
+	const moodboards = await getMoodboards(params.id);
+
 	return (
 		<div className='w-full h-full grid grid-cols-3 grid-rows-2'>
 			<div className='row-span-2 p-4'>
 				<ProfileCard profile={profile}></ProfileCard>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				<Showcase params={params} affiliations={affiliations}></Showcase>
+				<Showcase params={params} affiliations={affiliations} moodboards={moodboards}></Showcase>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				<Feeds params={params} comments={comments}></Feeds>
+				{/* <Feeds params={params} comments={comments}></Feeds> */}
 			</div>
 		</div>
 	);

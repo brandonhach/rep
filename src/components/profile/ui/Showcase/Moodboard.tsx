@@ -1,8 +1,13 @@
 import React from 'react';
 import { MoodboardConfig } from '@/config/site-config';
 import Image from 'next/image';
+import { useSession } from 'next-auth/react';
+import { TMoodboard } from '@/types/types';
+import { addMoodboard } from '@/actions/moodboards/add-moodboards';
 
-const Moodboard = () => {
+
+const Moodboard = ({ params, affiliations }: any) => {
+	const session = useSession();
 	return (
 		<div className='w-full h-full overflow-auto'>
 			<div className='w-full h-full grid grid-cols-4 auto-rows-[328px] overflow-auto'>
