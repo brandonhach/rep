@@ -6,18 +6,22 @@ import { TMoodboard } from '@/types/types';
 import { addMoodboard } from '@/actions/moodboards/add-moodboards';
 
 
-const Moodboard = ({ params, affiliations }: any) => {
+const Moodboard = ({ params, moodboards }: any) => {
 	const session = useSession();
 	return (
 		<div className='w-full h-full overflow-auto'>
 			<div className='w-full h-full grid grid-cols-4 auto-rows-[328px] overflow-auto'>
-				{MoodboardConfig.images.map((item, index) => {
-					return (
-						<div key={index} className='col-span-1 m-4 rounded-xl relative overflow-hidden'>
-							<Image className='object-cover rounded-t-xl' src={`${item.image}`} alt='' fill />
+			{moodboards.length === 0 ? (
+					<div className='w-full h-full flex flex-row items-center justify-start'>
+						<h1 className='text-4xl font-bold'>No Moodboards.</h1>
+					</div>
+				) : (
+				moodboards.map((moodboard: TMoodboard) => (
+						<div key={moodboard.id} className='col-span-1 m-4 rounded-xl relative overflow-hidden'>
+							<Image className='object-cover rounded-t-xl' src={`${moodboard.moodboardImage}`} alt='' fill />
 						</div>
-					);
-				})}
+				))
+				)}
 			</div>
 		</div>
 	);
