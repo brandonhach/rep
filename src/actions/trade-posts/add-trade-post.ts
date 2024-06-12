@@ -10,6 +10,9 @@ export const addTradePost = async (formData: FormData) => {
     const title = formData.get('title');
     const image = formData.get('image');
     const description = formData.get('description');
+    const price = formData.get('price');
+    const postType = formData.get('postType');
+
 
     await db.tradePost.create({
         data: {
@@ -18,6 +21,8 @@ export const addTradePost = async (formData: FormData) => {
             title: title as string,
             image: image as string,
             description: description as string,
+            price: price as string,
+            postType:postType as string,
         },
     });
 

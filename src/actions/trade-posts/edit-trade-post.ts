@@ -11,7 +11,6 @@ export const editTradePost = async (formData: FormData) => {
     const content = formData.get('content');
 
     await db.tradePost.update({
-        where: id,
         data: {
             profileId: profileId as string,
             userId: userId as string,

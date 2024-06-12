@@ -47,11 +47,6 @@ export type TComment = {
 export const addTradePostSchema = z.object({
 	profileId: z.string().min(1, 'Require profileId'),
 	userId: z.string().min(1, 'Require userId'),
-	title: z.string().min(1, 'Require title'),
-	description: z.string().min(1, 'Require description'),
-	price: z.string().min(1, 'Require price'),
-	postType: z.string().min(1, 'Require post type'),
-	image: z.string().min(1, 'Require image'),
 });
 
 export type TAddTradePostSchema = z.infer<typeof addTradePostSchema>;
@@ -64,7 +59,6 @@ export type TTradePost = {
 	price: string;
 	postType: string
 	userId: string;
-	profileId: string;
 	createdAt: string;
 	updatedAt: string;
 };

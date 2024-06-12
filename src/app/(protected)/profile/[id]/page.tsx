@@ -28,16 +28,14 @@ async function getTradePosts(profileId: string){
 		where: {
 			profileId: profileId,
 		},
-		select: {
-			title: true,
-			image: true,
-			description: true,
-			price: true,
-			postType: true,
-		},
 	});
 
-	return tradePosts;
+	const modifiedTradePosts = tradePosts.map((tradePost) => ({
+		...tradePost,
+		user: undefined,
+	}));
+
+	return modifiedTradePosts;
 }
 const Profile = async ({ params }: any) => {
 	// Profile page for example is a server component
@@ -56,7 +54,7 @@ const Profile = async ({ params }: any) => {
 				<ProfileCard profile={profile}></ProfileCard>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				<Showcase params={ params } tradePosts={ tradePosts }></Showcase>
+				<Showcase params={ params } tradePosts={tradePosts}></Showcase>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
 				{/*<Feeds params={params} comments={comments}></Feeds>*/}

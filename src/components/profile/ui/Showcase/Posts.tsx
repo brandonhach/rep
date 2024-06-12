@@ -4,9 +4,10 @@ import
 import Image from 'next/image';
 import React from 'react';
 import { DirectionAwareHover } from '@/components/ui/DirectionAwareHover';
-import {addTradePost} from "@/actions/trade-posts/add-trade-post";
 import {useSession} from "next-auth/react";
-import { MdAddBox, MdEditSquare } from "react-icons/md";
+import {MdAddBox, MdEditSquare} from "react-icons/md";
+import {TTradePost} from "@/types/types";
+import {addTradePost} from "@/actions/trade-posts/add-trade-post";
 
 
 const Posts = ({ params, tradePosts }: any) => {
@@ -18,17 +19,17 @@ const Posts = ({ params, tradePosts }: any) => {
 				<MdAddBox />
 			</button>
 			<div className='w-full h-full grid grid-cols-2 auto-rows-[328px] overflow-auto'>
-				{PostsConfig.posts.map((post, index) => {
+				{tradePosts.map((tradePost: TTradePost) => {
 					return (
-						<div key={index} className='col-span-1 m-4 rounded-xl relative overflow-hidden'>
+						<div key={tradePost.id} className='col-span-1 m-4 rounded-xl relative overflow-hidden'>
 							{' '}
-							<DirectionAwareHover imageUrl={`${post.image}`}>
-								<p className='font-bold text-2xl'>{post.title}</p>
+							<DirectionAwareHover imageUrl={`${tradePost.image}`}>
+								<p className='font-bold text-2xl'>{tradePost.title}</p>
 								<p className='font-normal text-md'>
-									Status: <span className='text-bold'>{post.postType}</span>
+									Status: <span className='text-bold'>{tradePost.postType}</span>
 								</p>
 								<p className='font-normal text-sm'>
-									{post.price} / {post.description}
+									{tradePost.price} / {tradePost.description}
 								</p>
 								<button className='btn rounded-xl absolute -top-2 -right-2'
 										onClick={() => (document.getElementById('editTradePost_modal') as HTMLDialogElement).showModal()}>
@@ -53,7 +54,7 @@ const Posts = ({ params, tradePosts }: any) => {
 								</label>
 								<label className="input input-bordered flex items-center gap-2 rounded-xl">
 									Image:
-									<input type="text" name='image' className="grow" placeholder="daisy@site.com"/>
+									<input type="text" name='image' className="grow" placeholder="Url..."/>
 								</label>
 								<textarea
 									className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
@@ -63,23 +64,27 @@ const Posts = ({ params, tradePosts }: any) => {
 									Price:
 									<input type="text" name='price' className="grow" placeholder="daisy@site.com"/>
 								</label>
-								<div className='flex flex-row items-center justify-evenly'>
-									<div className="form-control">
-										<label className="label cursor-pointer gap-4">
-											<span className="label-text">Selling</span>
-											<input type="radio" name="radio-10"
-												   className="radio checked:bg-green-500"
-												   checked/>
-										</label>
-									</div>
-									<div className="form-control">
-										<label className="label cursor-pointer gap-4">
-											<span className="label-text">Buying</span>
-											<input type="radio" name="radio-10" className="radio checked:bg-red-500"
-												   checked/>
-										</label>
-									</div>
-								</div>
+								<label className="input input-bordered flex items-center gap-2 rounded-xl">
+									Post Type:
+									<input type="text" name='postType' className="grow" placeholder="type"/>
+								</label>
+								{/*<div className='flex flex-row items-center justify-evenly'>*/}
+								{/*	<div className="form-control">*/}
+								{/*		<label className="label cursor-pointer gap-4">*/}
+								{/*			<span className="label-text">Selling</span>*/}
+								{/*			<input type="radio" name="radio-10"*/}
+								{/*				   className="radio checked:bg-green-500"*/}
+								{/*				   checked/>*/}
+								{/*		</label>*/}
+								{/*	</div>*/}
+								{/*	<div className="form-control">*/}
+								{/*		<label className="label cursor-pointer gap-4">*/}
+								{/*			<span className="label-text">Buying</span>*/}
+								{/*			<input type="radio" name="radio-10" className="radio checked:bg-red-500"*/}
+								{/*				   checked/>*/}
+								{/*		</label>*/}
+								{/*	</div>*/}
+								{/*</div>*/}
 							</label>
 							<button
 								className='btn btn-outline rounded-xl btn-sm'
