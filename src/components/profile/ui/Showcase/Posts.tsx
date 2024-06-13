@@ -1,7 +1,6 @@
 'use client';
-import
-{ PostsConfig } from '@/config/site-config';
-import Image from 'next/image';
+// import { PostsConfig } from '@/config/site-config';
+// import Image from 'next/image';
 import React, {useState} from 'react';
 import { DirectionAwareHover } from '@/components/ui/DirectionAwareHover';
 import {useSession} from "next-auth/react";
@@ -40,21 +39,24 @@ const Posts = ({ params, tradePosts }: any) => {
 								<p className='font-normal text-sm'>
 									{tradePost.price} / {tradePost.description}
 								</p>
-								<button className='btn rounded-xl absolute -top-2 -right-2'
-										onClick={() => handleEditClick(tradePost)}>
-									<MdEditSquare/>
-								</button>
+								{tradePosts.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? (
+									<button className='btn rounded-xl absolute -top-2 -right-2'
+											onClick={() => handleEditClick(tradePost)}>
+										<MdEditSquare/>
+									</button>
+								) : null}
 							</DirectionAwareHover>
 						</div>
 					))
 				)}
-
-				<div className="flex justify-center items-center bg-stone-950 col-span-1 m-4 rounded-xl relative overflow-hidden">
-					<button className="btn rounded-xl"
-							onClick={() => (document.getElementById('addTradePost_modal') as HTMLDialogElement).showModal()}>
-						<MdAddBox/> Create new post
-					</button>
-				</div>
+				{tradePosts.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? (
+					<div className="flex justify-center items-center bg-stone-950 col-span-1 m-4 rounded-xl relative overflow-hidden">
+						<button className="btn rounded-xl"
+								onClick={() => (document.getElementById('addTradePost_modal') as HTMLDialogElement).showModal()}>
+							<MdAddBox/> Create new post
+						</button>
+					</div>
+				) : null}
 			</div>
 			<dialog id='addTradePost_modal' className='modal'>
 				<div className='modal-box rounded-xl'>
@@ -144,7 +146,7 @@ const Posts = ({ params, tradePosts }: any) => {
 									<label className="label cursor-pointer gap-4">
 										<span className="label-text">Selling</span>
 										<input type="radio" name="postType" defaultValue="Selling"
-											   className="radio checked:bg-stone-400"
+											   className="radio"
 											   checked/>
 									</label>
 								</div>
@@ -152,8 +154,7 @@ const Posts = ({ params, tradePosts }: any) => {
 									<label className="label cursor-pointer gap-4">
 										<span className="label-text">Buying</span>
 										<input type="radio" name="postType" defaultValue="Buying"
-											   className="radio checked:bg-stone-400"
-											   checked/>
+											   className="radio"/>
 									</label>
 								</div>
 							</div>
