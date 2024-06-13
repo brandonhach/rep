@@ -1,7 +1,7 @@
 'use server';
 import * as z from 'zod';
 import { db } from '@/lib/prisma';
-// import { editradePostSchema } from '@/types/types';
+import { editTradePostSchema } from '@/types/types';
 import { revalidatePath } from 'next/cache';
 
 export const editTradePost = async (formData: FormData) => {

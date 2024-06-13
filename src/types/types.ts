@@ -68,4 +68,4 @@ export const editTradePostSchema = z.object({
 	userId: z.string().min(1, 'Require userId'),
 });
 
-export type TEditTradePostSchema = z.infer<typeof addTradePostSchema>;
+export type TEditTradePostSchema = z.infer<typeof editTradePostSchema>;
