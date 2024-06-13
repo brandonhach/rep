@@ -1,11 +1,11 @@
 'use server';
 import * as z from 'zod';
 import { db } from '@/lib/prisma';
-import { editradePostSchema } from '@/types/types';
+// import { editradePostSchema } from '@/types/types';
 import { revalidatePath } from 'next/cache';
-import {undefined} from "zod";
 
 export const editTradePost = async (formData: FormData) => {
+    const id = formData.get('id')
     const profileId = formData.get('profileId');
     const userId = formData.get('userId');
     const title = formData.get('title');
@@ -15,6 +15,9 @@ export const editTradePost = async (formData: FormData) => {
     const postType = formData.get('postType');
 
     await db.tradePost.update({
+        where: {
+            id: id as string,
+        },
         data: {
             profileId: profileId as string,
             userId: userId as string,

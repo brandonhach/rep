@@ -13,7 +13,6 @@ export const addTradePost = async (formData: FormData) => {
     const price = formData.get('price');
     const postType = formData.get('postType');
 
-
     await db.tradePost.create({
         data: {
             profileId: profileId as string,

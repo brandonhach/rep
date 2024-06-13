@@ -62,3 +62,10 @@ export type TTradePost = {
 	createdAt: string;
 	updatedAt: string;
 };
+
+export const editTradePostSchema = z.object({
+	profileId: z.string().min(1, 'Require profileId'),
+	userId: z.string().min(1, 'Require userId'),
+});
+
+export type TEditTradePostSchema = z.infer<typeof addTradePostSchema>;

@@ -2,7 +2,7 @@
 import
 { PostsConfig } from '@/config/site-config';
 import Image from 'next/image';
-import React from 'react';
+import React, {useState} from 'react';
 import { DirectionAwareHover } from '@/components/ui/DirectionAwareHover';
 import {useSession} from "next-auth/react";
 import {MdAddBox, MdEditSquare} from "react-icons/md";
@@ -13,6 +13,13 @@ import {editTradePost} from "@/actions/trade-posts/edit-trade-post";
 
 const Posts = ({ params, tradePosts }: any) => {
 	const session = useSession();
+	const [selectedTradePost, setSelectedTradePost] = useState<TTradePost | null>(null);
+
+	const handleEditClick = (tradePost: TTradePost) => {
+		setSelectedTradePost(tradePost);
+		(document.getElementById('editTradePost_modal') as HTMLDialogElement).showModal();
+	};
+
 	return (
 		<div className='w-full h-full overflow-auto'>
 			<div className='w-full h-full grid grid-cols-2 auto-rows-[328px] overflow-auto'>
@@ -29,7 +36,7 @@ const Posts = ({ params, tradePosts }: any) => {
 									{tradePost.price} / {tradePost.description}
 								</p>
 								<button className='btn rounded-xl absolute -top-2 -right-2'
-										onClick={() => (document.getElementById('editTradePost_modal') as HTMLDialogElement).showModal()}>
+										onClick={() => handleEditClick(tradePost)}>
 									<MdEditSquare/>
 								</button>
 							</DirectionAwareHover>
@@ -108,23 +115,24 @@ const Posts = ({ params, tradePosts }: any) => {
 						<form action={editTradePost} className='px-2 flex flex-col gap-4 items-end size-full'>
 							<label className='form-control size-full gap-4'>
 								Edit this post:
+								<input type='hidden' name='id' value={selectedTradePost?.id}/>
 								<input type='hidden' name='profileId' value={params.id}/>
 								<input type='hidden' name='userId' value={session.data?.user.id!}/>
 								<label className="input input-bordered flex items-center gap-2 rounded-xl">
 									Title:
-									<input type="text" name='title' className="grow" placeholder="Daisy"/>
+									<input type="text" name='title' className="grow" defaultValue={selectedTradePost?.title}/>
 								</label>
 								<label className="input input-bordered flex items-center gap-2 rounded-xl">
 									Image:
-									<input type="text" name='image' className="grow" placeholder="daisy@site.com"/>
+									<input type="text" name='image' className="grow" defaultValue={selectedTradePost?.image}/>
 								</label>
 								<textarea
 									className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
 									name='description'
-									placeholder='Provide a discription for your post...'></textarea>
+									defaultValue={selectedTradePost?.description}></textarea>
 								<label className="input input-bordered flex items-center gap-2 rounded-xl">
 									Price:
-									<input type="text" name='price' className="grow" placeholder="daisy@site.com"/>
+									<input type="text" name='price' className="grow" defaultValue={selectedTradePost?.price}/>
 								</label>
 								<div className='flex flex-row items-center justify-evenly'>
 									<div className="form-control">
@@ -149,7 +157,7 @@ const Posts = ({ params, tradePosts }: any) => {
 								className='btn btn-outline rounded-xl btn-sm'
 								type='submit'
 								onClick={() => {
-									(document.getElementById('addTradePost_modal') as HTMLDialogElement).close();
+									(document.getElementById('editTradePost_modal') as HTMLDialogElement).close();
 									// mutate(url);
 								}}>
 								Submit
