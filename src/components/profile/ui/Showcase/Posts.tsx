@@ -9,6 +9,7 @@ import {MdAddBox, MdEditSquare} from "react-icons/md";
 import {TTradePost} from "@/types/types";
 import {addTradePost} from "@/actions/trade-posts/add-trade-post";
 import {editTradePost} from "@/actions/trade-posts/edit-trade-post";
+import {deleteTradePost} from "@/actions/trade-posts/delete-trade-post";
 
 
 const Posts = ({ params, tradePosts }: any) => {
@@ -23,8 +24,12 @@ const Posts = ({ params, tradePosts }: any) => {
 	return (
 		<div className='w-full h-full overflow-auto'>
 			<div className='w-full h-full grid grid-cols-2 auto-rows-[328px] overflow-auto'>
-				{tradePosts.map((tradePost: TTradePost) => {
-					return (
+				{tradePosts.length === 0 ?(
+					<div className='w-full h-full flex justify-center items-center'>
+						<h1 className='text-xl'>No Trade Posts</h1>
+					</div>
+				) : (
+					tradePosts.map((tradePost: TTradePost) => (
 						<div key={tradePost.id} className='col-span-1 m-4 rounded-xl relative overflow-hidden'>
 							{' '}
 							<DirectionAwareHover imageUrl={`${tradePost.image}`}>
@@ -41,8 +46,9 @@ const Posts = ({ params, tradePosts }: any) => {
 								</button>
 							</DirectionAwareHover>
 						</div>
-					);
-				})}
+					))
+				)}
+
 				<div className="flex justify-center items-center bg-stone-950 col-span-1 m-4 rounded-xl relative overflow-hidden">
 					<button className="btn rounded-xl"
 							onClick={() => (document.getElementById('addTradePost_modal') as HTMLDialogElement).showModal()}>
@@ -100,7 +106,6 @@ const Posts = ({ params, tradePosts }: any) => {
 							type='submit'
 							onClick={() => {
 								(document.getElementById('addTradePost_modal') as HTMLDialogElement).close();
-								// mutate(url);
 							}}>
 							Submit
 						</button>
@@ -139,7 +144,7 @@ const Posts = ({ params, tradePosts }: any) => {
 									<label className="label cursor-pointer gap-4">
 										<span className="label-text">Selling</span>
 										<input type="radio" name="postType" defaultValue="Selling"
-											   className="radio checked:bg-green-500"
+											   className="radio checked:bg-stone-400"
 											   checked/>
 									</label>
 								</div>
@@ -147,21 +152,31 @@ const Posts = ({ params, tradePosts }: any) => {
 									<label className="label cursor-pointer gap-4">
 										<span className="label-text">Buying</span>
 										<input type="radio" name="postType" defaultValue="Buying"
-											   className="radio checked:bg-red-500"
+											   className="radio checked:bg-stone-400"
 											   checked/>
 									</label>
 								</div>
 							</div>
 						</label>
-						<button
-							className='btn btn-outline rounded-xl btn-sm'
-							type='submit'
-							onClick={() => {
-								(document.getElementById('editTradePost_modal') as HTMLDialogElement).close();
-								// mutate(url);
-							}}>
-							Submit
-						</button>
+						<div className='flex flex-row w-full justify-between items-center'>
+							<button
+								className='btn btn-outline btn-error rounded-xl btn-sm'
+								formAction={deleteTradePost}
+								type='submit'
+								onClick={() => {
+									(document.getElementById('editTradePost_modal') as HTMLDialogElement).close();
+								}}>
+								Delete
+							</button>
+							<button
+								className='btn btn-outline rounded-xl btn-sm'
+								type='submit'
+								onClick={() => {
+									(document.getElementById('editTradePost_modal') as HTMLDialogElement).close();
+								}}>
+								Submit
+							</button>
+						</div>
 					</form>
 				</div>
 				<form method='dialog' className='modal-backdrop'>

@@ -69,3 +69,10 @@ export const editTradePostSchema = z.object({
 });
 
 export type TEditTradePostSchema = z.infer<typeof editTradePostSchema>;
+
+export const deleteTradePostSchema = z.object({
+	profileId: z.string().min(1, 'Require profileId'),
+	userId: z.string().min(1, 'Require userId'),
+});
+
+export type TDeleteTradePostSchema = z.infer<typeof deleteTradePostSchema>;
