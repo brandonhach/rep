@@ -82,7 +82,7 @@ const Profile = async ({ params }: any) => {
 				<Showcase params={params} affiliations={affiliations} moodboards={moodboards}></Showcase>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				{/* <Feeds params={params} comments={comments}></Feeds> */}
+				<Feeds params={params} comments={comments}></Feeds>
 			</div>
 		</div>
 	);
