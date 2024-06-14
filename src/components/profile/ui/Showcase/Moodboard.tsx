@@ -9,7 +9,7 @@ import { addMoodboard } from '@/actions/moodboards/add-moodboards';
 const Moodboard = ({ params, moodboards }: any) => {
 	const session = useSession();
 	return (
-		<div className='w-full h-full overflow-auto relative'>
+		<div className='w-full h-full overflow-auto'>
 			<div className='w-full h-full grid grid-cols-4 auto-rows-[328px] overflow-auto'>
 				{moodboards.length === 0 ? (
 					<div className='w-full h-full flex flex-row items-start justify-start'>
@@ -23,7 +23,7 @@ const Moodboard = ({ params, moodboards }: any) => {
 					))
 				)}
 			</div>
-			<div className='w-full flex flex-row items-end justify-between absolute bottom-0'>
+			<div className='w-full flex flex-row items-end justify-between'>
 			{(moodboards.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? (
 					<div className='flex-1'>
 					<button className="btn rounded-xl"
