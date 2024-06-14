@@ -40,6 +40,7 @@ model User {
   profile       Profile?
   comment       Comment[]
   affiliation   Affiliation[]
+  moodboard     Moodboard[]
 
   @@map("users")
 }
@@ -99,4 +100,14 @@ model Affiliation {
   user             User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("affiliations")
+}
+
+model Moodboard {
+  id             String @id @default(cuid())
+  moodboardImage String
+  userId         String
+  profileId      String
+  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("moodboards")
 }
