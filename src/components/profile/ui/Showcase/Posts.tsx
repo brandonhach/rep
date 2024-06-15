@@ -1,7 +1,7 @@
 'use client';
 // import { PostsConfig } from '@/config/site-config';
 // import Image from 'next/image';
-import React, {useCallback, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { DirectionAwareHover } from '@/components/ui/DirectionAwareHover';
 import {useSession} from "next-auth/react";
 import {MdAddBox, MdEditSquare} from "react-icons/md";
@@ -14,6 +14,13 @@ import {deleteTradePost} from "@/actions/trade-posts/delete-trade-post";
 const Posts = ({ params, tradePosts }: any) => {
 	const session = useSession();
 	const [selectedTradePost, setSelectedTradePost] = useState<TTradePost | null>(null);
+	const [postType, setPostType] = useState('');
+
+	useEffect(() => {
+		if (selectedTradePost?.postType) {
+			setPostType(selectedTradePost.postType);
+		}
+	}, [selectedTradePost]);
 
 	const handleAddTradePost = () => {
 		const form = document.getElementById('addTradePost_form') as HTMLFormElement
@@ -73,35 +80,48 @@ const Posts = ({ params, tradePosts }: any) => {
 						<form id='addTradePost_form' action={addTradePost}
 							  className='px-2 flex flex-col gap-4 items-end size-full'>
 							<label className='form-control size-full gap-4'>
-								Add a new post:
+								Create a new post:
 								<input type='hidden' name='profileId' value={params.id}/>
 								<input type='hidden' name='userId' value={session.data?.user.id!}/>
-								<label className="input input-bordered flex items-center gap-2 rounded-xl">
-									Title:
-									<input type="text" name='title' className="grow" placeholder="Enter Title..."/>
+								<label className="form-control w-full">
+									<div className="label">
+										<span className="label-text">Title</span>
+									</div>
+									<input type="text" name='title' placeholder="Enter title..."
+										   className="input input-bordered w-full rounded-xl"
+										   />
 								</label>
-								<label className="input input-bordered flex items-center gap-2 rounded-xl">
-									Image:
-									<input type="text" name='image' className="grow"
-										   placeholder="Enter Image URL..."/>
+								<label className="form-control w-full">
+									<div className="label">
+										<span className="label-text">Image</span>
+									</div>
+									<input type="text" name='image' placeholder="Enter url..."
+										   className="input input-bordered w-full rounded-xl"
+										   />
 								</label>
-								<label>
-									Description
-									<textarea
-										className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
-										name='description'
-										placeholder='Enter Description...'></textarea>
+								<label className="form-control w-full">
+									<div className="label">
+										<span className="label-text">Description</span>
+									</div>
+									<textarea name='description'
+											  className="textarea textarea-bordered text-base h-24 rounded-xl"
+											  placeholder="Enter description..."
+											  ></textarea>
 								</label>
-								<label className="input input-bordered flex items-center gap-2 rounded-xl">
-									Price:
-									<input type="text" name='price' className="grow" placeholder="Enter Price..."/>
+								<label className="form-control w-full">
+									<div className="label">
+										<span className="label-text">Price</span>
+									</div>
+									<input type="text" name='price' placeholder="Enter price..."
+										   className="input input-bordered w-full rounded-xl"
+										   />
 								</label>
-								<div className='flex flex-row items-center justify-evenly'>
+								<div className='flex flex-row items-center justify-evenly py-4'>
 									<div className="form-control">
 										<label className="label cursor-pointer gap-4">
 											<span className="label-text">Selling</span>
 											<input type="radio" name="postType" defaultValue="Selling"
-												   className="radio checked:bg-green-500"
+												   className="radio"
 												   checked/>
 										</label>
 									</div>
@@ -109,7 +129,7 @@ const Posts = ({ params, tradePosts }: any) => {
 										<label className="label cursor-pointer gap-4">
 											<span className="label-text">Buying</span>
 											<input type="radio" name="postType" defaultValue="Buying"
-												   className="radio checked:bg-red-500"
+												   className="radio"
 												   checked/>
 										</label>
 									</div>
@@ -138,32 +158,47 @@ const Posts = ({ params, tradePosts }: any) => {
 								<input type='hidden' name='id' value={selectedTradePost?.id}/>
 								<input type='hidden' name='profileId' value={params.id}/>
 								<input type='hidden' name='userId' value={session.data?.user.id!}/>
-								<label className="input input-bordered flex items-center gap-2 rounded-xl">
-									Title:
-									<input type="text" name='title' className="grow"
+								<label className="form-control w-full">
+									<div className="label">
+										<span className="label-text">Title</span>
+									</div>
+									<input type="text" name='title' placeholder="Enter title..."
+										   className="input input-bordered w-full rounded-xl"
 										   defaultValue={selectedTradePost?.title}/>
 								</label>
-								<label className="input input-bordered flex items-center gap-2 rounded-xl">
-									Image:
-									<input type="text" name='image' className="grow"
+								<label className="form-control w-full">
+									<div className="label">
+										<span className="label-text">Image</span>
+									</div>
+									<input type="text" name='image' placeholder="Enter url..."
+										   className="input input-bordered w-full rounded-xl"
 										   defaultValue={selectedTradePost?.image}/>
 								</label>
-								<textarea
-									className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
-									name='description'
-									defaultValue={selectedTradePost?.description}></textarea>
-								<label className="input input-bordered flex items-center gap-2 rounded-xl">
-									Price:
-									<input type="text" name='price' className="grow"
+								<label className="form-control w-full">
+									<div className="label">
+										<span className="label-text">Description</span>
+									</div>
+									<textarea name='description'
+											  className="textarea textarea-bordered text-base h-24 rounded-xl"
+											  placeholder="Enter description..."
+											  defaultValue={selectedTradePost?.description}></textarea>
+								</label>
+								<label className="form-control w-full">
+									<div className="label">
+										<span className="label-text">Price</span>
+									</div>
+									<input type="text" name='price' placeholder="Enter price..."
+										   className="input input-bordered w-full rounded-xl"
 										   defaultValue={selectedTradePost?.price}/>
 								</label>
-								<div className='flex flex-row items-center justify-evenly'>
+								<div className='flex flex-row items-center justify-evenly py-4'>
 									<div className="form-control">
 										<label className="label cursor-pointer gap-4">
 											<span className="label-text">Selling</span>
 											<input type="radio" name="postType" defaultValue="Selling"
 												   className="radio"
-												   checked/>
+												   checked={postType === 'Selling'}
+												   onChange={() => setPostType('Selling')}/>
 										</label>
 									</div>
 									<div className="form-control">
@@ -171,7 +206,8 @@ const Posts = ({ params, tradePosts }: any) => {
 											<span className="label-text">Buying</span>
 											<input type="radio" name="postType" defaultValue="Buying"
 												   className="radio"
-												   checked/>
+												   checked={postType === 'Buying'}
+												   onChange={() => setPostType('Buying')}/>
 										</label>
 									</div>
 								</div>
@@ -184,7 +220,7 @@ const Posts = ({ params, tradePosts }: any) => {
 									onClick={() => {
 										(document.getElementById('editTradePost_modal') as HTMLDialogElement).close();
 									}}>
-									Delete
+								Delete
 								</button>
 								<button
 									className='btn btn-outline rounded-xl btn-sm'
