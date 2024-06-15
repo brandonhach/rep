@@ -59,8 +59,6 @@ export type TTradePost = {
 	price: string;
 	postType: string
 	userId: string;
-	createdAt: string;
-	updatedAt: string;
 };
 
 export const editTradePostSchema = z.object({
