@@ -39,6 +39,8 @@ model User {
   createdAt     DateTime        @default(now())
   profile       Profile?
   comment       Comment[]
+  affiliation   Affiliation[]
+  moodboard     Moodboard[]
   tradePost     TradePost[]
 
   @@map("users")
@@ -85,6 +87,30 @@ model Comment {
   updatedAt DateTime @updatedAt
 
   @@map("comments")
+}
+model Affiliation {
+  id               String @id @default(cuid())
+  affiliationTitle String
+  affiliationRole  String
+  platform         String
+  platformImage    String
+  platformURL      String
+  verified         Boolean @default(false)
+  userId           String
+  profileId        String
+  user             User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("affiliations")
+}
+
+model Moodboard {
+  id             String @id @default(cuid())
+  moodboardImage String
+  userId         String
+  profileId      String
+  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("moodboards")
 }
 
 model TradePost {
