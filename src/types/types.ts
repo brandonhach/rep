@@ -43,3 +43,13 @@ export type TComment = {
 		image: string;
 	};
 };
+
+export type TPlan = {
+	title: string;
+	badge: string;
+	price: string;
+	duration: string;
+	checkList: string[];
+	crossList: string[];
+	disabled: boolean;
+};
