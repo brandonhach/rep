@@ -40,6 +40,23 @@ export type TComment = {
 	image: string;
 };
 
+export const addTradePostSchema = z.object({
+	profileId: z.string().min(1, 'Require profileId'),
+	userId: z.string().min(1, 'Require userId'),
+});
+
+export type TAddTradePostSchema = z.infer<typeof addTradePostSchema>;
+
+export type TTradePost = {
+	id: string;
+	title: string;
+	image: string;
+	description: string;
+	price: string;
+	postType: string
+	userId: string;
+};
+
 export const addAffiliationSchema = z.object({
 	profileId: z.string().min(1, 'Require profileId'),
 	userId: z.string().min(1, 'Require userId'),
@@ -71,3 +88,16 @@ export type TMoodboard = {
 	userId: string;
 	profileId: string;
 }
+export const editTradePostSchema = z.object({
+	profileId: z.string().min(1, 'Require profileId'),
+	userId: z.string().min(1, 'Require userId'),
+});
+
+export type TEditTradePostSchema = z.infer<typeof editTradePostSchema>;
+
+export const deleteTradePostSchema = z.object({
+	profileId: z.string().min(1, 'Require profileId'),
+	userId: z.string().min(1, 'Require userId'),
+});
+
+export type TDeleteTradePostSchema = z.infer<typeof deleteTradePostSchema>;

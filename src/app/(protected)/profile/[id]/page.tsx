@@ -20,14 +20,29 @@ async function getComments(profileId: string) {
 		},
 	});
 
-	const modifiedComments = comments.map((comment) => ({
-		...comment,
-		name: comment.user?.name,
-		image: comment.user?.image,
+    const modifiedComments = comments.map((comment) => ({
+        ...comment,
+        name: comment.user?.name,
+        image: comment.user?.image,
+        user: undefined,
+    }));
+
+    return modifiedComments;
+}
+
+async function getTradePosts(profileId: string){
+	const tradePosts = await db.tradePost.findMany({
+		where: {
+			profileId: profileId,
+		},
+	});
+
+	const modifiedTradePosts = tradePosts.map((tradePost) => ({
+		...tradePost,
 		user: undefined,
 	}));
 
-	return modifiedComments;
+	return modifiedTradePosts;
 }
 
 async function getAffiliations(profileId: string) {
@@ -69,6 +84,8 @@ const Profile = async ({ params }: any) => {
 
 	const comments = await getComments(params.id);
 
+	const tradePosts = await getTradePosts(params.id);
+
 	const affiliations = await getAffiliations(params.id);
 
 	const moodboards = await getMoodboards(params.id);
@@ -79,7 +96,7 @@ const Profile = async ({ params }: any) => {
 				<ProfileCard profile={profile}></ProfileCard>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				<Showcase params={params} affiliations={affiliations} moodboards={moodboards}></Showcase>
+				<Showcase params={params} affiliations={affiliations} moodboards={moodboards} tradePosts={tradePosts}></Showcase>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
 				<Feeds params={params} comments={comments}></Feeds>

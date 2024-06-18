@@ -8,7 +8,7 @@ import { FaHandshake } from 'react-icons/fa';
 
 import { FaSignsPost } from 'react-icons/fa6';
 
-const Showcase = ({ params, affiliations, moodboards }: any) => {
+const Showcase = ({ params, affiliations, moodboards, tradePosts }: any) => {
 	const [activeTab, setActiveTab] = useState('moodboard');
 
 	const handleTabClick = (tab: React.SetStateAction<string>) => {
@@ -49,7 +49,7 @@ const Showcase = ({ params, affiliations, moodboards }: any) => {
 			<div className='w-[69rem] h-[23rem] p-4'>
 				{activeTab === 'moodboard' && <Moodboard params={params} moodboards={moodboards}></Moodboard>}
 				{activeTab === 'affiliation' && <Affiliation params={params} affiliations={affiliations}></Affiliation>}
-				{activeTab === 'posts' && <Posts></Posts>}
+				{activeTab === 'posts' && <Posts params={params} tradePosts={tradePosts}></Posts>}
 			</div>
 		</div>
 	);
