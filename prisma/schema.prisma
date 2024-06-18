@@ -28,17 +28,20 @@ enum UserRole {
 model User {
   id            String          @id @default(cuid())
   name          String?
-  image         String         @default("https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+  image         String          @default("https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
   country       String?
   email         String          @unique
   emailVerified DateTime?
   password      String?
-  avatar        Bytes? @db.ByteA 
+  avatar        Bytes?          @db.ByteA
   accounts      Account[]
-  role          UserRole @default(USER)
-  createdAt     DateTime @default(now())
+  role          UserRole        @default(USER)
+  createdAt     DateTime        @default(now())
   profile       Profile?
   comment       Comment[]
+  affiliation   Affiliation[]
+  moodboard     Moodboard[]
+  tradePost     TradePost[]
 
   @@map("users")
 }
@@ -55,9 +58,9 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@id([provider, providerAccountId])
 }
@@ -84,4 +87,42 @@ model Comment {
   updatedAt DateTime @updatedAt
 
   @@map("comments")
+}
+model Affiliation {
+  id               String @id @default(cuid())
+  affiliationTitle String
+  affiliationRole  String
+  platform         String
+  platformImage    String
+  platformURL      String
+  verified         Boolean @default(false)
+  userId           String
+  profileId        String
+  user             User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("affiliations")
+}
+
+model Moodboard {
+  id             String @id @default(cuid())
+  moodboardImage String
+  userId         String
+  profileId      String
+  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("moodboards")
+}
+
+model TradePost {
+  id          String   @id @default(cuid())
+  title       String
+  image       String
+  description String
+  price       String
+  postType    String
+  userId      String
+  profileId   String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("tradePosts")
 }
