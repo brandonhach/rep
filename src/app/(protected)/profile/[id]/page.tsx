@@ -5,6 +5,7 @@ import { db } from '@/lib/prisma';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
 
+const INITIAL_NUMBER_OF_MOODBOARDS = 6;
 async function getComments(profileId: string) {
 	const comments = await db.comment.findMany({
 		where: {
@@ -29,6 +30,7 @@ async function getComments(profileId: string) {
 
     return modifiedComments;
 }
+
 
 async function getTradePosts(profileId: string){
 	const tradePosts = await db.tradePost.findMany({
@@ -60,11 +62,13 @@ async function getAffiliations(profileId: string) {
 	return modifiedAffiliations;
 }
 
-async function getMoodboards(profileId: string) {
+async function getMoodboards(profileId: string, offset: number, limit: number) {
 	const moodboards = await db.moodboard.findMany({
 		where: {
 			profileId: profileId,
 		},
+		skip: offset,
+		take: limit,
 	});
 
 	const modifiedMoodboards = moodboards.map((moodboard) => ({
@@ -88,7 +92,7 @@ const Profile = async ({ params }: any) => {
 
 	const affiliations = await getAffiliations(params.id);
 
-	const moodboards = await getMoodboards(params.id);
+	const moodboards = await getMoodboards(params.id, 0, INITIAL_NUMBER_OF_MOODBOARDS);
 
 	return (
 		<div className='w-full h-full grid grid-cols-3 grid-rows-2'>
