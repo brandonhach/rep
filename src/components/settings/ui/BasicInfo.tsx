@@ -10,7 +10,7 @@ const BasicInfo = () => {
 			<h1 className='font-bold text-2xl'>Basic Information</h1>
 			<div className='size-full grid grid-cols-1 auto-rows-auto p-2 gap-4'>
 				<div className='bg-base-200/50 flex flex-row justify-between rounded-xl'>
-					<div className='w-1/2 p-4 flex flex-row items-center justify-center gap-4'>
+					<div className='w-1/2 p-4 flex flex-row items-center justify-center gap-10'>
 						<div className='avatar'>
 							<div className='avatar rounded-full w-30 ring-black ring-offset-black ring-offset-1'>
 								<Image
@@ -20,16 +20,19 @@ const BasicInfo = () => {
 									alt='avatar'></Image>
 							</div>
 						</div>
-						<button className='btn btn-outline rounded-xl' disabled>
-							Change avatar
-						</button>
+						<div className='w-44'>
+							<button className='btn btn-outline rounded-xl w-full' disabled>
+								Upload your avatar
+							</button>
+							<p className='text-sm text-neutral-500'>Image should be at least 184px x 184px.</p>
+						</div>
 					</div>
 					<div className='divider lg:divider-horizontal'></div>
 					<div className='w-1/2 p-4 flex flex-col gap-2'>
 						{/* Name */}
 						<label className='form-control w-full max-w-xs'>
 							<div className='label'>
-								<span className='label-text'>Name</span>
+								<span className='label-text'>Profile Name</span>
 							</div>
 							<input
 								type='text'
