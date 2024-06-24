@@ -126,3 +126,12 @@ model TradePost {
 
   @@map("tradePosts")
 }
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@unique([identifier, token])
+  @@map("verificationtokens")
+}
