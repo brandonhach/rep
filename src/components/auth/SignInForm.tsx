@@ -25,7 +25,7 @@ const SignInForm = () => {
 		formState: { errors, isSubmitting },
 	} = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
 
-	const onSubmit = async (data: TSignInSchema) => {
+	const onSubmit = async (data: FormData) => {
 		login(data);
 	};
 	return (
@@ -37,7 +37,7 @@ const SignInForm = () => {
 						<h1 className='text-3xl font-semibold'>Welcome back!</h1>
 						<h3 className='text-md font-thin'>The faster you fill up, the faster you go.</h3>
 					</div>
-					<form onSubmit={handleSubmit(onSubmit)} className='w-1/2 h-fit flex flex-col gap-y-4'>
+					<form action={login} className='w-1/2 h-fit flex flex-col gap-y-4'>
 						<label className='relative input input-bordered flex items-center gap-2'>
 							<MdEmail />
 							<input
@@ -48,18 +48,6 @@ const SignInForm = () => {
 							/>
 							{errors.email && (
 								<p className='absolute right-4 text-red-500 text-xs font-semibold'>{`${errors.email.message}`}</p>
-							)}
-						</label>
-						<label className='relative input input-bordered flex items-center gap-2'>
-							<FaKey />
-							<input
-								{...register('password')}
-								type='password'
-								placeholder='Password'
-								className='px-4 py-2 rounded'
-							/>
-							{errors.password && (
-								<p className='absolute right-4 text-red-500 text-xs font-semibold'>{`${errors.password.message}`}</p>
 							)}
 						</label>
 
