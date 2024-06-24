@@ -1,13 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { MoodboardConfig } from '@/config/site-config';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { TMoodboard } from '@/types/types';
+import { db } from '@/lib/prisma';
 import { addMoodboard } from '@/actions/moodboards/add-moodboards';
+import {getMoodboards} from "@/actions/moodboards/get-moodboards";
+
+const MOODS_PER_PAGE = 8;
 
 
 const Moodboard = ({ params, moodboards }: any) => {
 	const session = useSession();
+	const [offset, setOffset] = useState(MOODS_PER_PAGE);
+	const [moods, setMoods] = useState<TMoodboard[]>(moodboards);
+	const [hasMoreData, setHasMoreData] = useState(true);
+
+	const loadMoreMoods = async () => {
+		if (hasMoreData) {
+			const apiMoods = await getMoodboards(params.id, offset, MOODS_PER_PAGE)
+
+			if (apiMoods.length == 0) {
+				setHasMoreData(false);
+			}
+
+			setMoods((prevMoods) => [...prevMoods, ...apiMoods]);
+			setOffset((prevOffset) => prevOffset + MOODS_PER_PAGE);
+		}
+	}
+
 	return (
 		<div className='w-full h-full overflow-auto'>
 			<div className='w-full h-full grid grid-cols-4 auto-rows-[328px] overflow-auto'>
@@ -16,7 +36,7 @@ const Moodboard = ({ params, moodboards }: any) => {
 						<h1 className='text-4xl font-bold'>No Moodboards.</h1>
 					</div>
 				) : (
-					moodboards.map((moodboard: TMoodboard) => (
+					moods.map((moodboard: TMoodboard) => (
 						<div key={moodboard.id} className='col-span-1 m-4 rounded-xl relative overflow-hidden'>
 							<Image className='object-cover rounded-t-xl' src={`${moodboard.moodboardImage}`} alt='' fill />
 						</div>
@@ -24,11 +44,15 @@ const Moodboard = ({ params, moodboards }: any) => {
 				)}
 			</div>
 			<div className='w-full flex flex-row items-end justify-between'>
-			{(moodboards.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? (
+			{(moods.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? (
 					<div className='flex-1'>
 					<button className="btn rounded-xl"
 						onClick={() => (document.getElementById('moodboard_modal') as HTMLDialogElement).showModal()}>
 						Add a moodboard
+					</button>
+					<button className="btn rounded-xl"
+						onClick={loadMoreMoods}>
+						Load more moods
 					</button>
 					<dialog id="moodboard_modal" className="modal">
 						<div className="modal-box rounded-xl">
@@ -60,12 +84,6 @@ const Moodboard = ({ params, moodboards }: any) => {
 					</dialog>
 				</div>
 			) : null)}
-				<div className="join flex flex-row">
-					<button className="join-item btn btn-active">1</button>
-					<button className="join-item btn">2</button>
-					<button className="join-item btn">3</button>
-					<button className="join-item btn">4</button>
-				</div>
 			</div>
 		</div>
 	);

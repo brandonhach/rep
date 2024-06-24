@@ -5,7 +5,7 @@ import { db } from '@/lib/prisma';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
 
-const INITIAL_NUMBER_OF_MOODBOARDS = 6;
+const INITIAL_NUMBER_OF_MOODBOARDS = 8;
 async function getComments(profileId: string) {
 	const comments = await db.comment.findMany({
 		where: {
