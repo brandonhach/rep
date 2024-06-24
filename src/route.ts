@@ -2,7 +2,7 @@
 export const publicRoutes = ['/', '/learn', '/search-results'];
 
 // Array of routes used for authentication (redirect user to /dashboard)
-export const authRoutes = ['/login', '/signup', '/error'];
+export const authRoutes = ['/login', '/error', '/verify'];
 
 // Prefix for API auth routes. Used for API authentication purposes
 export const apiAuthPrefix = '/api/auth';

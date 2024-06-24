@@ -18,6 +18,8 @@ export const {
 	pages: {
 		signIn: '/login',
 		error: '/error',
+		verifyRequest: '/verify',
+		newUser: '/quick-setup',
 	},
 	events: {
 		async linkAccount({ user }) {
