@@ -20,6 +20,7 @@ const Navbar = () => {
 					<Image alt='Logo' src={'/logo/rep.png'} width={200} height={200}></Image>
 				</Link>
 			</div>
+			{/* Need to fix navbar width settings */}
 			<div className='menu menu-horizontal w-48'>
 				{session.status === 'authenticated' ? (
 					<div className='flex flex-row'>
