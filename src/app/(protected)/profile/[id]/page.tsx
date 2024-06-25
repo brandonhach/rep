@@ -4,6 +4,7 @@ import Showcase from '@/components/profile/Showcase';
 import { db } from '@/lib/prisma';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
+import { getMoodboards } from "@/actions/moodboards/get-moodboards";
 
 const INITIAL_NUMBER_OF_MOODBOARDS = 8;
 async function getComments(profileId: string) {
@@ -62,22 +63,7 @@ async function getAffiliations(profileId: string) {
 	return modifiedAffiliations;
 }
 
-async function getMoodboards(profileId: string, offset: number, limit: number) {
-	const moodboards = await db.moodboard.findMany({
-		where: {
-			profileId: profileId,
-		},
-		skip: offset,
-		take: limit,
-	});
-
-	const modifiedMoodboards = moodboards.map((moodboard) => ({
-		...moodboard,
-		user: undefined,
-	}));
-
-	return modifiedMoodboards
-}
+// Moved getMoodboards into its own action @/actions/moodboards/get-moodboards
 
 const Profile = async ({ params }: any) => {
 	// Profile page for example is a server component

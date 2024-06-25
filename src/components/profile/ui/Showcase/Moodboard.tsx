@@ -2,10 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
 import { TMoodboard } from '@/types/types';
-import { db } from '@/lib/prisma';
 import { addMoodboard } from '@/actions/moodboards/add-moodboards';
 import {getMoodboards} from "@/actions/moodboards/get-moodboards";
-import {undefined} from "zod";
 import {MdAddBox} from "react-icons/md";
 
 const MOODS_PER_PAGE = 8;
@@ -79,7 +77,7 @@ const Moodboard = ({ params, moodboards }: any) => {
 				)}
 				{hasMoreData ? (
 					<div className='flex justify-center items-center'>
-						<div ref={scrollTrigger}>Loading...</div>
+						<div ref={scrollTrigger}></div>
 					</div>
 				) : null}
 				{moods.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? (

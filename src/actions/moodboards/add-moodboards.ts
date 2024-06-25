@@ -1,7 +1,6 @@
 'use server';
-import * as z from 'zod';
+
 import { db } from '@/lib/prisma';
-import { addMoodboardSchema } from '@/types/types';
 import { revalidatePath } from 'next/cache';
 
 export const addMoodboard = async(formData: FormData) => {
