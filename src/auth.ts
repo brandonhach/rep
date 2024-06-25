@@ -20,7 +20,7 @@ export const {
 		signIn: '/login',
 		error: '/error',
 		verifyRequest: '/verify',
-		newUser: '/quick-setup',
+		newUser: '/onboarding',
 	},
 	events: {
 		async linkAccount({ user }) {
