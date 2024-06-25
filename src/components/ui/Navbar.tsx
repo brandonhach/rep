@@ -20,17 +20,17 @@ const Navbar = () => {
 					<Image alt='Logo' src={'/logo/rep.png'} width={200} height={200}></Image>
 				</Link>
 			</div>
-			<div className='menu menu-horizontal'>
+			<div className='menu menu-horizontal w-48'>
 				{session.status === 'authenticated' ? (
 					<div className='flex flex-row'>
-						{pathname !== '/' && (
+						{/* {pathname !== '/' && (
 							<>
 								<label className='input input-bordered flex items-center gap-2 rounded-xl'>
 									<input type='text' className='grow' placeholder='Search profile...' />
 									<MdOutlineSearch />
 								</label>
 							</>
-						)}
+						)} */}
 
 						<div className='dropdown'>
 							<div
@@ -38,11 +38,11 @@ const Navbar = () => {
 								role='button'
 								className='flex flex-row justify-center items-center btn btn-ghost'>
 								<div className='avatar'>
-									<div className='w-10 rounded-full'>
+									<div className='w-fit rounded-full'>
 										<Image
 											src={`${session.data.user.image}`}
-											height={128}
-											width={128}
+											height={48}
+											width={48}
 											alt='avatar'></Image>
 									</div>
 								</div>
@@ -50,7 +50,7 @@ const Navbar = () => {
 							</div>
 							<ul
 								tabIndex={0}
-								className='menu menu-sm dropdown-content z-[1] p-2 shadow rounded-box w-full bg-black'>
+								className='menu menu-sm dropdown-content z-[1] shadow rounded-box w-full bg-black'>
 								<li>
 									<Link href={'/dashboard'}>
 										<MdOutlineDashboard /> Dashboard <span className='badge'>New</span>
