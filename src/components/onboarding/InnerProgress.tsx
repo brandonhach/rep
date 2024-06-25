@@ -39,15 +39,15 @@ const InnerProgress = ({ session }: { session: any }) => {
 				<div className='w-2/3 h-20 flex flex-row items-center justify-between gap-10'>
 					<button
 						className={`btn-outline rounded-xl btn-lg flex flex-row items-center ${
-							activeTab === 0 ? 'invisible duration-0' : ''
-						} hover: duration-500`}
+							activeTab === 0 ? 'invisible duration-0' : 'hover: duration-500'
+						} `}
 						onClick={handlePrevClick}>
 						<GrFormPrevious />
 						Prev
 					</button>
 					<button
-						className={`btn-outline rounded-xl btn-lg hover: duration-500 flex flex-row items-center ${
-							activeTab === 3 ? 'invisible duration-0' : ''
+						className={`btn-outline rounded-xl btn-lg flex flex-row items-center ${
+							activeTab === 3 ? 'invisible hover: duration-0' : ' hover: duration-500'
 						}`}
 						onClick={handleNextClick}>
 						Next <GrFormNext />
