@@ -9,6 +9,7 @@ import Google from 'next-auth/providers/google';
 /**
  * If you need more fields to use during user session, add here accordingly.
  */
+
 export const {
 	handlers: { GET, POST },
 	auth,
@@ -54,7 +55,9 @@ export const {
 	adapter: PrismaAdapter(db),
 	session: { strategy: 'jwt' },
 	providers: [
-		Resend({ from: 'no-reply@repguard.id' }),
+		Resend({
+			from: process.env.RESEND_EMAIL,
+		}),
 		Google({ clientId: process.env.GOOGLE_CLIENT_ID, clientSecret: process.env.GOOGLE_CLIENT_SECRET }),
 		Discord({ clientId: process.env.DISCORD_CLIENT_ID, clientSecret: process.env.DISCORD_CLIENT_SECRET }),
 	],
