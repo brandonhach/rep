@@ -5,7 +5,8 @@ import { db } from '@/lib/prisma';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
 
-async function getComments(profileId: string) {
+const INITIAL_NUMBER_OF_COMMENTS = 4;
+async function getComments(profileId: string, offset: number, limit: number) {
 	const comments = await db.comment.findMany({
 		where: {
 			profileId: profileId,
@@ -18,6 +19,8 @@ async function getComments(profileId: string) {
 				},
 			},
 		},
+		skip: offset,
+		take: limit,
 	});
 
     const modifiedComments = comments.map((comment) => ({
@@ -82,7 +85,7 @@ const Profile = async ({ params }: any) => {
 		redirect('/dashboard');
 	}
 
-	const comments = await getComments(params.id);
+	const comments = await getComments(params.id, 0, INITIAL_NUMBER_OF_COMMENTS);
 
 	const tradePosts = await getTradePosts(params.id);
 
