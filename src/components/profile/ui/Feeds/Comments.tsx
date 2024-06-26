@@ -22,18 +22,27 @@ const NUMBER_OF_COMMENTS_TO_FETCH = 10;
 const Comments = ({ params, comments }: any) => {
 	const session = useSession();
 	const [userComments, setUserComments] = useState<TComment[]>(comments);
-	const [offset, setOffset] = useState(NUMBER_OF_COMMENTS_TO_FETCH);
-	const { ref, inView } = useInView();
+	const [offset, setOffset] = useState(NUMBER_OF_COMMENTS_TO_FETCH); //Offset is max number of entries to be shown
+	const [hasMoreComments, setHasMoreComments] = useState(true); //Determines whether there are more comments to fetch.
+	const { ref, inView } = useInView(); //Used to detect when element "Ref" enters the viewport, inView will be true when element is in view which laods more comments
 
 	const loadMoreComments = async () => {
+		{/*Fetching comments asynchronously from getComments functions in actions folder*/}
 		const apiComments = await getComments(params.id, offset, NUMBER_OF_COMMENTS_TO_FETCH);
-		setUserComments([...userComments, ...apiComments]);
-		setOffset(offset + NUMBER_OF_COMMENTS_TO_FETCH);
+
+		{/*Checks if number of comments fetched is less than 10, is so theres no more comments to load and set to false*/}
+		if(apiComments.length < NUMBER_OF_COMMENTS_TO_FETCH) {
+			setHasMoreComments(false);
+		}
+
+		setUserComments([...userComments, ...apiComments]); //Concatenating new comments (apiComments) with existing ones (userComments)
+		setOffset(offset + NUMBER_OF_COMMENTS_TO_FETCH); //Update offset for next fetch so next batch of comments is fetched correctly
 	}
 
+	{/*useEffect executes when inView changes (Component comes into view)*/}
 	useEffect(() => {
 		if (inView) {
-			loadMoreComments();
+			loadMoreComments(); //Calls this function when inView is true which fetches more comments
 		}
 	}, [inView])
 
@@ -100,9 +109,13 @@ const Comments = ({ params, comments }: any) => {
 					))
 				)}
 				<div ref={ref}>
-					Loading...
+					{/*If more comments to load (true), the loading message is displayed*/}
+					{hasMoreComments && 
+						<p className='text-2xl text-amber-300 text-center'>Loading <span className="loading loading-dots loading-lg inline-block align-middle"></span></p> 
+					}
+					{/*If no more comments to load (false), message for no more comment appears*/}
+          			{!hasMoreComments && <p className='text-2xl text-amber-300 text-center'>No more comments available.</p>}
 				</div>
-				<button onClick={loadMoreComments}>Load More</button>
 			</div>
 			{/* Open modal using comment modal id (daisy ui) */}
 			<div className='w-full z-50 h-1/6 flex flex-row items-end justify-between px-3'>
