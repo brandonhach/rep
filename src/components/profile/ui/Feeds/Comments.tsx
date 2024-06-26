@@ -1,11 +1,12 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdOutlineAddReaction } from 'react-icons/md';
 import useSWR, { mutate } from 'swr';
 import { TComment } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { addComment } from '@/actions/comments/add-comment';
 import { getComments } from '@/actions/comments/get-comments';
+import { useInView } from 'react-intersection-observer'
 
 /**
  * TODO:
@@ -22,12 +23,19 @@ const Comments = ({ params, comments }: any) => {
 	const session = useSession();
 	const [userComments, setUserComments] = useState<TComment[]>(comments);
 	const [offset, setOffset] = useState(NUMBER_OF_COMMENTS_TO_FETCH);
+	const { ref, inView } = useInView();
 
 	const loadMoreComments = async () => {
 		const apiComments = await getComments(params.id, offset, NUMBER_OF_COMMENTS_TO_FETCH);
 		setUserComments([...userComments, ...apiComments]);
 		setOffset(offset + NUMBER_OF_COMMENTS_TO_FETCH);
 	}
+
+	useEffect(() => {
+		if (inView) {
+			loadMoreComments();
+		}
+	}, [inView])
 
 	// const url = params.id ? `/api/profile/${params.id}/comment` : null;
 	// const { data, error, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false });
@@ -91,6 +99,9 @@ const Comments = ({ params, comments }: any) => {
 						</div>
 					))
 				)}
+				<div ref={ref}>
+					Loading...
+				</div>
 				<button onClick={loadMoreComments}>Load More</button>
 			</div>
 			{/* Open modal using comment modal id (daisy ui) */}
