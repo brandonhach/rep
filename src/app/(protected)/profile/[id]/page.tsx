@@ -5,7 +5,7 @@ import { db } from '@/lib/prisma';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
 
-const INITIAL_NUMBER_OF_COMMENTS = 4;
+const INITIAL_NUMBER_OF_COMMENTS = 10;
 async function getComments(profileId: string, offset: number, limit: number) {
 	const comments = await db.comment.findMany({
 		where: {

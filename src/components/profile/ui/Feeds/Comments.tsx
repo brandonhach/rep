@@ -1,10 +1,11 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import { MdOutlineAddReaction } from 'react-icons/md';
 import useSWR, { mutate } from 'swr';
 import { TComment } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { addComment } from '@/actions/comments/add-comment';
+import { getComments } from '@/actions/comments/get-comments';
 
 /**
  * TODO:
@@ -14,10 +15,19 @@ import { addComment } from '@/actions/comments/add-comment';
  * 4. Documentation
  */
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+// const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const NUMBER_OF_COMMENTS_TO_FETCH = 10;
 
 const Comments = ({ params, comments }: any) => {
 	const session = useSession();
+	const [userComments, setUserComments] = useState<TComment[]>(comments);
+	const [offset, setOffset] = useState(NUMBER_OF_COMMENTS_TO_FETCH);
+
+	const loadMoreComments = async () => {
+		const apiComments = await getComments(params.id, offset, NUMBER_OF_COMMENTS_TO_FETCH);
+		setUserComments([...userComments, ...apiComments]);
+		setOffset(offset + NUMBER_OF_COMMENTS_TO_FETCH);
+	}
 
 	// const url = params.id ? `/api/profile/${params.id}/comment` : null;
 	// const { data, error, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false });
@@ -32,7 +42,7 @@ const Comments = ({ params, comments }: any) => {
 	return (
 		<div className='w-full h-full overflow-auto'>
 			<div className='w-full h-5/6 grid grid-cols-1 auto-rows-max overflow-auto scrollbar-hide'>
-				{comments.length === 0 ? (
+				{userComments.length === 0 ? (
 					<div className='w-full h-32 px-4 flex flex-row items-center justify-start gap-4'>
 						<h1 className='text-6xl font-bold'>No comments.</h1>
 						<div className='size-24 relative'>
@@ -40,7 +50,7 @@ const Comments = ({ params, comments }: any) => {
 						</div>
 					</div>
 				) : (
-					comments.map((comment: TComment) => (
+					userComments.map((comment: TComment) => (
 						<div
 							key={comment.id}
 							className='col-span-1 m-2 rounded-xl relative overflow-hidden py-4 pb-6 hover:bg-base-200 duration-200 '>
@@ -81,6 +91,7 @@ const Comments = ({ params, comments }: any) => {
 						</div>
 					))
 				)}
+				<button onClick={loadMoreComments}>Load More</button>
 			</div>
 			{/* Open modal using comment modal id (daisy ui) */}
 			<div className='w-full z-50 h-1/6 flex flex-row items-end justify-between px-3'>
