@@ -9,8 +9,6 @@ import FormWrapper from './ui/FormWrapper';
 import { FcGoogle } from 'react-icons/fc';
 import { BsDiscord } from 'react-icons/bs';
 import { MdEmail } from 'react-icons/md';
-import { FaKey } from 'react-icons/fa6';
-import Link from 'next/link';
 import Image from 'next/image';
 
 const SignInForm = () => {
@@ -25,19 +23,17 @@ const SignInForm = () => {
 		formState: { errors, isSubmitting },
 	} = useForm<TSignInSchema>({ resolver: zodResolver(signInSchema) });
 
-	const onSubmit = async (data: TSignInSchema) => {
-		login(data);
-	};
 	return (
 		<div className='w-full h-full flex flex-row items-center justify-center'>
 			<FormWrapper>
-				<div className='relative w-full h-full flex flex-col items-center justify-center gap-2 pb-16'>
-					<div className='flex flex-col items-center justify-center pb-10'>
-						<Image src={'/logo/elephant.png'} width={64} height={64} alt={'elephant'}></Image>
-						<h1 className='text-3xl font-semibold'>Welcome back!</h1>
-						<h3 className='text-md font-thin'>The faster you fill up, the faster you go.</h3>
-					</div>
-					<form onSubmit={handleSubmit(onSubmit)} className='w-1/2 h-fit flex flex-col gap-y-4'>
+				<div className='relative w-1/2 h-full flex flex-col items-center justify-center px-10'>
+					<Image alt={'Elephant'} src={'/logo/elephant.png'} width={640} height={640}></Image>
+				</div>
+				<div className='divider lg:divider-horizontal'></div>
+				<div className='relative w-1/2 h-full flex flex-col items-center justify-center gap-2 pb-16 px-10'>
+					<form action={login} className='w-full h-fit flex flex-col gap-y-4'>
+						<h1 className='text-2xl font-semibold'>The faster you fill up, the faster you go.</h1>
+
 						<label className='relative input input-bordered flex items-center gap-2'>
 							<MdEmail />
 							<input
@@ -50,27 +46,12 @@ const SignInForm = () => {
 								<p className='absolute right-4 text-red-500 text-xs font-semibold'>{`${errors.email.message}`}</p>
 							)}
 						</label>
-						<label className='relative input input-bordered flex items-center gap-2'>
-							<FaKey />
-							<input
-								{...register('password')}
-								type='password'
-								placeholder='Password'
-								className='px-4 py-2 rounded'
-							/>
-							{errors.password && (
-								<p className='absolute right-4 text-red-500 text-xs font-semibold'>{`${errors.password.message}`}</p>
-							)}
-						</label>
-
 						<button disabled={isSubmitting} type='submit' className='btn hover:bg-neutral-800/95'>
-							Sign In
+							Continue
 						</button>
 					</form>
-					<div className='w-full flex flex-row items-center justify-center'>
-						<div className='divider w-1/2'>OR</div>
-					</div>
-					<div className='w-1/2'>
+					<div className='divider w-full'>OR</div>
+					<div className='w-full'>
 						<button
 							className='btn btn-ghost px-4 py-2 rounded-sm w-1/2'
 							onClick={() => {
@@ -87,17 +68,12 @@ const SignInForm = () => {
 						</button>
 					</div>
 					<div className='absolute bottom-10'>
-						<p className='text-neutral-500'>
-							Don&apos;t have an account?
+						<h1 className='text-neutral-500'>
 							<span>
 								{' '}
-								<Link
-									href={'/signup'}
-									className='text-amber-300 font-bold hover:underline hover:text-amber-200/90'>
-									Sign up!
-								</Link>
+								<p className='text-amber-300 font-bold hover:underline hover:text-amber-200/90'></p>
 							</span>
-						</p>
+						</h1>
 					</div>
 				</div>
 			</FormWrapper>
