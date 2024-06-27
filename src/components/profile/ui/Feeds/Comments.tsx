@@ -16,7 +16,6 @@ import { useInView } from 'react-intersection-observer'
  * 4. Documentation
  */
 
-// const fetcher = (url: string) => fetch(url).then((res) => res.json());
 const NUMBER_OF_COMMENTS_TO_FETCH = 10;
 
 const Comments = ({ params, comments }: any) => {
@@ -50,7 +49,7 @@ const Comments = ({ params, comments }: any) => {
         if (response.success) {
 			const newComment: TComment = {
 				id: response.comment.id,
-				name: response.comment.name ?? 'null',	//Null in prisma can be null so had to do this
+				name: response.comment.name ?? 'null',	//In prisma name can be null so had to do this
 				content: response.comment.content,
 				emotes: response.comment.emotes,
 				userId: response.comment.userId,
@@ -71,17 +70,6 @@ const Comments = ({ params, comments }: any) => {
 			loadMoreComments(); //Calls this function when inView & hasMoreComments is true which fetches more comments
 		}
 	}, [inView, hasMoreComments])
-
-
-	// const url = params.id ? `/api/profile/${params.id}/comment` : null;
-	// const { data, error, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false });
-	// if (error) return <div>Failed to load</div>;
-	// if (isLoading)
-	// 	return (
-	// 		<div className='size-full flex flex-col items-center justify-center'>
-	// 			<span className='loading loading-dots loading-lg'></span>
-	// 		</div>
-	// 	);
 
 	return (
 		<div className='w-full h-full overflow-auto'>
@@ -174,7 +162,6 @@ const Comments = ({ params, comments }: any) => {
 								type='submit'
 								onClick={() => {
 									(document.getElementById('comment_modal') as HTMLDialogElement).close();
-									// mutate(url);
 								}}>
 								Comment
 							</button>
