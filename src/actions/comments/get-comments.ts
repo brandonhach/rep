@@ -21,6 +21,10 @@ export const getComments = async (profileId: string, offset: number, limit: numb
 		take: limit,
 	});
 
+	{/*
+		- Copies existing properties of comment object with spread ... into a new object modifiedComments
+		- modifiedComments then returns the new fetched comments from loadMoreComments function in Comments.tsx
+	*/}
     const modifiedComments = comments.map((comment) => ({
         ...comment,
         name: comment.user?.name || "null",

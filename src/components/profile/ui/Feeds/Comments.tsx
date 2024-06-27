@@ -26,7 +26,7 @@ const Comments = ({ params, comments }: any) => {
 	const [hasMoreComments, setHasMoreComments] = useState(true); //Determines whether there are more comments to fetch.
 	const { ref, inView } = useInView(); //Used to detect when element "Ref" enters the viewport, inView will be true when element is in view which laods more comments
 
-	const loadMoreComments = async () => {
+	const loadMoreComments = async () => {		
 		{/*Fetching comments asynchronously from getComments functions in actions folder*/}
 		const apiComments = await getComments(params.id, offset, NUMBER_OF_COMMENTS_TO_FETCH);
 
@@ -35,37 +35,42 @@ const Comments = ({ params, comments }: any) => {
 			setHasMoreComments(false);
 		}
 
-		// setUserComments([...userComments, ...apiComments]); //Concatenating new comments (apiComments) with existing ones (userComments)
-		// setOffset(offset + NUMBER_OF_COMMENTS_TO_FETCH); //Update offset for next fetch so next batch of comments is fetched correctly
-		setUserComments((prevComments) => [...prevComments, ...apiComments]);
-        setOffset((prevOffset) => prevOffset + NUMBER_OF_COMMENTS_TO_FETCH);
+		setUserComments((prevComments) => [...prevComments, ...apiComments]); //Concatenating new comments (apiComments) with previosu ones (prevComments) and sets comments
+        setOffset((prevOffset) => prevOffset + NUMBER_OF_COMMENTS_TO_FETCH); //Update offset for next fetch so next batch of comments is fetched correctly.
 	}
 
+	//Asynchronously calls addComment(formData) to send formData to database
 	const handleAddComment = async (formData: FormData) => {
         const response = await addComment(formData);
+		{/*If comment submission is successful
+			- Constructs a new comment object (newComment) using data from the response
+			- Updates the local state setUserComments to include new comment
+			- Sets hasMoreComments to true to ensure correct display behavior so more comments are loaded
+		*/}
         if (response.success) {
 			const newComment: TComment = {
 				id: response.comment.id,
-				name: response.comment.name ?? 'null',
+				name: response.comment.name ?? 'null',	//Null in prisma can be null so had to do this
 				content: response.comment.content,
 				emotes: response.comment.emotes,
 				userId: response.comment.userId,
-				createdAt: response.comment.createdAt.toISOString(),
-				updatedAt: response.comment.updatedAt.toISOString(),
+				createdAt: response.comment.createdAt.toISOString(), //Prisma createdAt is DateTime, but TComment is string had to convert
+				updatedAt: response.comment.updatedAt.toISOString(), //Prisma updatedAt is DateTime, but TComment is string had to convert
 				image: response.comment.image,
 			};
 	
-			setHasMoreComments(true);
+			setHasMoreComments(true); 
 			setUserComments((prevComments) => [...prevComments, newComment]);
+			//If more comment is added upon submission setHasMoreComments is true, and previous userComments is concatenated with newComment  
 		}  
     };
 
-	{/*useEffect executes when inView changes (Component comes into view)*/}
+	{/*useEffect executes when inView changes (Component comes into view) && If theres more comments*/}
 	useEffect(() => {
-		if (inView) {
-			loadMoreComments(); //Calls this function when inView is true which fetches more comments
+		if (inView && hasMoreComments) {
+			loadMoreComments(); //Calls this function when inView & hasMoreComments is true which fetches more comments
 		}
-	}, [inView])
+	}, [inView, hasMoreComments])
 
 
 	// const url = params.id ? `/api/profile/${params.id}/comment` : null;
@@ -131,14 +136,14 @@ const Comments = ({ params, comments }: any) => {
 					))
 				)}
 				<div ref={ref}>
-					{/*If more comments to load (true), the loading message is displayed*/}
-					{hasMoreComments && userComments.length >= 10 &&
+					{/*If more comments to load (true) & theres more than 10 comments in DB, the loading message is displayed*/}
+					{hasMoreComments && userComments.length > 10 &&
 						<div className='flex items-center justify-center'>
 							<span className="loading loading-dots loading-lg"></span>
 						</div>
 					}
-					{/*If no more comments to load (false), message for no more comment appears*/}
-          			{!hasMoreComments && userComments.length >= 10 && <p className='text-2xl text-center'>No more comments available.</p>}
+					{/*If no more comments to load (false) & more than 0 comments in DB, message for no more comment appears*/}
+          			{!hasMoreComments && userComments.length > 0 && <p className='text-2xl text-center'>No more comments available.</p>}
 				</div>
 			</div>
 			{/* Open modal using comment modal id (daisy ui) */}
@@ -152,8 +157,8 @@ const Comments = ({ params, comments }: any) => {
 					<div className='modal-box rounded-xl'>
 						<form onSubmit={async (e) => {
 							e.preventDefault();
-							const formData = new FormData(e.target as HTMLFormElement);
-                            await handleAddComment(formData);
+							const formData = new FormData(e.target as HTMLFormElement); //Creates a new FormData object from the form encapsulating form data for submission
+                            await handleAddComment(formData); //awaits handleAddComment function call, so comment is added and state updated first
 						}} 
 						className='px-2 flex flex-col gap-4 items-end size-full'>
 							<label className='form-control size-full'>

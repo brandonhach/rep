@@ -23,12 +23,16 @@ export const addComment = async (formData: FormData) => {
             content: content as string,
         },
 		include: {
-			user: true,
+			user: true, //Include user related data to fetch user information associated with new comment
 		}
 	})
 
 	revalidatePath(`/profile/${profileId}`); // profile check for data change and reloads
 
+	{/*Includes also newly created comment with user-related data: name & image */}
+	{/* - newComment object propertires spread into comment object.
+	    - Name and image property of newComment object assigned to comment name and image
+	*/}
 	return {
 		success: true,
 		comment: {
