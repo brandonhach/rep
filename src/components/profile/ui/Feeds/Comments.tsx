@@ -35,9 +35,30 @@ const Comments = ({ params, comments }: any) => {
 			setHasMoreComments(false);
 		}
 
-		setUserComments([...userComments, ...apiComments]); //Concatenating new comments (apiComments) with existing ones (userComments)
-		setOffset(offset + NUMBER_OF_COMMENTS_TO_FETCH); //Update offset for next fetch so next batch of comments is fetched correctly
+		// setUserComments([...userComments, ...apiComments]); //Concatenating new comments (apiComments) with existing ones (userComments)
+		// setOffset(offset + NUMBER_OF_COMMENTS_TO_FETCH); //Update offset for next fetch so next batch of comments is fetched correctly
+		setUserComments((prevComments) => [...prevComments, ...apiComments]);
+        setOffset((prevOffset) => prevOffset + NUMBER_OF_COMMENTS_TO_FETCH);
 	}
+
+	const handleAddComment = async (formData: FormData) => {
+        const response = await addComment(formData);
+        if (response.success) {
+			const newComment: TComment = {
+				id: response.comment.id,
+				name: response.comment.name ?? 'null',
+				content: response.comment.content,
+				emotes: response.comment.emotes,
+				userId: response.comment.userId,
+				createdAt: response.comment.createdAt.toISOString(),
+				updatedAt: response.comment.updatedAt.toISOString(),
+				image: response.comment.image,
+			};
+	
+			setHasMoreComments(true);
+			setUserComments((prevComments) => [...prevComments, newComment]);
+		}  
+    };
 
 	{/*useEffect executes when inView changes (Component comes into view)*/}
 	useEffect(() => {
@@ -45,6 +66,7 @@ const Comments = ({ params, comments }: any) => {
 			loadMoreComments(); //Calls this function when inView is true which fetches more comments
 		}
 	}, [inView])
+
 
 	// const url = params.id ? `/api/profile/${params.id}/comment` : null;
 	// const { data, error, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false });
@@ -110,11 +132,13 @@ const Comments = ({ params, comments }: any) => {
 				)}
 				<div ref={ref}>
 					{/*If more comments to load (true), the loading message is displayed*/}
-					{hasMoreComments && 
-						<p className='text-2xl text-amber-300 text-center'>Loading <span className="loading loading-dots loading-lg inline-block align-middle"></span></p> 
+					{hasMoreComments && userComments.length >= 10 &&
+						<div className='flex items-center justify-center'>
+							<span className="loading loading-dots loading-lg"></span>
+						</div>
 					}
 					{/*If no more comments to load (false), message for no more comment appears*/}
-          			{!hasMoreComments && <p className='text-2xl text-amber-300 text-center'>No more comments available.</p>}
+          			{!hasMoreComments && userComments.length >= 10 && <p className='text-2xl text-center'>No more comments available.</p>}
 				</div>
 			</div>
 			{/* Open modal using comment modal id (daisy ui) */}
@@ -126,7 +150,12 @@ const Comments = ({ params, comments }: any) => {
 				</button>
 				<dialog id='comment_modal' className='modal'>
 					<div className='modal-box rounded-xl'>
-						<form action={addComment} className='px-2 flex flex-col gap-4 items-end size-full'>
+						<form onSubmit={async (e) => {
+							e.preventDefault();
+							const formData = new FormData(e.target as HTMLFormElement);
+                            await handleAddComment(formData);
+						}} 
+						className='px-2 flex flex-col gap-4 items-end size-full'>
 							<label className='form-control size-full'>
 								<input type='hidden' name='profileId' value={params.id} />
 								<input type='hidden' name='userId' value={session.data?.user.id!} />

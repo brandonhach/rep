@@ -9,17 +9,32 @@ export const addComment = async (formData: FormData) => {
 	const userId = formData.get('userId');
 	const content = formData.get('content');
 
-	await db.comment.create({
+	// await db.comment.create({
+	// 	data: {
+	// 		profileId: profileId as string,
+	// 		userId: userId as string,
+	// 		content: content as string,
+	// 	},
+	// });
+	const newComment = await db.comment.create({
 		data: {
-			profileId: profileId as string,
-			userId: userId as string,
-			content: content as string,
-		},
-	});
+            profileId: profileId as string,
+            userId: userId as string,
+            content: content as string,
+        },
+		include: {
+			user: true,
+		}
+	})
 
 	revalidatePath(`/profile/${profileId}`); // profile check for data change and reloads
 
 	return {
 		success: true,
+		comment: {
+			...newComment,
+			name: newComment.user.name,
+			image: newComment.user.image,
+		}
 	};
 };
