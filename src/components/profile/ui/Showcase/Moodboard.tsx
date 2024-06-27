@@ -14,6 +14,7 @@ const Moodboard = ({ params, moodboards }: any) => {
 	const [offset, setOffset] = useState(MOODS_PER_PAGE);
 	const [moods, setMoods] = useState<TMoodboard[]>(moodboards);
 	const [hasMoreData, setHasMoreData] = useState(true);
+	const [newMoodUrl, setNewMoodUrl] = useState('')
 	const scrollTrigger = useRef(null);
 
 	const loadMoreMoods = useCallback (async () => {
@@ -55,10 +56,26 @@ const Moodboard = ({ params, moodboards }: any) => {
 	}, [loadMoreMoods]);
 
 	const handleAddMood = () => {
-		const form = document.getElementById('addMood_form') as HTMLFormElement
+		setNewMoodUrl('');
 		const modal = document.getElementById('addMood_modal') as HTMLDialogElement
-		form.reset();
 		modal.showModal();
+	}
+
+	const handleSubmitMood = async (event: React.FormEvent) => {
+		event.preventDefault();
+		try {
+			await addMoodboard({
+				moodboardImage: newMoodUrl,
+				profileId: params.id,
+				userId: session.data?.user.id!
+			});
+			setNewMoodUrl('');
+			setHasMoreData(true);
+			(document.getElementById('addMood_modal') as HTMLDialogElement).close();
+		} catch (error) {
+			console.error('Failed to add moodboard:', error);
+			// Handle error (e.g., show error message to user)
+		}
 	}
 
 	return (
@@ -89,15 +106,14 @@ const Moodboard = ({ params, moodboards }: any) => {
 				) : null}
 			</div>
 			<div className='w-full flex flex-row items-end justify-between'>
-			{(moods.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? (
-					<div className='flex-1'>
+			{moods.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? <div className='flex-1'>
 					<dialog id='addMood_modal' className="modal">
 						<div className="modal-box rounded-xl">
 							<form method="dialog">
 								{/*Closes the modal box*/}
 								<button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
 							</form>
-							<form id='addMood_form' action={addMoodboard}  className='px-2 py-2 flex flex-col gap-4 items-end size-full'>
+							<form id='addMood_form' onSubmit={handleSubmitMood} className='px-2 py-2 flex flex-col gap-4 items-end size-full'>
 								<label className='form-control size-full'>
 									<input type='hidden' name='profileId' value={params.id} />
 									<input type='hidden' name='userId' value={session.data?.user.id!} />
@@ -106,21 +122,19 @@ const Moodboard = ({ params, moodboards }: any) => {
 										type="text"
 										name='moodboardImage'
 										placeholder="Enter your moodboard unsplash URL"
+										value={newMoodUrl}
+										onChange={(e) => setNewMoodUrl(e.target.value)}
 									/>
 								</label>
 								<button
 									className='btn btn-outline rounded-xl btn-sm'
-									type='submit'
-									onClick={() => {
-										(document.getElementById('addMood_modal') as HTMLDialogElement).close();
-									}}>
+									type='submit'>
 									Add Moodboard
 								</button>
 							</form>
 						</div>
 					</dialog>
-				</div>
-			) : null)}
+				</div> : null}
 			</div>
 		</div>
 	);

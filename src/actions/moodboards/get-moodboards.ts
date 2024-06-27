@@ -1,6 +1,6 @@
 'use server'
 
-import { db } from '@/lib/prisma';
+import {db} from '@/lib/prisma';
 
 export const getMoodboards = async (profileId: string, offset: number, limit: number)=> {
     const moodboards = await db.moodboard.findMany({
@@ -11,10 +11,8 @@ export const getMoodboards = async (profileId: string, offset: number, limit: nu
         take: limit,
     });
 
-    const modifiedMoodboards = moodboards.map((moodboard) => ({
+    return moodboards.map((moodboard) => ({
         ...moodboard,
         user: undefined,
-    }));
-
-    return modifiedMoodboards
+    }))
 }

@@ -3,10 +3,10 @@
 import { db } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
-export const addMoodboard = async(formData: FormData) => {
-    const profileId = formData.get('profileId');
-	const userId = formData.get('userId');
-	const moodboardImage = formData.get('moodboardImage');
+export const addMoodboard = async (formData: { moodboardImage: string; profileId: any; userId: any }) => {
+    const profileId = formData.profileId;
+	const userId = formData.userId;
+	const moodboardImage = formData.moodboardImage;
 
     await db.moodboard.create({
         data: {
