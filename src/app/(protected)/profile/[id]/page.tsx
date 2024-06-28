@@ -4,34 +4,35 @@ import Showcase from '@/components/profile/Showcase';
 import { db } from '@/lib/prisma';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
+import { getComments } from '@/actions/comments/get-comments';
 
 const INITIAL_NUMBER_OF_COMMENTS = 4;
-async function getComments(profileId: string, offset: number, limit: number) {
-	const comments = await db.comment.findMany({
-		where: {
-			profileId: profileId,
-		},
-		include: {
-			user: {
-				select: {
-					name: true,
-					image: true,
-				},
-			},
-		},
-		skip: offset,
-		take: limit,
-	});
+// async function getComments(profileId: string, offset: number, limit: number) {
+// 	const comments = await db.comment.findMany({
+// 		where: {
+// 			profileId: profileId,
+// 		},
+// 		include: {
+// 			user: {
+// 				select: {
+// 					name: true,
+// 					image: true,
+// 				},
+// 			},
+// 		},
+// 		skip: offset,
+// 		take: limit,
+// 	});
 
-    const modifiedComments = comments.map((comment) => ({
-        ...comment,
-        name: comment.user?.name,
-        image: comment.user?.image,
-        user: undefined,
-    }));
+//     const modifiedComments = comments.map((comment) => ({
+//         ...comment,
+//         name: comment.user?.name,
+//         image: comment.user?.image,
+//         user: undefined,
+//     }));
 
-    return modifiedComments;
-}
+//     return modifiedComments;
+// }
 
 async function getTradePosts(profileId: string){
 	const tradePosts = await db.tradePost.findMany({
