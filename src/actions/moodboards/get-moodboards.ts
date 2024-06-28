@@ -9,6 +9,9 @@ export const getMoodboards = async (profileId: string, offset: number, limit: nu
         },
         skip: offset,
         take: limit,
+        orderBy: {
+            id: 'desc',
+        }
     });
 
     return moodboards.map((moodboard) => ({

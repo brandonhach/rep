@@ -6,6 +6,7 @@ import { addMoodboard } from '@/actions/moodboards/add-moodboards';
 import {getMoodboards} from "@/actions/moodboards/get-moodboards";
 import {MdAddBox} from "react-icons/md";
 
+
 const MOODS_PER_PAGE = 8;
 
 
@@ -64,13 +65,13 @@ const Moodboard = ({ params, moodboards }: any) => {
 	const handleSubmitMood = async (event: React.FormEvent) => {
 		event.preventDefault();
 		try {
-			await addMoodboard({
+			const newMood: TMoodboard = await addMoodboard({
 				moodboardImage: newMoodUrl,
 				profileId: params.id,
 				userId: session.data?.user.id!
 			});
+			setMoods((prevMoods) => [newMood, ...prevMoods]);
 			setNewMoodUrl('');
-			setHasMoreData(true);
 			(document.getElementById('addMood_modal') as HTMLDialogElement).close();
 		} catch (error) {
 			console.error('Failed to add moodboard:', error);

@@ -8,7 +8,7 @@ export const addMoodboard = async (formData: { moodboardImage: string; profileId
 	const userId = formData.userId;
 	const moodboardImage = formData.moodboardImage;
 
-    await db.moodboard.create({
+    const addedMood = await db.moodboard.create({
         data: {
             profileId: profileId as string,
             userId: userId as string,
@@ -18,7 +18,5 @@ export const addMoodboard = async (formData: { moodboardImage: string; profileId
 
     revalidatePath(`/profile/${profileId}`);
 
-    return {
-        success: true,
-    };
+    return addedMood;
 }
