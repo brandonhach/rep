@@ -16,7 +16,7 @@ import { useInView } from 'react-intersection-observer'
  * 4. Documentation
  */
 
-const NUMBER_OF_COMMENTS_TO_FETCH = 10;
+const NUMBER_OF_COMMENTS_TO_FETCH = 4;
 
 const Comments = ({ params, comments }: any) => {
 	const session = useSession();
@@ -26,7 +26,7 @@ const Comments = ({ params, comments }: any) => {
 	const { ref, inView } = useInView(); //Used to detect when element "Ref" enters the viewport, inView will be true when element is in view which laods more comments
 
 	const loadMoreComments = async () => {		
-		{/*Fetching comments asynchronously from getComments functions in actions folder*/}
+		await new Promise(resolve => setTimeout(resolve, 2000));		{/*Fetching comments asynchronously from getComments functions in actions folder*/}
 		const apiComments = await getComments(params.id, offset, NUMBER_OF_COMMENTS_TO_FETCH);
 
 		{/*Checks if number of comments fetched is less than 10, is so theres no more comments to load and set to false*/}
@@ -138,8 +138,8 @@ const Comments = ({ params, comments }: any) => {
 					))
 				)}
 				<div ref={ref}>
-					{/*If more comments to load (true) & theres more than 10 comments in DB, the loading message is displayed*/}
-					{hasMoreComments && userComments.length > 10 &&
+					{/*If more comments to load (true) & theres more than 4 comments in DB, the loading message is displayed*/}
+					{hasMoreComments && userComments.length >= 4 &&
 						<div className='flex items-center justify-center'>
 							<span className="loading loading-dots loading-lg"></span>
 						</div>
@@ -180,12 +180,6 @@ const Comments = ({ params, comments }: any) => {
 						<button>close</button>
 					</form>
 				</dialog>
-				<div className='join'>
-					<button className='join-item btn btn-sm btn-active'>1</button>
-					<button className='join-item btn btn-sm'>2</button>
-					<button className='join-item btn btn-sm'>3</button>
-					<button className='join-item btn btn-sm'>4</button>
-				</div>
 			</div>
 		</div>
 	);
