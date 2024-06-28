@@ -26,7 +26,7 @@ const Comments = ({ params, comments }: any) => {
 	const { ref, inView } = useInView(); //Used to detect when element "Ref" enters the viewport, inView will be true when element is in view which laods more comments
 
 	const loadMoreComments = async () => {		
-		await new Promise(resolve => setTimeout(resolve, 2000));		{/*Fetching comments asynchronously from getComments functions in actions folder*/}
+		{/*Fetching comments asynchronously from getComments functions in actions folder*/}
 		const apiComments = await getComments(params.id, offset, NUMBER_OF_COMMENTS_TO_FETCH);
 
 		{/*Checks if number of comments fetched is less than 10, is so theres no more comments to load and set to false*/}
