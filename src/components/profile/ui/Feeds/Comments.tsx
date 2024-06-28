@@ -64,6 +64,20 @@ const Comments = ({ params, comments }: any) => {
 		}  
     };
 
+	{/*
+		- Creates a new FormData object, extracting form data from current form element
+		- form is a reference to form element to reset the form
+		- handleAddComment is called to add the new comment with form as a parameter
+		- Reset the form to be empty after comment is added
+	*/}
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const form = e.currentTarget;
+		const formData = new FormData(form);
+		await handleAddComment(formData);
+		form.reset();
+	};
+
 	{/*useEffect executes when inView changes (Component comes into view) && If theres more comments*/}
 	useEffect(() => {
 		if (inView && hasMoreComments) {
@@ -143,12 +157,7 @@ const Comments = ({ params, comments }: any) => {
 				</button>
 				<dialog id='comment_modal' className='modal'>
 					<div className='modal-box rounded-xl'>
-						<form onSubmit={async (e) => {
-							e.preventDefault();
-							const formData = new FormData(e.target as HTMLFormElement); //Creates a new FormData object from the form encapsulating form data for submission
-                            await handleAddComment(formData); //awaits handleAddComment function call, so comment is added and state updated first
-						}} 
-						className='px-2 flex flex-col gap-4 items-end size-full'>
+						<form onSubmit={handleSubmit} className='px-2 flex flex-col gap-4 items-end size-full'>
 							<label className='form-control size-full'>
 								<input type='hidden' name='profileId' value={params.id} />
 								<input type='hidden' name='userId' value={session.data?.user.id!} />
