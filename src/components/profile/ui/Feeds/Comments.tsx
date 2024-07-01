@@ -6,7 +6,7 @@ import { TComment } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { addComment } from '@/actions/comments/add-comment';
 import { getComments } from '@/actions/comments/get-comments';
-import { useInView } from 'react-intersection-observer'
+import { useInView } from 'react-intersection-observer';
 
 /**
  * TODO:
@@ -25,31 +25,37 @@ const Comments = ({ params, comments }: any) => {
 	const [hasMoreComments, setHasMoreComments] = useState(true); //Determines whether there are more comments to fetch.
 	const { ref, inView } = useInView(); //Used to detect when element "Ref" enters the viewport, inView will be true when element is in view which laods more comments
 
-	const loadMoreComments = async () => {		
-		{/*Fetching comments asynchronously from getComments functions in actions folder*/}
+	const loadMoreComments = async () => {
+		{
+			/*Fetching comments asynchronously from getComments functions in actions folder*/
+		}
 		const apiComments = await getComments(params.id, offset, NUMBER_OF_COMMENTS_TO_FETCH);
 
-		{/*Checks if number of comments fetched is less than 10, is so theres no more comments to load and set to false*/}
-		if(apiComments.length < NUMBER_OF_COMMENTS_TO_FETCH) {
+		{
+			/*Checks if number of comments fetched is less than 10, is so theres no more comments to load and set to false*/
+		}
+		if (apiComments.length < NUMBER_OF_COMMENTS_TO_FETCH) {
 			setHasMoreComments(false);
 		}
 
 		setUserComments((prevComments) => [...prevComments, ...apiComments]); //Concatenating new comments (apiComments) with previosu ones (prevComments) and sets comments
-        setOffset((prevOffset) => prevOffset + NUMBER_OF_COMMENTS_TO_FETCH); //Update offset for next fetch so next batch of comments is fetched correctly.
-	}
+		setOffset((prevOffset) => prevOffset + NUMBER_OF_COMMENTS_TO_FETCH); //Update offset for next fetch so next batch of comments is fetched correctly.
+	};
 
 	//Asynchronously calls addComment(formData) to send formData to database
 	const handleAddComment = async (formData: FormData) => {
-        const response = await addComment(formData);
-		{/*If comment submission is successful
+		const response = await addComment(formData);
+		{
+			/*If comment submission is successful
 			- Constructs a new comment object (newComment) using data from the response
 			- Updates the local state setUserComments to include new comment
 			- Sets hasMoreComments to true to ensure correct display behavior so more comments are loaded
-		*/}
-        if (response.success) {
+		*/
+		}
+		if (response.success) {
 			const newComment: TComment = {
 				id: response.comment.id,
-				name: response.comment.name ?? 'null',	//In prisma name can be null so had to do this
+				name: response.comment.name ?? 'null', //In prisma name can be null so had to do this
 				content: response.comment.content,
 				emotes: response.comment.emotes,
 				userId: response.comment.userId,
@@ -57,19 +63,22 @@ const Comments = ({ params, comments }: any) => {
 				updatedAt: response.comment.updatedAt.toISOString(), //Prisma updatedAt is DateTime, but TComment is string had to convert
 				image: response.comment.image,
 			};
-	
-			setHasMoreComments(true); 
-			setUserComments((prevComments) => [...prevComments, newComment]);
-			//If more comment is added upon submission setHasMoreComments is true, and previous userComments is concatenated with newComment  
-		}  
-    };
 
-	{/*
+			setHasMoreComments(true);
+			setUserComments((prevComments) => [newComment, ...prevComments]); // Swap newComment to append before prevComment
+
+			//If more comment is added upon submission setHasMoreComments is true, and previous userComments is concatenated with newComment
+		}
+	};
+
+	{
+		/*
 		- Creates a new FormData object, extracting form data from current form element
 		- form is a reference to form element to reset the form
 		- handleAddComment is called to add the new comment with form as a parameter
 		- Reset the form to be empty after comment is added
-	*/}
+	*/
+	}
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const form = e.currentTarget;
@@ -78,12 +87,14 @@ const Comments = ({ params, comments }: any) => {
 		form.reset();
 	};
 
-	{/*useEffect executes when inView changes (Component comes into view) && If theres more comments*/}
+	{
+		/*useEffect executes when inView changes (Component comes into view) && If theres more comments*/
+	}
 	useEffect(() => {
 		if (inView && hasMoreComments) {
 			loadMoreComments(); //Calls this function when inView & hasMoreComments is true which fetches more comments
 		}
-	}, [inView, hasMoreComments])
+	}, [inView, hasMoreComments]);
 
 	return (
 		<div className='w-full h-full overflow-auto'>
@@ -139,13 +150,15 @@ const Comments = ({ params, comments }: any) => {
 				)}
 				<div ref={ref}>
 					{/*If more comments to load (true) & theres more than 4 comments in DB, the loading message is displayed*/}
-					{hasMoreComments && userComments.length >= 4 &&
+					{hasMoreComments && userComments.length >= 4 && (
 						<div className='flex items-center justify-center'>
-							<span className="loading loading-dots loading-lg"></span>
+							<span className='loading loading-dots loading-lg'></span>
 						</div>
-					}
+					)}
 					{/*If no more comments to load (false) & more than 0 comments in DB, message for no more comment appears*/}
-          			{!hasMoreComments && userComments.length > 0 && <p className='text-2xl text-center'>No more comments available.</p>}
+					{!hasMoreComments && userComments.length > 0 && (
+						<p className='text-2xl text-center'>No more comments available.</p>
+					)}
 				</div>
 			</div>
 			{/* Open modal using comment modal id (daisy ui) */}
