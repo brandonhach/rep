@@ -15,30 +15,30 @@ const Navbar = () => {
 	const session = useSession();
 	const pathname = usePathname();
 	return (
-		<div className='navbar flex flex-row items-center justify-between px-8 h-24'>
-			<div className='btn btn-ghost text-xl h-full flex flex-col items-center justify-center'>
+		<div className='flex flex-row items-center justify-between px-8 h-14 mt-2 w-screen'>
+			<div className=' text-xl h-full flex flex-col items-center justify-center'>
 				<Link href={'/'}>
-					<Image alt='Logo' src={'/logo/rep.png'} width={200} height={200}></Image>
+					<Image alt='Logo' src={'/logo/rep.png'} width={150} height={150}></Image>
 				</Link>
 			</div>
 			{/* Need to fix navbar width settings */}
-			<div className='menu menu-horizontal w-48'>
+			<div className='menu menu-horizontal w-fit'>
 				{session.status === 'authenticated' ? (
 					<div className='flex flex-row'>
-						{/* {pathname !== '/' && (
+						{pathname !== '/' && (
 							<>
 								<label className='input input-bordered flex items-center gap-2 rounded-xl'>
 									<input type='text' className='grow' placeholder='Search profile...' />
 									<MdOutlineSearch />
 								</label>
 							</>
-						)} */}
+						)}
 
-						<div className='dropdown'>
+						<div className='dropdown pl-4'>
 							<div
 								tabIndex={0}
 								role='button'
-								className='flex flex-row justify-center items-center btn btn-ghost'>
+								className='flex flex-row justify-center items-center w-fit gap-2'>
 								<div className='avatar'>
 									<div className='w-fit rounded-full'>
 										<Image
