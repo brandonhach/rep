@@ -1,10 +1,12 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdOutlineAddReaction } from 'react-icons/md';
 import useSWR, { mutate } from 'swr';
 import { TComment } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { addComment } from '@/actions/comments/add-comment';
+import { getComments } from '@/actions/comments/get-comments';
+import { useInView } from 'react-intersection-observer';
 
 /**
  * TODO:
@@ -14,25 +16,90 @@ import { addComment } from '@/actions/comments/add-comment';
  * 4. Documentation
  */
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const NUMBER_OF_COMMENTS_TO_FETCH = 4;
 
 const Comments = ({ params, comments }: any) => {
 	const session = useSession();
+	const [userComments, setUserComments] = useState<TComment[]>(comments);
+	const [offset, setOffset] = useState(NUMBER_OF_COMMENTS_TO_FETCH); //Offset is max number of entries to be shown
+	const [hasMoreComments, setHasMoreComments] = useState(true); //Determines whether there are more comments to fetch.
+	const { ref, inView } = useInView(); //Used to detect when element "Ref" enters the viewport, inView will be true when element is in view which laods more comments
 
-	// const url = params.id ? `/api/profile/${params.id}/comment` : null;
-	// const { data, error, isLoading } = useSWR(url, fetcher, { revalidateOnFocus: false });
-	// if (error) return <div>Failed to load</div>;
-	// if (isLoading)
-	// 	return (
-	// 		<div className='size-full flex flex-col items-center justify-center'>
-	// 			<span className='loading loading-dots loading-lg'></span>
-	// 		</div>
-	// 	);
+	const loadMoreComments = async () => {
+		{
+			/*Fetching comments asynchronously from getComments functions in actions folder*/
+		}
+		const apiComments = await getComments(params.id, offset, NUMBER_OF_COMMENTS_TO_FETCH);
+
+		{
+			/*Checks if number of comments fetched is less than 10, is so theres no more comments to load and set to false*/
+		}
+		if (apiComments.length < NUMBER_OF_COMMENTS_TO_FETCH) {
+			setHasMoreComments(false);
+		}
+
+		setUserComments((prevComments) => [...prevComments, ...apiComments]); //Concatenating new comments (apiComments) with previosu ones (prevComments) and sets comments
+		setOffset((prevOffset) => prevOffset + NUMBER_OF_COMMENTS_TO_FETCH); //Update offset for next fetch so next batch of comments is fetched correctly.
+	};
+
+	//Asynchronously calls addComment(formData) to send formData to database
+	const handleAddComment = async (formData: FormData) => {
+		const response = await addComment(formData);
+		{
+			/*If comment submission is successful
+			- Constructs a new comment object (newComment) using data from the response
+			- Updates the local state setUserComments to include new comment
+			- Sets hasMoreComments to true to ensure correct display behavior so more comments are loaded
+		*/
+		}
+		if (response.success) {
+			const newComment: TComment = {
+				id: response.comment.id,
+				name: response.comment.name ?? 'null', //In prisma name can be null so had to do this
+				content: response.comment.content,
+				emotes: response.comment.emotes,
+				userId: response.comment.userId,
+				createdAt: response.comment.createdAt.toISOString(), //Prisma createdAt is DateTime, but TComment is string had to convert
+				updatedAt: response.comment.updatedAt.toISOString(), //Prisma updatedAt is DateTime, but TComment is string had to convert
+				image: response.comment.image,
+			};
+
+			setHasMoreComments(true);
+			setUserComments((prevComments) => [newComment, ...prevComments]); // Swap newComment to append before prevComment
+
+			//If more comment is added upon submission setHasMoreComments is true, and previous userComments is concatenated with newComment
+		}
+	};
+
+	{
+		/*
+		- Creates a new FormData object, extracting form data from current form element
+		- form is a reference to form element to reset the form
+		- handleAddComment is called to add the new comment with form as a parameter
+		- Reset the form to be empty after comment is added
+	*/
+	}
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const form = e.currentTarget;
+		const formData = new FormData(form);
+		await handleAddComment(formData);
+		form.reset();
+	};
+
+	{
+		/*useEffect executes when inView changes (Component comes into view) && If theres more comments*/
+	}
+	useEffect(() => {
+		if (inView && hasMoreComments) {
+			loadMoreComments(); //Calls this function when inView & hasMoreComments is true which fetches more comments
+		}
+	}, [inView, hasMoreComments]);
 
 	return (
 		<div className='w-full h-full overflow-auto'>
 			<div className='w-full h-5/6 grid grid-cols-1 auto-rows-max overflow-auto scrollbar-hide'>
-				{comments.length === 0 ? (
+				{userComments.length === 0 ? (
 					<div className='w-full h-32 px-4 flex flex-row items-center justify-start gap-4'>
 						<h1 className='text-6xl font-bold'>No comments.</h1>
 						<div className='size-24 relative'>
@@ -40,7 +107,7 @@ const Comments = ({ params, comments }: any) => {
 						</div>
 					</div>
 				) : (
-					comments.map((comment: TComment) => (
+					userComments.map((comment: TComment) => (
 						<div
 							key={comment.id}
 							className='col-span-1 m-2 rounded-xl relative overflow-hidden py-4 pb-6 hover:bg-base-200 duration-200 '>
@@ -48,7 +115,7 @@ const Comments = ({ params, comments }: any) => {
 								<div className='avatar'>
 									<div className='rounded-full w-14 ring ring-black ring-offset-black ring-offset-1'>
 										<Image
-											src={comment.user.image}
+											src={comment.image}
 											height={48}
 											width={48}
 											alt='avatar'
@@ -57,7 +124,7 @@ const Comments = ({ params, comments }: any) => {
 									</div>
 								</div>
 								<div className='flex flex-col pl-4'>
-									<h1 className='text-lg font-semibold'>{comment.user.name}</h1>
+									<h1 className='text-lg font-semibold'>{comment.name}</h1>
 									<p className='text-sm text-gray-500'>
 										{new Date(comment.createdAt).toLocaleDateString()}
 									</p>
@@ -81,6 +148,18 @@ const Comments = ({ params, comments }: any) => {
 						</div>
 					))
 				)}
+				<div ref={ref}>
+					{/*If more comments to load (true) & theres more than 4 comments in DB, the loading message is displayed*/}
+					{hasMoreComments && userComments.length >= 4 && (
+						<div className='flex items-center justify-center'>
+							<span className='loading loading-dots loading-lg'></span>
+						</div>
+					)}
+					{/*If no more comments to load (false) & more than 0 comments in DB, message for no more comment appears*/}
+					{!hasMoreComments && userComments.length > 0 && (
+						<p className='text-2xl text-center'>No more comments available.</p>
+					)}
+				</div>
 			</div>
 			{/* Open modal using comment modal id (daisy ui) */}
 			<div className='w-full z-50 h-1/6 flex flex-row items-end justify-between px-3'>
@@ -91,7 +170,7 @@ const Comments = ({ params, comments }: any) => {
 				</button>
 				<dialog id='comment_modal' className='modal'>
 					<div className='modal-box rounded-xl'>
-						<form action={addComment} className='px-2 flex flex-col gap-4 items-end size-full'>
+						<form onSubmit={handleSubmit} className='px-2 flex flex-col gap-4 items-end size-full'>
 							<label className='form-control size-full'>
 								<input type='hidden' name='profileId' value={params.id} />
 								<input type='hidden' name='userId' value={session.data?.user.id!} />
@@ -105,7 +184,6 @@ const Comments = ({ params, comments }: any) => {
 								type='submit'
 								onClick={() => {
 									(document.getElementById('comment_modal') as HTMLDialogElement).close();
-									// mutate(url);
 								}}>
 								Comment
 							</button>
@@ -115,12 +193,6 @@ const Comments = ({ params, comments }: any) => {
 						<button>close</button>
 					</form>
 				</dialog>
-				<div className='join'>
-					<button className='join-item btn btn-sm btn-active'>1</button>
-					<button className='join-item btn btn-sm'>2</button>
-					<button className='join-item btn btn-sm'>3</button>
-					<button className='join-item btn btn-sm'>4</button>
-				</div>
 			</div>
 		</div>
 	);
