@@ -24,6 +24,7 @@
 		"react-dom": "^18",
 		"react-hook-form": "^7.51.4",
 		"react-icons": "^5.2.1",
+		"react-intersection-observer": "^9.10.3",
 		"react-world-flags": "^1.6.0",
 		"simplex-noise": "^4.0.1",
 		"swr": "^2.2.5",

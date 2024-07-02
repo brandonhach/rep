@@ -4,31 +4,35 @@ import Showcase from '@/components/profile/Showcase';
 import { db } from '@/lib/prisma';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
+import { getComments } from '@/actions/comments/get-comments';
 
-async function getComments(profileId: string) {
-	const comments = await db.comment.findMany({
-		where: {
-			profileId: profileId,
-		},
-		include: {
-			user: {
-				select: {
-					name: true,
-					image: true,
-				},
-			},
-		},
-	});
+const INITIAL_NUMBER_OF_COMMENTS = 4;
+// async function getComments(profileId: string, offset: number, limit: number) {
+// 	const comments = await db.comment.findMany({
+// 		where: {
+// 			profileId: profileId,
+// 		},
+// 		include: {
+// 			user: {
+// 				select: {
+// 					name: true,
+// 					image: true,
+// 				},
+// 			},
+// 		},
+// 		skip: offset,
+// 		take: limit,
+// 	});
 
-    const modifiedComments = comments.map((comment) => ({
-        ...comment,
-        name: comment.user?.name,
-        image: comment.user?.image,
-        user: undefined,
-    }));
+//     const modifiedComments = comments.map((comment) => ({
+//         ...comment,
+//         name: comment.user?.name,
+//         image: comment.user?.image,
+//         user: undefined,
+//     }));
 
-    return modifiedComments;
-}
+//     return modifiedComments;
+// }
 
 async function getTradePosts(profileId: string){
 	const tradePosts = await db.tradePost.findMany({
@@ -82,7 +86,7 @@ const Profile = async ({ params }: any) => {
 		redirect('/dashboard');
 	}
 
-	const comments = await getComments(params.id);
+	const comments = await getComments(params.id, 0, INITIAL_NUMBER_OF_COMMENTS);
 
 	const tradePosts = await getTradePosts(params.id);
 
