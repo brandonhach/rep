@@ -1,13 +1,15 @@
 import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { db } from './lib/prisma';
-import authConfig from './auth.config';
 import { getUserById } from './model/user';
 import { UserRole } from '@prisma/client';
-
+import Resend from 'next-auth/providers/resend';
+import Discord from 'next-auth/providers/discord';
+import Google from 'next-auth/providers/google';
 /**
  * If you need more fields to use during user session, add here accordingly.
  */
+
 export const {
 	handlers: { GET, POST },
 	auth,
@@ -17,6 +19,8 @@ export const {
 	pages: {
 		signIn: '/login',
 		error: '/error',
+		verifyRequest: '/verify',
+		newUser: '/onboarding',
 	},
 	events: {
 		async linkAccount({ user }) {
@@ -50,5 +54,11 @@ export const {
 	},
 	adapter: PrismaAdapter(db),
 	session: { strategy: 'jwt' },
-	...authConfig,
+	providers: [
+		Resend({
+			from: process.env.RESEND_EMAIL,
+		}),
+		Google({ clientId: process.env.GOOGLE_CLIENT_ID, clientSecret: process.env.GOOGLE_CLIENT_SECRET }),
+		Discord({ clientId: process.env.DISCORD_CLIENT_ID, clientSecret: process.env.DISCORD_CLIENT_SECRET }),
+	],
 });

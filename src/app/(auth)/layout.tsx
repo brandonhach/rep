@@ -9,7 +9,6 @@ export default function AuthLayout({
 	return (
 		<>
 			<div className='flex flex-col h-screen w-screen'>
-				<Navbar />
 				<main className='flex flex-grow'>{children}</main>
 			</div>
 		</>
