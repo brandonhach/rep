@@ -5,8 +5,10 @@ import { db } from '@/lib/prisma';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
 import { getComments } from '@/actions/comments/get-comments';
+import { getMoodboards } from "@/actions/moodboards/get-moodboards";
 
 const INITIAL_NUMBER_OF_COMMENTS = 4;
+const INITIAL_NUMBER_OF_MOODBOARDS = 8;
 // async function getComments(profileId: string, offset: number, limit: number) {
 // 	const comments = await db.comment.findMany({
 // 		where: {
@@ -64,20 +66,7 @@ async function getAffiliations(profileId: string) {
 	return modifiedAffiliations;
 }
 
-async function getMoodboards(profileId: string) {
-	const moodboards = await db.moodboard.findMany({
-		where: {
-			profileId: profileId,
-		},
-	});
-
-	const modifiedMoodboards = moodboards.map((moodboard) => ({
-		...moodboard,
-		user: undefined,
-	}));
-
-	return modifiedMoodboards
-}
+// Moved getMoodboards into its own action @/actions/moodboards/get-moodboards
 
 const Profile = async ({ params }: any) => {
 	// Profile page for example is a server component
@@ -92,7 +81,7 @@ const Profile = async ({ params }: any) => {
 
 	const affiliations = await getAffiliations(params.id);
 
-	const moodboards = await getMoodboards(params.id);
+	const moodboards = await getMoodboards(params.id, 0, INITIAL_NUMBER_OF_MOODBOARDS);
 
 	return (
 		<div className='w-full h-full grid grid-cols-3 grid-rows-2'>
