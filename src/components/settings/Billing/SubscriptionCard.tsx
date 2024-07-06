@@ -54,7 +54,7 @@ const SubscriptionCard = ({ plan }: { plan: TPlan }) => {
 			</div>
 			<div className='w-full px-4 pt-4 pb-2'>
 				<button className={`btn btn-ghost w-full rounded-xl bg-base-300/70`} disabled={plan.disabled}>
-					Select Plan
+					{plan.badge == 'Subscription' ? 'Coming Soon...' : 'Select Plan'}
 				</button>
 			</div>
 		</div>

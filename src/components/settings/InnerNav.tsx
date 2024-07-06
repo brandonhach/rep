@@ -4,7 +4,6 @@ import Appearance from './ui/Appearance';
 import BasicInfo from './ui/BasicInfo';
 import Billing from './ui/Billing';
 import News from './ui/News';
-import Notification from './ui/Notification';
 import Security from './ui/Security';
 
 const InnerNav = () => {
@@ -46,12 +45,6 @@ const InnerNav = () => {
 				</a>
 				<a
 					role='tab'
-					className={`tab ${activeTab === 'notification' ? 'tab-active' : ''}`}
-					onClick={() => handleTabClick('notification')}>
-					Notification
-				</a>
-				<a
-					role='tab'
 					className={`tab ${activeTab === 'news' ? 'tab-active' : ''}`}
 					onClick={() => handleTabClick('news')}>
 					What&apos;s New
@@ -62,7 +55,6 @@ const InnerNav = () => {
 				{activeTab === 'billing' && <Billing></Billing>}
 				{activeTab === 'appearance' && <Appearance></Appearance>}
 				{activeTab === 'security' && <Security></Security>}
-				{activeTab === 'notification' && <Notification></Notification>}
 				{activeTab === 'news' && <News></News>}
 			</div>
 		</div>
