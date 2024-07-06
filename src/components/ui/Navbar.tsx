@@ -21,7 +21,6 @@ const Navbar = () => {
 					<Image alt='Logo' src={'/logo/rep.png'} width={150} height={150}></Image>
 				</Link>
 			</div>
-			{/* Need to fix navbar width settings */}
 			<div className='menu menu-horizontal w-fit'>
 				{session.status === 'authenticated' ? (
 					<div className='flex flex-row'>
@@ -38,7 +37,7 @@ const Navbar = () => {
 							<div
 								tabIndex={0}
 								role='button'
-								className='flex flex-row justify-center items-center w-fit gap-2'>
+								className='flex flex-row justify-center items-center w-fit gap-2 min-w-40'>
 								<div className='avatar'>
 									<div className='w-fit rounded-full'>
 										<Image
