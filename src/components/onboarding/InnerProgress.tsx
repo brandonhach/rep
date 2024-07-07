@@ -36,7 +36,7 @@ const InnerProgress = ({ session }: { session: any }) => {
 					{activeTab === 2 && <Plan></Plan>}
 					{activeTab === 3 && <FinishOnboard></FinishOnboard>}
 				</div>
-				<div className='w-2/3 h-20 flex flex-row items-center justify-between gap-10'>
+				<div className='w-2/3 h-20 flex flex-row items-center justify-between gap-10 pt-20'>
 					<button
 						className={`btn-outline rounded-xl btn-lg flex flex-row items-center ${
 							activeTab === 0 ? 'invisible duration-0' : 'hover: duration-500'

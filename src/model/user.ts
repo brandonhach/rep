@@ -1,4 +1,5 @@
 import { db } from '@/lib/prisma';
+import { unstable_cache } from 'next/cache';
 
 export const getUserByEmail = async (email: string) => {
 	try {
@@ -8,7 +9,7 @@ export const getUserByEmail = async (email: string) => {
 		return null;
 	}
 };
-export const getUserById = async (id: string) => {
+const fetchUserById = async (id: string) => {
 	try {
 		const user = await db.user.findUnique({ where: { id } });
 		return user;
@@ -16,3 +17,5 @@ export const getUserById = async (id: string) => {
 		return null;
 	}
 };
+
+export const getUserById = unstable_cache(fetchUserById);

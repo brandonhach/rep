@@ -10,6 +10,8 @@ import { FcGoogle } from 'react-icons/fc';
 import { BsDiscord } from 'react-icons/bs';
 import { MdEmail } from 'react-icons/md';
 import Image from 'next/image';
+import Link from 'next/link';
+import { RiArrowGoBackFill } from 'react-icons/ri';
 
 const SignInForm = () => {
 	const onClick = (provider: 'google' | 'discord') => {
@@ -27,7 +29,7 @@ const SignInForm = () => {
 		<div className='w-full h-full flex flex-row items-center justify-center'>
 			<FormWrapper>
 				<div className='relative w-1/2 h-full flex flex-col items-center justify-center px-10'>
-					<Image alt={'Elephant'} src={'/logo/elephant.png'} width={640} height={640}></Image>
+					<Image alt={'Elephant'} src={'/logo/rep.png'} width={250} height={250}></Image>
 				</div>
 				<div className='divider lg:divider-horizontal'></div>
 				<div className='relative w-1/2 h-full flex flex-col items-center justify-center gap-2 pb-16 px-10'>
@@ -68,10 +70,15 @@ const SignInForm = () => {
 						</button>
 					</div>
 					<div className='absolute bottom-10'>
-						<h1 className='text-neutral-500'>
+						<h1 className='text-neutral-500 flex flex-row items-center gap-2'>
+							Return to homepage
 							<span>
 								{' '}
-								<p className='text-amber-300 font-bold hover:underline hover:text-amber-200/90'></p>
+								<Link
+									href={'/'}
+									className='text-amber-300 font-bold hover:underline hover:text-amber-200/90 '>
+									<RiArrowGoBackFill />
+								</Link>
 							</span>
 						</h1>
 					</div>
