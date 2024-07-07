@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import Store from './ui/Store';
+import Shop from './ui/Shop';
 import BasicInfo from './ui/BasicInfo';
 import Billing from './ui/Billing';
 import News from './ui/News';
@@ -34,9 +34,9 @@ const InnerNav = () => {
 				</a>
 				<a
 					role='tab'
-					className={`tab ${activeTab === 'store' ? 'tab-active' : ''}`}
-					onClick={() => handleTabClick('store')}>
-					Store
+					className={`tab ${activeTab === 'shop' ? 'tab-active' : ''}`}
+					onClick={() => handleTabClick('shop')}>
+					Shop
 				</a>
 				<a
 					role='tab'
@@ -62,9 +62,9 @@ const InnerNav = () => {
 						<Billing></Billing>
 					</FadeIn>
 				)}
-				{activeTab === 'store' && (
+				{activeTab === 'shop' && (
 					<FadeIn>
-						<Store></Store>
+						<Shop></Shop>
 					</FadeIn>
 				)}
 				{activeTab === 'security' && (
