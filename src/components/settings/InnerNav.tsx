@@ -1,10 +1,11 @@
 'use client';
 import { useState } from 'react';
-import Appearance from './ui/Appearance';
+import Store from './ui/Store';
 import BasicInfo from './ui/BasicInfo';
 import Billing from './ui/Billing';
 import News from './ui/News';
 import Security from './ui/Security';
+import FadeIn from '../ui/transition/FadeIn';
 
 const InnerNav = () => {
 	const [activeTab, setActiveTab] = useState('basic-info');
@@ -33,9 +34,9 @@ const InnerNav = () => {
 				</a>
 				<a
 					role='tab'
-					className={`tab ${activeTab === 'appearance' ? 'tab-active' : ''}`}
-					onClick={() => handleTabClick('appearance')}>
-					Appearance
+					className={`tab ${activeTab === 'store' ? 'tab-active' : ''}`}
+					onClick={() => handleTabClick('store')}>
+					Store
 				</a>
 				<a
 					role='tab'
@@ -51,11 +52,31 @@ const InnerNav = () => {
 				</a>
 			</div>
 			<div className='w-[69rem] h-[23rem] p-4'>
-				{activeTab === 'basic-info' && <BasicInfo></BasicInfo>}
-				{activeTab === 'billing' && <Billing></Billing>}
-				{activeTab === 'appearance' && <Appearance></Appearance>}
-				{activeTab === 'security' && <Security></Security>}
-				{activeTab === 'news' && <News></News>}
+				{activeTab === 'basic-info' && (
+					<FadeIn>
+						<BasicInfo></BasicInfo>
+					</FadeIn>
+				)}
+				{activeTab === 'billing' && (
+					<FadeIn>
+						<Billing></Billing>
+					</FadeIn>
+				)}
+				{activeTab === 'store' && (
+					<FadeIn>
+						<Store></Store>
+					</FadeIn>
+				)}
+				{activeTab === 'security' && (
+					<FadeIn>
+						<Security></Security>
+					</FadeIn>
+				)}
+				{activeTab === 'news' && (
+					<FadeIn>
+						<News></News>
+					</FadeIn>
+				)}
 			</div>
 		</div>
 	);
