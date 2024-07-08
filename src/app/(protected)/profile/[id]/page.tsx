@@ -91,7 +91,6 @@ const Profile = async ({ params }: any) => {
 		redirect('/dashboard');
 	}
 	const comments = await getComments(params.id, 0, INITIAL_NUMBER_OF_COMMENTS);
-	console.log(profile);
 	const tradePosts = await getTradePosts(params.id);
 
 	const affiliations = await getAffiliations(params.id);
