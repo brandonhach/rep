@@ -1,3 +1,4 @@
+
 import { FaXTwitter, FaReddit, FaDiscord, FaSteam } from 'react-icons/fa6';
 import Image from 'next/image';
 import { ProfileConfig } from '@/config/site-config';
@@ -6,14 +7,23 @@ import { MdCompareArrows } from 'react-icons/md';
 import { IoPersonAddSharp } from 'react-icons/io5';
 import { IoSparkles } from 'react-icons/io5';
 import { MdOutlineQuestionMark } from 'react-icons/md';
+import { MdModeEdit } from "react-icons/md";
 import { PiThumbsUpLight, PiThumbsDownLight } from 'react-icons/pi';
+import EditProfileButton from './ui/ProfileEditButton';
+
 
 const ProfileCard = ({ profile, profileInfo }: any) => {
+
+	// const handleEditProfileCard = () => {
+	// 	//setSelectedTradePost(tradePost);
+	// 	(document.getElementById('profileEdit_modal') as HTMLDialogElement).showModal();
+	// };
+
 	return (
 		<div className='w-full h-full grid grid-cols-1 grid-rows-3 border-[1px] border-transparent rounded-xl border-base-300'>
 			<div className='row-span-2 relative'>
 				<div className='relative w-full h-1/3 flex flex-col justify-end items-center '>
-					<Image className='object-cover rounded-t-xl' src={`${ProfileConfig.bgImage}`} alt='' fill />
+					<Image className='object-cover rounded-t-xl' src={`${profileInfo.backgroundImage}`} alt='' fill />
 					<div className='absolute top-16 flex flex-col justify-center items-center'>
 						<div className='avatar'>
 							<div className='w-32 rounded-full ring ring-black ring-offset-black ring-offset-8'>
@@ -26,12 +36,12 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 				<div className='pt-32 w-full flex flex-row justify-center items-center'>
 					<div className='stat w-fit'>
 						<div className='stat-title'>Contacts</div>
-						<div className='stat-value'>28</div>
+						<div className='stat-value'>{profileInfo.contacts}</div>
 						<div className='stat-desc'>Public</div>
 					</div>
 					<div className='stat w-fit'>
 						<div className='stat-title'>Followers</div>
-						<div className='stat-value'>152</div>
+						<div className='stat-value'>{profileInfo.followers}</div>
 						<div className='stat-desc'>Public</div>
 					</div>
 
@@ -48,12 +58,12 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 							<div className='stat-value flex flex-row items-center justify-start'>
 								<div className='flex flex-row badge badge-ghost h-9 rounded-xl'>
 									<span className='w-14 flex flex-row items-center justify-end text-2xl gap-1'>
-										<h1>17</h1>
+										<h1>{profileInfo.likes}</h1>
 										<PiThumbsUpLight className='text-2xl text-green-500' />
 									</span>
 
 									<span className='w-14 flex flex-row items-center justify-end text-2xl gap-1'>
-										<h1>1</h1>
+										<h1>{profileInfo.dislikes}</h1>
 										<PiThumbsDownLight className='text-2xl text-red-500' />
 									</span>
 								</div>
@@ -74,6 +84,7 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 					Rep
 					<MdCompareArrows className='text-amber-200' />
 				</button>
+				<EditProfileButton />
 			</div>
 			<div className='flex flex-row items-center justify-center pt-10'>
 				<div className='px-4'>
@@ -95,7 +106,7 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 							</div>
 						</button>
 						<button>
-							<div className='bg-stone-950 rounded-full p-2 text-white'>
+							<div className='bg-stone-950 rounded-full p-2 text-white' >
 								<FaXTwitter />
 							</div>
 						</button>
@@ -120,6 +131,41 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 						</label>
 					</div>
 				</div>
+				<dialog id='profileEdit_modal' className='modal'>
+					<div className='modal-box rounded-xl'>
+						<form className='px-2 flex flex-col gap-4 items-end size-full'>
+							<input type='hidden' name='id' value={profileInfo.userId} />
+							<label className='form-control w-full'>
+								<span className='label-text'>Profile Description</span>
+								<textarea
+									className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
+									name='description'
+									value={profileInfo.description}
+									placeholder='Enter new description'
+								></textarea>
+							</label>
+							<label className='form-control w-full'>
+								<span className='label-text'>Background Image URL</span>
+								<input
+									type='text'
+									className='input input-bordered w-full rounded-xl'
+									name='backgroundImage'
+									value={profileInfo.backgroundImage}
+									placeholder='Enter new image URL'
+								/>
+							</label>
+							<button
+								className='btn btn-outline rounded-xl btn-sm'
+								type='submit'
+							>
+								Save Changes
+							</button>
+						</form>
+					</div>
+					<form method='dialog' className='modal-backdrop'>
+						<button>close</button>
+					</form>
+				</dialog>
 			</div>
 		</div>
 	);
