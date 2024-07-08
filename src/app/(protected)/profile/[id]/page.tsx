@@ -6,7 +6,7 @@ import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
 import { getComments } from '@/actions/comments/get-comments';
 import { getMoodboards } from "@/actions/moodboards/get-moodboards";
-
+import { checkAndCreateProfile } from '@/actions/profile-card/check-profilecard';
 const INITIAL_NUMBER_OF_COMMENTS = 4;
 const INITIAL_NUMBER_OF_MOODBOARDS = 8;
 // async function getComments(profileId: string, offset: number, limit: number) {
@@ -36,7 +36,7 @@ const INITIAL_NUMBER_OF_MOODBOARDS = 8;
 //     return modifiedComments;
 // }
 
-async function getTradePosts(profileId: string){
+async function getTradePosts(profileId: string) {
 	const tradePosts = await db.tradePost.findMany({
 		where: {
 			profileId: profileId,
@@ -66,6 +66,23 @@ async function getAffiliations(profileId: string) {
 	return modifiedAffiliations;
 }
 
+async function getProfileInfo(userId: string) {
+	await checkAndCreateProfile(userId);
+	const profile = await db.profile.findUnique({
+		where: {
+			userId: userId
+		},
+	});
+
+	const profileInfo = {
+		...profile,
+		user: undefined
+	}
+
+	return profileInfo;
+
+}
+
 // Moved getMoodboards into its own action @/actions/moodboards/get-moodboards
 
 const Profile = async ({ params }: any) => {
@@ -74,19 +91,20 @@ const Profile = async ({ params }: any) => {
 	if (!profile) {
 		redirect('/dashboard');
 	}
-
 	const comments = await getComments(params.id, 0, INITIAL_NUMBER_OF_COMMENTS);
-
+	console.log(comments);
 	const tradePosts = await getTradePosts(params.id);
 
 	const affiliations = await getAffiliations(params.id);
 
 	const moodboards = await getMoodboards(params.id, 0, INITIAL_NUMBER_OF_MOODBOARDS);
 
+	const profileInfo = await getProfileInfo(params.id);
+
 	return (
 		<div className='w-full h-full grid grid-cols-3 grid-rows-2'>
 			<div className='row-span-2 p-4'>
-				<ProfileCard profile={profile}></ProfileCard>
+				<ProfileCard profile={profile} profileInfo={profileInfo}></ProfileCard>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
 				<Showcase params={params} affiliations={affiliations} moodboards={moodboards} tradePosts={tradePosts}></Showcase>

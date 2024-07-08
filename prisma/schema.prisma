@@ -26,17 +26,17 @@ enum UserRole {
 }
 
 model User {
-  id            String          @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  image         String          @default("https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+  image         String        @default("https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1364&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
   country       String?
-  email         String          @unique
+  email         String        @unique
   emailVerified DateTime?
   password      String?
-  avatar        Bytes?          @db.ByteA
+  avatar        Bytes?        @db.ByteA
   accounts      Account[]
-  role          UserRole        @default(USER)
-  createdAt     DateTime        @default(now())
+  role          UserRole      @default(USER)
+  createdAt     DateTime      @default(now())
   profile       Profile?
   comment       Comment[]
   affiliation   Affiliation[]
@@ -45,9 +45,9 @@ model User {
 
   @@map("users")
 }
- 
+
 model Account {
-  userId            String    
+  userId            String
   type              String
   provider          String
   providerAccountId String
@@ -58,38 +58,44 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@id([provider, providerAccountId])
 }
 
 model Profile {
-  id             String   @id @default(cuid())
-  userId         String   @unique
-  description    String?
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  description     String?
   backgroundImage String?
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  contacts        Int?
+  followers       Int?
+  likes           Int?
+  dislikes        Int?
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
   @@map("profiles")
 }
 
 model Comment {
   id        String   @id @default(cuid())
-  content   String  
-  emotes    String[]  
-  userId    String 
-  profileId String 
+  content   String
+  emotes    String[]
+  userId    String
+  profileId String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("comments")
 }
+
 model Affiliation {
-  id               String @id @default(cuid())
+  id               String  @id @default(cuid())
   affiliationTitle String
   affiliationRole  String
   platform         String
@@ -98,7 +104,7 @@ model Affiliation {
   verified         Boolean @default(false)
   userId           String
   profileId        String
-  user             User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user             User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("affiliations")
 }
@@ -108,13 +114,13 @@ model Moodboard {
   moodboardImage String
   userId         String
   profileId      String
-  user           User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("moodboards")
 }
 
 model TradePost {
-  id          String   @id @default(cuid())
+  id          String @id @default(cuid())
   title       String
   image       String
   description String
@@ -122,7 +128,7 @@ model TradePost {
   postType    String
   userId      String
   profileId   String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("tradePosts")
 }
@@ -131,7 +137,7 @@ model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@unique([identifier, token])
   @@map("verificationtokens")
 }
