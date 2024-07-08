@@ -8,7 +8,7 @@ import { IoSparkles } from 'react-icons/io5';
 import { MdOutlineQuestionMark } from 'react-icons/md';
 import { PiThumbsUpLight, PiThumbsDownLight } from 'react-icons/pi';
 
-const ProfileCard = ({ profile }: any) => {
+const ProfileCard = ({ profile, profileInfo }: any) => {
 	return (
 		<div className='w-full h-full grid grid-cols-1 grid-rows-3 border-[1px] border-transparent rounded-xl border-base-300'>
 			<div className='row-span-2 relative'>
@@ -61,7 +61,7 @@ const ProfileCard = ({ profile }: any) => {
 						</div>
 					</div>
 				</div>
-				<div className='px-4 leading-5 w-full h-1/3 '>{ProfileConfig.description}</div>
+				<div className='px-4 leading-5 w-full h-1/3 '>{profileInfo.description}</div>
 			</div>
 			<div className='flex flex-row items-center justify-center gap-2 pt-28'>
 				<button className='btn btn-outline rounded-xl'>
