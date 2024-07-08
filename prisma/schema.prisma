@@ -25,6 +25,13 @@ enum UserRole {
   SUBSCRIBER
 }
 
+enum StatusType {
+  NONE
+  SAFE
+  CAUT
+  BAN
+}
+
 model User {
   id            String        @id @default(cuid())
   name          String?
@@ -68,12 +75,13 @@ model Account {
 model Profile {
   id              String   @id @default(cuid())
   userId          String   @unique
-  description     String?
-  backgroundImage String?
-  contacts        Int?
-  followers       Int?
-  likes           Int?
-  dislikes        Int?
+  description     String  @default("No information provided.")
+  backgroundImage String  @default("https://images.unsplash.com/photo-1720371300677-ba4838fa0678?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+  contacts        Int      @default(0)
+  followers       Int      @default(0)
+  likes           Int      @default(0)
+  dislikes        Int      @default(0)
+  status          StatusType @default(NONE)
   user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

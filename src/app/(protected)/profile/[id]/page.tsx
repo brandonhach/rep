@@ -5,7 +5,7 @@ import { db } from '@/lib/prisma';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
 import { getComments } from '@/actions/comments/get-comments';
-import { getMoodboards } from "@/actions/moodboards/get-moodboards";
+import { getMoodboards } from '@/actions/moodboards/get-moodboards';
 import { checkAndCreateProfile } from '@/actions/profile-card/check-profilecard';
 const INITIAL_NUMBER_OF_COMMENTS = 4;
 const INITIAL_NUMBER_OF_MOODBOARDS = 8;
@@ -70,17 +70,16 @@ async function getProfileInfo(userId: string) {
 	await checkAndCreateProfile(userId);
 	const profile = await db.profile.findUnique({
 		where: {
-			userId: userId
+			userId: userId,
 		},
 	});
 
 	const profileInfo = {
 		...profile,
-		user: undefined
-	}
+		user: undefined,
+	};
 
 	return profileInfo;
-
 }
 
 // Moved getMoodboards into its own action @/actions/moodboards/get-moodboards
@@ -107,7 +106,11 @@ const Profile = async ({ params }: any) => {
 				<ProfileCard profile={profile} profileInfo={profileInfo}></ProfileCard>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				<Showcase params={params} affiliations={affiliations} moodboards={moodboards} tradePosts={tradePosts}></Showcase>
+				<Showcase
+					params={params}
+					affiliations={affiliations}
+					moodboards={moodboards}
+					tradePosts={tradePosts}></Showcase>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
 				<Feeds params={params} comments={comments}></Feeds>

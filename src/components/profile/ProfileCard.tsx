@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { FaXTwitter, FaReddit, FaDiscord, FaSteam } from 'react-icons/fa6';
 import Image from 'next/image';
 import { ProfileConfig } from '@/config/site-config';
@@ -7,17 +7,20 @@ import { MdCompareArrows } from 'react-icons/md';
 import { IoPersonAddSharp } from 'react-icons/io5';
 import { IoSparkles } from 'react-icons/io5';
 import { MdOutlineQuestionMark } from 'react-icons/md';
-import { MdModeEdit } from "react-icons/md";
+import { MdModeEdit } from 'react-icons/md';
 import { PiThumbsUpLight, PiThumbsDownLight } from 'react-icons/pi';
 import EditProfileButton from './ui/ProfileEditButton';
 import { editProfileData } from '@/actions/profile-card/edit-profilecard';
-
+import { StatusType } from '@/types/types';
+import { IoShield } from 'react-icons/io5';
+import { GoShield, GoShieldCheck } from 'react-icons/go';
+import { FaBan } from 'react-icons/fa';
 const ProfileCard = ({ profile, profileInfo }: any) => {
-
 	// const handleEditProfileCard = () => {
 	// 	//setSelectedTradePost(tradePost);
 	// 	(document.getElementById('profileEdit_modal') as HTMLDialogElement).showModal();
 	// };
+	console.log(profileInfo);
 
 	return (
 		<div className='w-full h-full grid grid-cols-1 grid-rows-3 border-[1px] border-transparent rounded-xl border-base-300'>
@@ -46,11 +49,14 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 					</div>
 
 					<div className='stat w-fit'>
-						<div className='stat-title pb-1'>Status</div>
-						<div className='stat-value flex flex-row justify-center items-center'>
-							<VscWorkspaceTrusted className='text-green-500' />
+						<div className='stat-title'>Status</div>
+						<div className='stat-value flex flex-row justify-center items-center pb-1'>
+							{profileInfo.status === StatusType.NONE && <IoShield className='text-neutral-500' />}
+							{profileInfo.status === StatusType.SAFE && <GoShieldCheck className='text-green-500' />}
+							{profileInfo.status === StatusType.CAUT && <GoShield className='text-yellow-500' />}
+							{profileInfo.status === StatusType.BAN && <FaBan className='text-red-500' />}
 						</div>
-						<div className='stat-desc text-center'>Safe</div>
+						<div className='stat-desc text-center'>{profileInfo.status}</div>
 					</div>
 					<div className='stat w-fit'>
 						<div className='pb-4'>
@@ -106,7 +112,7 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 							</div>
 						</button>
 						<button>
-							<div className='bg-stone-950 rounded-full p-2 text-white' >
+							<div className='bg-stone-950 rounded-full p-2 text-white'>
 								<FaXTwitter />
 							</div>
 						</button>
@@ -141,8 +147,7 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 									className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
 									name='description'
 									defaultValue={profileInfo.description}
-									placeholder='Enter profile description'
-								></textarea>
+									placeholder='Enter profile description'></textarea>
 							</label>
 							<label className='form-control w-full'>
 								<span className='label-text'>Background Image URL</span>
@@ -160,7 +165,6 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 								onClick={() => {
 									(document.getElementById('profileEdit_modal') as HTMLDialogElement).close();
 								}}>
-
 								Save Changes
 							</button>
 						</form>
