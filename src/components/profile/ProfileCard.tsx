@@ -1,4 +1,4 @@
-
+'use client'
 import { FaXTwitter, FaReddit, FaDiscord, FaSteam } from 'react-icons/fa6';
 import Image from 'next/image';
 import { ProfileConfig } from '@/config/site-config';
@@ -10,7 +10,7 @@ import { MdOutlineQuestionMark } from 'react-icons/md';
 import { MdModeEdit } from "react-icons/md";
 import { PiThumbsUpLight, PiThumbsDownLight } from 'react-icons/pi';
 import EditProfileButton from './ui/ProfileEditButton';
-
+import { editProfileData } from '@/actions/profile-card/edit-profilecard';
 
 const ProfileCard = ({ profile, profileInfo }: any) => {
 
@@ -133,15 +133,15 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 				</div>
 				<dialog id='profileEdit_modal' className='modal'>
 					<div className='modal-box rounded-xl'>
-						<form className='px-2 flex flex-col gap-4 items-end size-full'>
+						<form className='px-2 flex flex-col gap-4 items-end size-full' action={editProfileData}>
 							<input type='hidden' name='id' value={profileInfo.userId} />
 							<label className='form-control w-full'>
 								<span className='label-text'>Profile Description</span>
 								<textarea
 									className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
 									name='description'
-									value={profileInfo.description}
-									placeholder='Enter new description'
+									defaultValue={profileInfo.description}
+									placeholder='Enter profile description'
 								></textarea>
 							</label>
 							<label className='form-control w-full'>
@@ -150,14 +150,17 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 									type='text'
 									className='input input-bordered w-full rounded-xl'
 									name='backgroundImage'
-									value={profileInfo.backgroundImage}
-									placeholder='Enter new image URL'
+									defaultValue={profileInfo.backgroundImage}
+									placeholder='Enter background image URL'
 								/>
 							</label>
 							<button
 								className='btn btn-outline rounded-xl btn-sm'
 								type='submit'
-							>
+								onClick={() => {
+									(document.getElementById('profileEdit_modal') as HTMLDialogElement).close();
+								}}>
+
 								Save Changes
 							</button>
 						</form>

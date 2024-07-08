@@ -8,4 +8,23 @@ export const editProfileData = async (formData: FormData) => {
     const description = formData.get('description');
     const backgroundImage = formData.get('backgroundImage');
 
+
+    await db.profile.update({
+        where: {
+            userId: id as string,
+        },
+        data: {
+
+            description: description as string,
+            backgroundImage: backgroundImage as string,
+        }
+    });
+
+    revalidatePath(`/profile/${id}`); // profile check for data change and reloads
+
+    return {
+        success: true,
+    };
+
+
 }
