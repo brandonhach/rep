@@ -115,3 +115,10 @@ export const deleteTradePostSchema = z.object({
 });
 
 export type TDeleteTradePostSchema = z.infer<typeof deleteTradePostSchema>;
+
+export enum StatusType {
+	NONE = 'NONE',
+	SAFE = 'SAFE',
+	CAUT = 'CAUT',
+	BAN = 'BAN',
+}
