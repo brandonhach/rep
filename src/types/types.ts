@@ -38,6 +38,20 @@ export type TComment = {
 	createdAt: string;
 	updatedAt: string;
 	image: string;
+	user: {
+		name: string;
+		image: string;
+	};
+};
+
+export type TPlan = {
+	title: string;
+	badge: string;
+	price: string;
+	duration: string;
+	checkList: string[];
+	crossList: string[];
+	disabled: boolean;
 };
 
 export const addTradePostSchema = z.object({
@@ -53,7 +67,7 @@ export type TTradePost = {
 	image: string;
 	description: string;
 	price: string;
-	postType: string
+	postType: string;
 	userId: string;
 };
 
@@ -73,7 +87,7 @@ export type TAffiliation = {
 	platformURL: string;
 	verified: string;
 	userId: string;
-}
+};
 
 export const addMoodboardSchema = z.object({
 	profileId: z.string().min(1, 'Require profileId'),
@@ -87,7 +101,7 @@ export type TMoodboard = {
 	moodboardImage: string;
 	userId: string;
 	profileId: string;
-}
+};
 export const editTradePostSchema = z.object({
 	profileId: z.string().min(1, 'Require profileId'),
 	userId: z.string().min(1, 'Require userId'),
@@ -101,3 +115,10 @@ export const deleteTradePostSchema = z.object({
 });
 
 export type TDeleteTradePostSchema = z.infer<typeof deleteTradePostSchema>;
+
+export enum StatusType {
+	NONE = 'NONE',
+	SAFE = 'SAFE',
+	CAUT = 'CAUT',
+	BAN = 'BAN',
+}

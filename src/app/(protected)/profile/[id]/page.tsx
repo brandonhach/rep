@@ -5,8 +5,10 @@ import { db } from '@/lib/prisma';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
 import { getComments } from '@/actions/comments/get-comments';
-
+import { getMoodboards } from '@/actions/moodboards/get-moodboards';
+import { checkAndCreateProfile } from '@/actions/profile-card/check-profilecard';
 const INITIAL_NUMBER_OF_COMMENTS = 4;
+const INITIAL_NUMBER_OF_MOODBOARDS = 8;
 // async function getComments(profileId: string, offset: number, limit: number) {
 // 	const comments = await db.comment.findMany({
 // 		where: {
@@ -34,7 +36,7 @@ const INITIAL_NUMBER_OF_COMMENTS = 4;
 //     return modifiedComments;
 // }
 
-async function getTradePosts(profileId: string){
+async function getTradePosts(profileId: string) {
 	const tradePosts = await db.tradePost.findMany({
 		where: {
 			profileId: profileId,
@@ -64,20 +66,23 @@ async function getAffiliations(profileId: string) {
 	return modifiedAffiliations;
 }
 
-async function getMoodboards(profileId: string) {
-	const moodboards = await db.moodboard.findMany({
+async function getProfileInfo(userId: string) {
+	await checkAndCreateProfile(userId);
+	const profile = await db.profile.findUnique({
 		where: {
-			profileId: profileId,
+			userId: userId,
 		},
 	});
 
-	const modifiedMoodboards = moodboards.map((moodboard) => ({
-		...moodboard,
+	const profileInfo = {
+		...profile,
 		user: undefined,
-	}));
+	};
 
-	return modifiedMoodboards
+	return profileInfo;
 }
+
+// Moved getMoodboards into its own action @/actions/moodboards/get-moodboards
 
 const Profile = async ({ params }: any) => {
 	// Profile page for example is a server component
@@ -85,22 +90,26 @@ const Profile = async ({ params }: any) => {
 	if (!profile) {
 		redirect('/dashboard');
 	}
-
 	const comments = await getComments(params.id, 0, INITIAL_NUMBER_OF_COMMENTS);
-
 	const tradePosts = await getTradePosts(params.id);
 
 	const affiliations = await getAffiliations(params.id);
 
-	const moodboards = await getMoodboards(params.id);
+	const moodboards = await getMoodboards(params.id, 0, INITIAL_NUMBER_OF_MOODBOARDS);
+
+	const profileInfo = await getProfileInfo(params.id);
 
 	return (
 		<div className='w-full h-full grid grid-cols-3 grid-rows-2'>
 			<div className='row-span-2 p-4'>
-				<ProfileCard profile={profile}></ProfileCard>
+				<ProfileCard profile={profile} profileInfo={profileInfo}></ProfileCard>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				<Showcase params={params} affiliations={affiliations} moodboards={moodboards} tradePosts={tradePosts}></Showcase>
+				<Showcase
+					params={params}
+					affiliations={affiliations}
+					moodboards={moodboards}
+					tradePosts={tradePosts}></Showcase>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
 				<Feeds params={params} comments={comments}></Feeds>

@@ -274,3 +274,56 @@ const posts = [
 export const PostsConfig = {
 	posts: posts,
 };
+
+export const SubscriptionPlansConfig = [
+	{
+		title: 'Noob',
+		badge: '',
+		price: '0',
+		duration: 'default',
+		checkList: ['Code-based authenticator'],
+		crossList: [
+			'Enhanced Profile Customization',
+			'Vouchers',
+			'Premium Badge',
+			'Trade Post',
+			'Priority Search',
+			'DirectMail Messaging',
+		],
+		disabled: true,
+	},
+	{
+		title: 'Premium+',
+		badge: 'Supporter',
+		price: '6',
+		duration: 'lifetime',
+		checkList: [
+			'Code-based authenticator',
+			'Enhanced Profile Customization',
+			'Vouchers',
+			'Premium Badge',
+			'Trade Post',
+			'Priority Search',
+			'DirectMail Messaging',
+		],
+		crossList: [],
+		disabled: false,
+	},
+	{
+		title: 'Premium+',
+		badge: 'Subscription',
+		price: '5',
+		duration: 'month',
+		checkList: [
+			'Code-based authenticator',
+			'Enhanced Profile Customization',
+			'Vouchers',
+			'Premium Badge',
+			'Trade Post',
+			'Priority Search',
+			'DirectMail Messaging',
+		],
+		crossList: [],
+		disabled: true,
+	},
+];
