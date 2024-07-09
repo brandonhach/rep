@@ -22,14 +22,14 @@ const Hero = () => {
 	};
 
 	return (
-		<div className='w-screen h-[87vh] relative flex flex-col items-center justify-center'>
+		<div className='w-screen h-full relative flex flex-col items-center justify-center '>
 			<div className='flex flex-col w-full h-fit justify-center items-center '>
 				{/* Globe */}
 				<div className='flex flex-row items-center justify-center w-full h-[50rem] overflow-hidden '>
 					<World data={sampleArcs} globeConfig={globeConfig} />
 				</div>
 			</div>
-			<div className='absolute flex flex-col gap-10 top-30'>
+			<div className='absolute flex flex-col gap-10 top-30 '>
 				{/* Heading */}
 				<HeroHighlight>
 					<motion.h1
@@ -53,11 +53,15 @@ const Hero = () => {
 				{/* Search bar */}
 				<FancySearchBar placeholders={HeroConfig.placeholders} onChange={handleChange} onSubmit={onSubmit} />
 			</div>
-			<div className='w-full h-fit flex flex-row items-center justify-center bg-neutral-900/50'>
-				<Link href={'/learn'} className='flex flex-row font-light text-sm hover:underline items-center gap-1'>
-					<AiOutlineInfoCircle />
-					<p>Learn more</p>
-				</Link>
+			<div className='pt-8 w-full overflow-y-hidden'>
+				<div className='w-full h-8 flex flex-row items-center justify-center bg-neutral-900/50'>
+					<Link
+						href={'/learn'}
+						className='flex flex-row font-light text-sm hover:underline items-center gap-1'>
+						<AiOutlineInfoCircle />
+						<p>Learn more</p>
+					</Link>
+				</div>
 			</div>
 		</div>
 	);
