@@ -88,6 +88,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
 		arcLength: 0.9,
 		rings: 1,
 		maxRings: 3,
+		animateIn: false,
 		...globeConfig,
 	};
 

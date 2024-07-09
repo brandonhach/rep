@@ -19,7 +19,7 @@ export function FancySearchBar({
 		const startAnimation = () => {
 			const interval = setInterval(() => {
 				setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
-			}, 1500);
+			}, 8000);
 			return () => clearInterval(interval);
 		};
 
