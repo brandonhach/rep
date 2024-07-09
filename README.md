@@ -31,7 +31,7 @@ Rep is a platform focused on helping people build track records & reducing fraud
 ![image](https://github.com/brandonhach/Rep/assets/58790036/f6e78ac1-86a6-4fef-9c4c-ac85c73712b8)
 
 ## Screenshots
-![image](https://github.com/brandonhach/Rep/assets/58790036/9eddf25d-2943-47b7-b82e-42d6819a3571)
+![vvasd](https://github.com/brandonhach/rep/assets/58790036/6ff5eea9-fe15-4986-b4f7-b528136f4d17)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
