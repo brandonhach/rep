@@ -4,6 +4,13 @@ export const HeroConfig = {
 	title: 'Lookup users here.',
 	searchPlaceholder: placeHolderList,
 	description: '',
+	placeholders: [
+		'Enter a name to check their reputation',
+		'Who do you want to verify?',
+		"Search for someone's authenticity",
+		'Is this person safe to interact with?',
+		'Look up a user to confirm their identity',
+	],
 };
 
 export const ProfileConfig = {
