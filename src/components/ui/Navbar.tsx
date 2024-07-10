@@ -85,9 +85,9 @@ const Navbar = () => {
 							href={'/signup'}
 							className='relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50 z-50'>
 							<span className='absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#f59e0b_0%,#fef3c7_50%,#d97706_100%)]' />
-							<span className='inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-black px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl hover:bg-neutral-900/90 duration-700'>
-								<p className='text-xs px-2'>Get Started</p>
-							</span>
+							<p className='inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-black px-5 py-1 text-sm font-medium text-white backdrop-blur-3xl hover:bg-neutral-900/90 duration-700'>
+								Get Started
+							</p>
 						</Link>
 					</>
 				)}
