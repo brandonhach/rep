@@ -3,7 +3,14 @@ import ProfileCard from '@/components/profile/ProfileCard';
 import Showcase from '@/components/profile/Showcase';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
-import { getAffiliations, getComments, getMoodboards, getProfileInfo, getTradePosts } from '@/lib/profile-data';
+import {
+	getAffiliations,
+	getComments,
+	getMoodboards,
+	getProfileInfo,
+	getReps,
+	getTradePosts,
+} from '@/lib/profile-data';
 
 const INITIAL_NUMBER_OF_COMMENTS = 4;
 const INITIAL_NUMBER_OF_MOODBOARDS = 8;
@@ -19,11 +26,11 @@ const Profile = async ({ params }: any) => {
 	const affiliations = await getAffiliations(params.id);
 	const moodboards = await getMoodboards(params.id, 0, INITIAL_NUMBER_OF_MOODBOARDS);
 	const profileInfo = await getProfileInfo(params.id);
-
+	const reps = await getReps(params.id);
 	return (
 		<div className='w-full h-full grid grid-cols-3 grid-rows-2'>
 			<div className='row-span-2 p-4'>
-				<ProfileCard profile={profile} profileInfo={profileInfo}></ProfileCard>
+				<ProfileCard profile={profile} profileInfo={profileInfo} params={params}></ProfileCard>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
 				<Showcase
@@ -33,7 +40,7 @@ const Profile = async ({ params }: any) => {
 					tradePosts={tradePosts}></Showcase>
 			</div>
 			<div className='col-span-2 row-span-1 p-4'>
-				<Feeds params={params} comments={comments}></Feeds>
+				<Feeds params={params} comments={comments} reps={reps}></Feeds>
 			</div>
 		</div>
 	);
