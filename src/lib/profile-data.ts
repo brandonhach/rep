@@ -105,3 +105,25 @@ export async function getMoodboards(profileId: string, offset: number, limit: nu
 		user: undefined,
 	}));
 }
+
+export async function getReps(profileId: string) {
+	const reps = await db.rep.findMany({
+		where: {
+			profileId: profileId,
+		},
+		include: {
+			user: {
+				select: {
+					name: true,
+					image: true,
+				},
+			},
+		},
+	});
+
+	const modifiedReps = reps.map((rep) => ({
+		...rep,
+	}));
+
+	return modifiedReps;
+}
