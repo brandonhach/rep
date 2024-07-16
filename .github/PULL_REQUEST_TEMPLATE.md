@@ -28,4 +28,4 @@
 
 ### Let me know if there's anything I missed.
 
-https://media1.tenor.com/m/wiqeVvUwGrwAAAAd/kiryu-yakuza.gif
+![alt text](yakuza-kiryu.gif)
