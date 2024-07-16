@@ -88,16 +88,14 @@ const Posts = ({ params, tradePosts }: any) => {
 										<span className="label-text">Title</span>
 									</div>
 									<input type="text" name='title' placeholder="Enter title..."
-										   className="input input-bordered w-full rounded-xl"
-										   />
+										   className="input input-bordered w-full rounded-xl"/>
 								</label>
 								<label className="form-control w-full">
 									<div className="label">
 										<span className="label-text">Image</span>
 									</div>
 									<input type="text" name='image' placeholder="Enter url..."
-										   className="input input-bordered w-full rounded-xl"
-										   />
+										   className="input input-bordered w-full rounded-xl"/>
 								</label>
 								<label className="form-control w-full">
 									<div className="label">
@@ -113,8 +111,7 @@ const Posts = ({ params, tradePosts }: any) => {
 										<span className="label-text">Price</span>
 									</div>
 									<input type="text" name='price' placeholder="Enter price..."
-										   className="input input-bordered w-full rounded-xl"
-										   />
+										   className="input input-bordered w-full rounded-xl"/>
 								</label>
 								<div className='flex flex-row items-center justify-evenly py-4'>
 									<div className="form-control">
@@ -181,7 +178,7 @@ const Posts = ({ params, tradePosts }: any) => {
 									<textarea name='description'
 											  className="textarea textarea-bordered text-base h-24 rounded-xl"
 											  placeholder="Enter description..."
-											  defaultValue={selectedTradePost?.description}></textarea>
+											  defaultValue={selectedTradePost?.description}/>
 								</label>
 								<label className="form-control w-full">
 									<div className="label">

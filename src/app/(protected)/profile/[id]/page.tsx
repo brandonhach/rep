@@ -5,6 +5,7 @@ import { db } from '@/lib/prisma';
 import { getUserById } from '@/model/user';
 import { redirect } from 'next/navigation';
 import { getComments } from '@/actions/comments/get-comments';
+import { getTradePosts } from '@/actions/trade-posts/get-trade-posts';
 import { getMoodboards } from '@/actions/moodboards/get-moodboards';
 import { checkAndCreateProfile } from '@/actions/profile-card/check-profilecard';
 const INITIAL_NUMBER_OF_COMMENTS = 4;
@@ -36,20 +37,7 @@ const INITIAL_NUMBER_OF_MOODBOARDS = 8;
 //     return modifiedComments;
 // }
 
-async function getTradePosts(profileId: string) {
-	const tradePosts = await db.tradePost.findMany({
-		where: {
-			profileId: profileId,
-		},
-	});
-
-	const modifiedTradePosts = tradePosts.map((tradePost) => ({
-		...tradePost,
-		user: undefined,
-	}));
-
-	return modifiedTradePosts;
-}
+// Moved getTradePosts into its own action @/actions/trade-posts/get-trade-posts
 
 async function getAffiliations(profileId: string) {
 	const affiliations = await db.affiliation.findMany({
