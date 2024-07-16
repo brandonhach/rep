@@ -17,7 +17,6 @@ assignees: ''
 ## Tasks
 
 <!-- List specific tasks or sub-tasks related to implementing this user story. -->
-
--   [ ]
+1. 
 
 @assign-me
