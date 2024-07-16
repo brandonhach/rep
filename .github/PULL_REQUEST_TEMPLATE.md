@@ -27,5 +27,3 @@
 # Snapshots
 
 ### Let me know if there's anything I missed.
-
-![alt text](yakuza-kiryu.gif)
