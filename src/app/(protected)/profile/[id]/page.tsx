@@ -9,6 +9,7 @@ import { getTradePosts } from '@/actions/trade-posts/get-trade-posts';
 import { getMoodboards } from '@/actions/moodboards/get-moodboards';
 import { checkAndCreateProfile } from '@/actions/profile-card/check-profilecard';
 const INITIAL_NUMBER_OF_COMMENTS = 4;
+const INITIAL_NUMBER_OF_TRADE_POSTS = 4;
 const INITIAL_NUMBER_OF_MOODBOARDS = 8;
 // async function getComments(profileId: string, offset: number, limit: number) {
 // 	const comments = await db.comment.findMany({
@@ -79,7 +80,7 @@ const Profile = async ({ params }: any) => {
 		redirect('/dashboard');
 	}
 	const comments = await getComments(params.id, 0, INITIAL_NUMBER_OF_COMMENTS);
-	const tradePosts = await getTradePosts(params.id);
+	const tradePosts = await getTradePosts(params.id, 0, INITIAL_NUMBER_OF_TRADE_POSTS);
 
 	const affiliations = await getAffiliations(params.id);
 
