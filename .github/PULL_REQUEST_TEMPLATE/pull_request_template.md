@@ -1,6 +1,9 @@
 ---
+name: 🫡Pull Request
+about: Pull requests for user stories
 title: 'PR:'
 labels: Pull Request
+assignees: ''
 ---
 
 # Overview
