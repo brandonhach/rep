@@ -1,27 +1,31 @@
----
-name: 🫡Pull Request
-about: Pull requests for user stories
-title: 'PR:'
-labels: Pull Request
-assignees: ''
----
-
 # Overview
 
+## <!-- Describe what this pull request accomplished. -->
+
 ## User Stories
+
+## <!-- Your user stories. -->
 
 -
 
 ## Features
 
+## <!-- Describe the features or functionality that this pull request has. -->
+
 -
 
 ## Changes
+
+## <!-- Record any significant changes. -->
 
 -
 
 ## Known issues or Bugs:
 
+## <!-- Write down any issues or bugs that is still in this pull request.. -->
+
 # Snapshots
 
 ### Let me know if there's anything I missed.
+
+https://media1.tenor.com/m/wiqeVvUwGrwAAAAd/kiryu-yakuza.gif
