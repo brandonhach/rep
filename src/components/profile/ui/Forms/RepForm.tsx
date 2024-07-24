@@ -1,105 +1,73 @@
 import { addRep } from '@/actions/rep/add-rep';
 import { useSession } from 'next-auth/react';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
+import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
+import Link from 'next/link';
+import BasicForm from './RepForm/BasicForm';
+import LogForm from './RepForm/LogForm';
+import ConfirmForm from './RepForm/ConfirmForm';
+import { FormProvider, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { repSchema } from '@/types/schema';
 
 const RepForm = ({ userId, params }: { userId: string; params: any }) => {
 	const session = useSession();
 	// https://dev.to/okafor__mary/how-to-dynamically-add-input-fields-on-button-click-in-reactjs-5298
-	const [keywords, setKeyWords] = useState(['']);
 
-	const handleAddKeyword = () => {
-		if (keywords.length < 5) {
-			setKeyWords([...keywords, '']);
-		}
+	const [activeTab, setActiveTab] = useState(0);
+	const handlePrevClick = () => {
+		setActiveTab((prevTab) => (prevTab > 0 ? prevTab - 1 : prevTab));
 	};
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement>, index: number) => {
-		let { value } = event.target;
-		let onChangeValue = [...keywords];
-		onChangeValue[index] = value;
-		setKeyWords(onChangeValue);
+	const handleNextClick = () => {
+		setActiveTab((prevTab) => (prevTab < 3 ? prevTab + 1 : prevTab));
 	};
 
-	const handleDeleteKeyword = (index: number) => {
-		const newArray = [...keywords];
-		newArray.splice(index, 1);
-		setKeyWords(newArray);
-	};
+	const methods = useForm({
+		resolver: zodResolver(repSchema),
+		mode: 'onChange',
+	});
 
 	return (
-		<div className='w-full h-1/2'>
-			<form className='px-2 flex flex-col gap-4 items-end w-full h-full' action={addRep}>
-				<input type='hidden' name='profileId' value={params.id} />
-				<input type='hidden' name='userId' value={session.data?.user.id} />
-				{/* Rating*/}
-				<div className='form-control'>
-					<label className='label cursor-pointer'>
-						<span className='label-text'>+rep</span>
-						<input
-							type='radio'
-							name='rating'
-							value={'true'}
-							className='radio checked:bg-green-500'
-							defaultChecked
-						/>
-					</label>
-				</div>
-				<div className='form-control'>
-					<label className='label cursor-pointer'>
-						<span className='label-text'>-rep</span>
-						<input type='radio' name='rating' value={'false'} className='radio checked:bg-red-500' />
-					</label>
-				</div>
-				{/* description */}
-				<label className='form-control w-full'>
-					<textarea
-						className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
-						name='description'
-						placeholder='Description'></textarea>
-				</label>
+		<FormProvider {...methods}>
+			<div className='size-full flex flex-col items-center justify-center'>
+				<div className='w-full h-full flex flex-row items-center justify-evenly p-4'>
+					<ul className='steps steps-vertical gap-4 pb-4'>
+						<li className={`step  ${activeTab >= 0 ? 'step-success' : ''}`}>Your details</li>
+						<li className={`step  ${activeTab >= 1 ? 'step-success' : ''}`}>Detailed Log</li>
+						<li className={`step  ${activeTab >= 2 ? 'step-success' : ''}`}>Confirmation</li>
+					</ul>
+					<form className='flex flex-col items-center justify-center w-1/2 h-3/4' action={addRep}>
+						{activeTab === 0 && <BasicForm params={params}></BasicForm>}
+						{activeTab === 1 && <LogForm></LogForm>}
+						{activeTab === 2 && <ConfirmForm></ConfirmForm>}
 
-				{/* KeywordList */}
-				<div className='w-full flex flex-col items-center justify-center gap-4'>
-					{keywords.map((keyword, index) => (
-						<div className='input_container' key={index}>
-							<input
-								type='text'
-								value={keyword}
-								onChange={(event) => handleChange(event, index)}
-								className='input input-bordered w-full rounded-xl'
-								placeholder={`Keyword ${index + 1}`}
-							/>
-							{index === keywords.length - 1 && keywords.length < 5 && (
-								<button
-									type='button'
-									className='btn btn-sm rounded-xl'
-									onClick={() => handleAddKeyword()}>
-									Add
-								</button>
-							)}
-							{keywords.length > 1 && (
-								<button
-									type='button'
-									className='btn btn-sm btn-error rounded-xl'
-									onClick={() => handleDeleteKeyword(index)}>
-									Delete
-								</button>
-							)}
+						<div className='w-full flex flex-row items-center justify-between gap-10 pt-20'>
+							<button
+								className={`btn-outline rounded-xl btn-lg flex flex-row items-center ${
+									activeTab === 0 ? 'invisible duration-0' : 'hover: duration-500'
+								} `}
+								onClick={handlePrevClick}>
+								<GrFormPrevious />
+								Prev
+							</button>
+							<button
+								className={`btn-outline rounded-xl btn-lg flex flex-row items-center ${
+									activeTab === 2 ? 'invisible hover: duration-0' : ' hover: duration-500'
+								}`}
+								onClick={handleNextClick}>
+								Next <GrFormNext />
+							</button>
+							<button
+								className={`btn-outline rounded-xl btn-lg text-white hover: duration-500 hover:btn-success `}
+								hidden={activeTab !== 2}>
+								<Link href={`/profile/`}>I agree</Link>
+							</button>
 						</div>
-					))}
+					</form>
 				</div>
-				<input type='hidden' name='keywords' value={keywords.filter((k) => k.trim() !== '').join(',')} />
-
-				<button
-					className='btn btn-outline rounded-xl btn-sm'
-					type='submit'
-					onClick={() => {
-						(document.getElementById('rep_modal') as HTMLDialogElement).close();
-					}}>
-					Save Changes
-				</button>
-			</form>
-		</div>
+			</div>
+		</FormProvider>
 	);
 };
 

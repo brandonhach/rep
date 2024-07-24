@@ -5,8 +5,8 @@ import useSWR, { mutate } from 'swr';
 import { TComment } from '@/types/types';
 import { useSession } from 'next-auth/react';
 import { addComment } from '@/actions/comments/add-comment';
-import { getComments } from '@/actions/comments/get-comments';
 import { useInView } from 'react-intersection-observer';
+import { getComments } from '@/lib/profile-data';
 
 /**
  * TODO:

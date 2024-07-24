@@ -33,7 +33,7 @@ const InnerProgress = ({ session }: { session: any }) => {
 				<div className='w-full h-4/5 flex flex-col items-center justify-center'>
 					{activeTab === 0 && <DetailForm session={session}></DetailForm>}
 					{activeTab === 1 && <UploadAvatar session={session}></UploadAvatar>}
-					{activeTab === 2 && <Plan></Plan>}
+					{activeTab === 2 && <Plan></Plan>}                       
 					{activeTab === 3 && <FinishOnboard></FinishOnboard>}
 				</div>
 				<div className='w-2/3 h-20 flex flex-row items-center justify-between gap-10 pt-20'>

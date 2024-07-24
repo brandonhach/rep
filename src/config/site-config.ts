@@ -334,3 +334,31 @@ export const SubscriptionPlansConfig = [
 		disabled: true,
 	},
 ];
+
+export const lorem = `					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam convallis est in massa fermentum,
+					eu accumsan lectus accumsan. Nam fringilla sapien ut massa ullamcorper rhoncus. Curabitur vel enim
+					ac nulla malesuada sagittis a eu mi. Mauris consectetur velit id ornare sollicitudin. Sed vitae ex
+					non est egestas vulputate. Proin ornare egestas arcu, quis tempus eros ullamcorper pretium. Nulla
+					vulputate risus aliquet, viverra ex vel, dictum magna. Pellentesque facilisis vehicula elementum.
+					Pellentesque et lorem finibus, finibus urna sit amet, congue est. Integer at porttitor libero, vel
+					pellentesque urna. Curabitur dapibus turpis id venenatis posuere. Quisque sit amet neque metus. Ut
+					dapibus orci vel leo laoreet, vel vehicula diam porttitor. Cras orci lectus, efficitur dictum
+					interdum at, ultrices non dui. Donec fringilla, sapien id ornare ultrices, leo felis dignissim nunc,
+					quis pellentesque libero libero in lacus. Nunc est mauris, lobortis id imperdiet at, hendrerit ut
+					neque. Maecenas nec dui quam. Mauris ultricies purus turpis, sit amet dictum diam egestas sed. Donec
+					sed orci a enim dictum condimentum. Vestibulum accumsan pellentesque libero id aliquet. Etiam
+					fringilla libero eget orci pellentesque, a convallis leo scelerisque. Aliquam sollicitudin faucibus
+					erat. Ut ultricies mauris sit amet interdum sodales. Vestibulum non facilisis elit. Cras eget
+					vestibulum ligula. Fusce fermentum eros est. Sed at iaculis mauris. Ut est leo, consectetur
+					dignissim faucibus eu, accumsan vitae diam. Ut ornare justo non gravida ullamcorper. Suspendisse non
+					eros justo. Morbi fringilla feugiat augue vel dignissim. Cras tincidunt sem mauris, eu hendrerit
+					tortor volutpat vel. Integer et libero semper, elementum mi in, rutrum tellus. Vestibulum porttitor
+					lacus mauris, ut rhoncus diam commodo quis. Vivamus vestibulum felis at nibh fringilla semper. Proin
+					ornare lectus et euismod suscipit. Aenean convallis rutrum erat, viverra eleifend ligula blandit
+					non. Suspendisse placerat tristique laoreet. Vestibulum sed mi neque. Nullam rutrum nisl sit amet
+					eros scelerisque, vulputate fringilla lacus cursus. Morbi rutrum sed dui a pretium. Sed ultrices
+					vestibulum nulla. Ut eget lacinia ante, ultrices placerat dolor. Morbi elit turpis, iaculis ut felis
+					non, finibus tempus erat. Aenean lectus turpis, consectetur a nunc ac, consectetur suscipit erat.
+					Nullam at egestas dolor, vitae scelerisque est. Donec faucibus purus ac ultricies convallis. Integer
+					iaculis placerat iaculis. Nam tellus mi, varius a congue nec, volutpat condimentum lectus. Sed
+					eleifend maximus orci sed pellentesque.'`;

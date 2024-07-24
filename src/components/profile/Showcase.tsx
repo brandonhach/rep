@@ -47,7 +47,7 @@ const Showcase = ({ params, affiliations, moodboards, tradePosts }: any) => {
 				</a>
 			</div>
 			<div className='w-[69rem] h-[23rem] p-4'>
-				{activeTab === 'moodboard' && <Moodboard params={params} moodboards={moodboards}></Moodboard>}
+				{/* {activeTab === 'moodboard' && <Moodboard params={params} moodboards={moodboards}></Moodboard>} */}
 				{activeTab === 'affiliation' && <Affiliation params={params} affiliations={affiliations}></Affiliation>}
 				{activeTab === 'posts' && <Posts params={params} tradePosts={tradePosts}></Posts>}
 			</div>
