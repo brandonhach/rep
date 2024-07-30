@@ -47,15 +47,20 @@ const BasicForm = ({ params }: { params: any }) => {
 								type='radio'
 								value={'true'}
 								className='radio checked:bg-green-500'
-								defaultChecked
 								{...register('rating')}
+								defaultChecked
 							/>
 						</label>
 					</div>
 					<div className='form-control'>
 						<label className='label cursor-pointer'>
 							<span className='label-text text-xl font-semibold pr-4'>-rep</span>
-							<input type='radio' name='rating' value={'false'} className='radio checked:bg-red-500' />
+							<input
+								type='radio'
+								value={'false'}
+								className='radio checked:bg-red-500'
+								{...register('rating')}
+							/>
 						</label>
 					</div>
 				</div>
@@ -64,8 +69,8 @@ const BasicForm = ({ params }: { params: any }) => {
 					<input
 						type='text'
 						placeholder='Enter a short sentence summarizing this transaction'
-						name='description'
 						className='input input-bordered w-full rounded-md indicator'
+						{...register('description')}
 					/>
 				</label>
 
@@ -96,16 +101,11 @@ const BasicForm = ({ params }: { params: any }) => {
 						</div>
 					))}
 				</div>
-				<input type='hidden' name='keywords' value={keywords.filter((k) => k.trim() !== '').join(',')} />
-
-				{/* <button
-					className='btn btn-outline rounded-xl btn-sm'
-					type='submit'
-					onClick={() => {
-						(document.getElementById('rep_modal') as HTMLDialogElement).close();
-					}}>
-					Save Changes
-				</button> */}
+				<input
+					type='hidden'
+					{...register('keywords')}
+					value={keywords.filter((k) => k.trim() !== '').join(',')}
+				/>
 			</div>
 		</div>
 	);

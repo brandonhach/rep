@@ -6,9 +6,9 @@ import Link from 'next/link';
 import BasicForm from './RepForm/BasicForm';
 import LogForm from './RepForm/LogForm';
 import ConfirmForm from './RepForm/ConfirmForm';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, SubmitHandler, useForm, useFormState } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { repSchema } from '@/types/schema';
+import { repSchema, Rep } from '@/types/schema';
 
 const RepForm = ({ userId, params }: { userId: string; params: any }) => {
 	const session = useSession();
@@ -28,6 +28,19 @@ const RepForm = ({ userId, params }: { userId: string; params: any }) => {
 		mode: 'onChange',
 	});
 
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<Rep>({
+		resolver: zodResolver(repSchema),
+	});
+
+	const processForm = async (data: any) => {
+		const result = await addRep(data);
+		console.log(result);
+	};
+
 	return (
 		<FormProvider {...methods}>
 			<div className='size-full flex flex-col items-center justify-center'>
@@ -37,7 +50,9 @@ const RepForm = ({ userId, params }: { userId: string; params: any }) => {
 						<li className={`step  ${activeTab >= 1 ? 'step-success' : ''}`}>Detailed Log</li>
 						<li className={`step  ${activeTab >= 2 ? 'step-success' : ''}`}>Confirmation</li>
 					</ul>
-					<form className='flex flex-col items-center justify-center w-1/2 h-3/4' action={addRep}>
+					<form
+						className='flex flex-col items-center justify-center w-1/2 h-3/4'
+						onSubmit={handleSubmit(processForm)}>
 						{activeTab === 0 && <BasicForm params={params}></BasicForm>}
 						{activeTab === 1 && <LogForm></LogForm>}
 						{activeTab === 2 && <ConfirmForm></ConfirmForm>}
@@ -60,8 +75,12 @@ const RepForm = ({ userId, params }: { userId: string; params: any }) => {
 							</button>
 							<button
 								className={`btn-outline rounded-xl btn-lg text-white hover: duration-500 hover:btn-success `}
-								hidden={activeTab !== 2}>
-								<Link href={`/profile/`}>I agree</Link>
+								hidden={activeTab !== 2}
+								type='submit'
+								onClick={() => {
+									(document.getElementById('rep_modal') as HTMLDialogElement).close();
+								}}>
+								Submit form
 							</button>
 						</div>
 					</form>
