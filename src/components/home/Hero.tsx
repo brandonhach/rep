@@ -14,9 +14,7 @@ const Hero = () => {
 		ssr: false,
 	});
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		console.log(e.target.value);
-	};
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 	};

@@ -49,6 +49,7 @@ model User {
   affiliation   Affiliation[]
   moodboard     Moodboard[]
   tradePost     TradePost[]
+  rep           Rep[]
 
   @@map("users")
 }
@@ -139,6 +140,28 @@ model TradePost {
   user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("tradePosts")
+}
+
+model Rep {
+  id        String   @id @default(cuid())
+  description String
+  rating    Boolean
+  logs      Log?
+  keywords  String[]
+  createdAt DateTime @default(now())
+  profileId String 
+  userId    String   
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("reps")
+}
+
+model Log {
+  id        String   @id @default(cuid())
+  title     String    
+  description String
+  repId     String   @unique
+  rep       Rep      @relation(fields: [repId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {

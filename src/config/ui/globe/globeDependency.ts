@@ -2,7 +2,7 @@ export const globeConfig = {
 	pointSize: 4,
 	globeColor: '#262626',
 	showAtmosphere: true,
-	atmosphereColor: '#171717',
+	atmosphereColor: '#ffffff',
 	atmosphereAltitude: 0.1,
 	emissive: '#262626',
 	emissiveIntensity: 0.1,

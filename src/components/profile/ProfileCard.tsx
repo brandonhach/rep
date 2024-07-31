@@ -1,27 +1,20 @@
 'use client';
 import { FaXTwitter, FaReddit, FaDiscord, FaSteam } from 'react-icons/fa6';
 import Image from 'next/image';
-import { ProfileConfig } from '@/config/site-config';
-import { VscWorkspaceTrusted } from 'react-icons/vsc';
-import { MdCompareArrows } from 'react-icons/md';
 import { IoPersonAddSharp } from 'react-icons/io5';
 import { IoSparkles } from 'react-icons/io5';
 import { MdOutlineQuestionMark } from 'react-icons/md';
-import { MdModeEdit } from 'react-icons/md';
 import { PiThumbsUpLight, PiThumbsDownLight } from 'react-icons/pi';
 import EditProfileButton from './ui/ProfileEditButton';
-import { editProfileData } from '@/actions/profile-card/edit-profilecard';
-import { StatusType } from '@/types/types';
+import { StatusType, TProfileInfo } from '@/types/types';
 import { IoShield } from 'react-icons/io5';
 import { GoShield, GoShieldCheck } from 'react-icons/go';
 import { FaBan } from 'react-icons/fa';
-const ProfileCard = ({ profile, profileInfo }: any) => {
-	// const handleEditProfileCard = () => {
-	// 	//setSelectedTradePost(tradePost);
-	// 	(document.getElementById('profileEdit_modal') as HTMLDialogElement).showModal();
-	// };
-	console.log(profileInfo);
+import RepButton from './ui/RepButton';
+import RepForm from './ui/Forms/RepForm';
+import ProfileForm from './ui/Forms/ProfileForm';
 
+const ProfileCard = ({ profile, profileInfo, params }: any) => {
 	return (
 		<div className='w-full h-full grid grid-cols-1 grid-rows-3 border-[1px] border-transparent rounded-xl border-base-300'>
 			<div className='row-span-2 relative'>
@@ -86,10 +79,7 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 				<button className='btn btn-outline rounded-xl'>
 					Add as Contact <IoPersonAddSharp className='text-amber-200' />
 				</button>
-				<button className='btn btn-outline rounded-xl'>
-					Rep
-					<MdCompareArrows className='text-amber-200' />
-				</button>
+				<RepButton />
 				<EditProfileButton />
 			</div>
 			<div className='flex flex-row items-center justify-center pt-10'>
@@ -137,37 +127,21 @@ const ProfileCard = ({ profile, profileInfo }: any) => {
 						</label>
 					</div>
 				</div>
+
+				{/* profile modal */}
 				<dialog id='profileEdit_modal' className='modal'>
 					<div className='modal-box rounded-xl'>
-						<form className='px-2 flex flex-col gap-4 items-end size-full' action={editProfileData}>
-							<input type='hidden' name='id' value={profileInfo.userId} />
-							<label className='form-control w-full'>
-								<span className='label-text'>Profile Description</span>
-								<textarea
-									className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
-									name='description'
-									defaultValue={profileInfo.description}
-									placeholder='Enter profile description'></textarea>
-							</label>
-							<label className='form-control w-full'>
-								<span className='label-text'>Background Image URL</span>
-								<input
-									type='text'
-									className='input input-bordered w-full rounded-xl'
-									name='backgroundImage'
-									defaultValue={profileInfo.backgroundImage}
-									placeholder='Enter background image URL'
-								/>
-							</label>
-							<button
-								className='btn btn-outline rounded-xl btn-sm'
-								type='submit'
-								onClick={() => {
-									(document.getElementById('profileEdit_modal') as HTMLDialogElement).close();
-								}}>
-								Save Changes
-							</button>
-						</form>
+						<ProfileForm profileInfo={profileInfo}></ProfileForm>
+					</div>
+					<form method='dialog' className='modal-backdrop'>
+						<button>close</button>
+					</form>
+				</dialog>
+
+				{/* rep modal */}
+				<dialog id='rep_modal' className='modal'>
+					<div className='modal-box rounded-xl'>
+						<RepForm userId={profileInfo.userId} params={params}></RepForm>
 					</div>
 					<form method='dialog' className='modal-backdrop'>
 						<button>close</button>

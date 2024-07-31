@@ -122,3 +122,31 @@ export enum StatusType {
 	CAUT = 'CAUT',
 	BAN = 'BAN',
 }
+
+export type TRep = {
+	id: string;
+	description: string;
+	rating: boolean;
+	logs: string;
+	keywords: string[];
+	createdAt: string;
+	user: {
+		name: string;
+		image: string;
+		country: string;
+	};
+};
+
+export type TProfileInfo = {
+	id?: string;
+	userId: string;
+	description: string;
+	backgroundImage: string;
+	contacts: number;
+	followers: number;
+	likes: number;
+	dislikes: number;
+	status: StatusType;
+	createdAt?: Date;
+	updatedAt?: Date;
+};
