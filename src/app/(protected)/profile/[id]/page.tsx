@@ -16,7 +16,6 @@ const INITIAL_NUMBER_OF_COMMENTS = 4;
 const INITIAL_NUMBER_OF_MOODBOARDS = 8;
 
 const Profile = async ({ params }: any) => {
-	// Profile page for example is a server component
 	const profile = await getUserById(params.id);
 	if (!profile) {
 		redirect('/dashboard');
