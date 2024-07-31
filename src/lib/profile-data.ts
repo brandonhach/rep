@@ -1,3 +1,4 @@
+'use server';
 import { db } from '@/lib/prisma';
 import { checkAndCreateProfile } from '@/actions/profile-card/check-profilecard';
 
