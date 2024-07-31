@@ -10,6 +10,7 @@ import {addTradePost} from "@/actions/trade-posts/add-trade-post";
 import {editTradePost} from "@/actions/trade-posts/edit-trade-post";
 import {deleteTradePost} from "@/actions/trade-posts/delete-trade-post";
 
+const TRADE_POSTS_PER_PAGE = 8;
 
 const Posts = ({ params, tradePosts }: any) => {
 	const session = useSession();
