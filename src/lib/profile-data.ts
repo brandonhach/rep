@@ -112,6 +112,9 @@ export async function getReps(profileId: string) {
 		where: {
 			profileId: profileId,
 		},
+		orderBy: {
+			createdAt: 'desc',
+		},
 		include: {
 			user: {
 				select: {
