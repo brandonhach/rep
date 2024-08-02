@@ -28,9 +28,7 @@ const RepForm = ({ params }: { userId: string; params: any }) => {
 	const { register, reset } = methods;
 
 	const processForm: SubmitHandler<Rep> = async (data) => {
-		console.log(data);
 		addRep(data);
-		reset();
 	};
 	const onInvalid = (errors: any) => console.error(errors);
 
@@ -73,6 +71,8 @@ const RepForm = ({ params }: { userId: string; params: any }) => {
 								type='submit'
 								onClick={() => {
 									(document.getElementById('rep_modal') as HTMLDialogElement).close();
+									setActiveTab(0);
+									reset();
 								}}>
 								Submit form
 							</button>
