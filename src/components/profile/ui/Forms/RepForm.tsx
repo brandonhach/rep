@@ -1,6 +1,10 @@
+'use client';
 import { addRep } from '@/actions/rep/add-rep';
+import { Rep, repSchema } from '@/types/schema';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import { ChangeEvent, useState } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 const RepForm = ({ userId, params }: { userId: string; params: any }) => {
 	const session = useSession();
@@ -26,18 +30,32 @@ const RepForm = ({ userId, params }: { userId: string; params: any }) => {
 		setKeyWords(newArray);
 	};
 
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<Rep>({
+		resolver: zodResolver(repSchema),
+	});
+
+	const processForm = async (data: Rep) => {
+		await addRep(data);
+	};
+	const onInvalid = (errors: any) => console.error(errors);
 	return (
 		<div className='w-full h-1/2'>
-			<form className='px-2 flex flex-col gap-4 items-end w-full h-full' action={addRep}>
-				<input type='hidden' name='profileId' value={params.id} />
-				<input type='hidden' name='userId' value={session.data?.user.id} />
+			<form
+				className='px-2 flex flex-col gap-4 items-end w-full h-full'
+				onSubmit={handleSubmit(processForm, onInvalid)}>
+				<input type='hidden' {...register('profileId')} value={params.id} />
+				<input type='hidden' {...register('userId')} value={session.data?.user.id} />
 				{/* Rating*/}
 				<div className='form-control'>
 					<label className='label cursor-pointer'>
 						<span className='label-text'>+rep</span>
 						<input
 							type='radio'
-							name='rating'
+							{...register('rating')}
 							value={'true'}
 							className='radio checked:bg-green-500'
 							defaultChecked
@@ -47,19 +65,28 @@ const RepForm = ({ userId, params }: { userId: string; params: any }) => {
 				<div className='form-control'>
 					<label className='label cursor-pointer'>
 						<span className='label-text'>-rep</span>
-						<input type='radio' name='rating' value={'false'} className='radio checked:bg-red-500' />
+						<input
+							type='radio'
+							{...register('rating')}
+							value={'false'}
+							className='radio checked:bg-red-500'
+						/>
 					</label>
 				</div>
 				{/* description */}
 				<label className='form-control w-full'>
+					{errors.description?.message && (
+						<p className='text-sm text-red-400'>{errors.description.message}</p>
+					)}
 					<textarea
 						className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
-						name='description'
+						{...register('description')}
 						placeholder='Description'></textarea>
 				</label>
 
 				{/* KeywordList */}
 				<div className='w-full flex flex-col items-center justify-center gap-4'>
+					{errors.keywords?.message && <p className='text-sm text-red-400'>{errors.keywords.message}</p>}
 					{keywords.map((keyword, index) => (
 						<div className='input_container' key={index}>
 							<input
@@ -67,7 +94,7 @@ const RepForm = ({ userId, params }: { userId: string; params: any }) => {
 								value={keyword}
 								onChange={(event) => handleChange(event, index)}
 								className='input input-bordered w-full rounded-xl'
-								placeholder={`Keyword ${index + 1}`}
+								placeholder={`keyword ${index + 1}`}
 							/>
 							{index === keywords.length - 1 && keywords.length < 5 && (
 								<button
@@ -88,14 +115,13 @@ const RepForm = ({ userId, params }: { userId: string; params: any }) => {
 						</div>
 					))}
 				</div>
-				<input type='hidden' name='keywords' value={keywords.filter((k) => k.trim() !== '').join(',')} />
+				<input
+					type='hidden'
+					{...register('keywords')}
+					value={keywords.filter((k) => k.trim() !== '').join(',')}
+				/>
 
-				<button
-					className='btn btn-outline rounded-xl btn-sm'
-					type='submit'
-					onClick={() => {
-						(document.getElementById('rep_modal') as HTMLDialogElement).close();
-					}}>
+				<button className='btn btn-outline rounded-xl btn-sm' type='submit'>
 					Save Changes
 				</button>
 			</form>
