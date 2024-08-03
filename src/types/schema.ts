@@ -1,6 +1,9 @@
 import { z } from 'zod';
 
-// const logSchema = z.object({ title: z.string(), details: z.string() });
+const logSchema = z.object({
+	title: z.string().min(1, 'Title required.').max(50, 'Max length for title is 50 characters.'),
+	description: z.string().min(1, 'Details required.').max(500, 'Max length for details is 500 characters.'),
+});
 
 export const repSchema = z.object({
 	description: z
@@ -15,6 +18,10 @@ export const repSchema = z.object({
 		.max(5, 'Max keyword accepted is 5.'),
 	profileId: z.string().min(1),
 	userId: z.string().min(1),
+	log: logSchema,
 });
 
 export type Rep = z.infer<typeof repSchema>;
+
+export const tab1Schema = repSchema.omit({ log: true });
+export const tab2Schema = z.object({ log: logSchema });
