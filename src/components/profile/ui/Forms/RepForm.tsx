@@ -1,6 +1,6 @@
 'use client';
 import { addRep } from '@/actions/rep/add-rep';
-import { Rep, repSchema } from '@/types/schema';
+import { Rep, repSchema, tab1Schema, tab2Schema } from '@/types/schema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
@@ -9,10 +9,12 @@ import BasicForm from './RepFormWizard/BasicForm';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import LogForm from './RepFormWizard/LogForm';
 
-const RepForm = ({ params }: { userId: string; params: any }) => {
+const RepForm = ({ params }: { params: any }) => {
 	const session = useSession();
 
-	// Handles next and prev tab
+	/**
+	 * Handles active tab
+	 */
 	const [activeTab, setActiveTab] = useState(0);
 	const handlePrevClick = () => {
 		setActiveTab((prevTab) => (prevTab > 0 ? prevTab - 1 : prevTab));
@@ -27,8 +29,21 @@ const RepForm = ({ params }: { userId: string; params: any }) => {
 	 * traditional destructure version. See doc for that.
 	 */
 
+	// Toggles schema based on what tab the user is on. Currently at the end it defaults to using the repSchema.
+	const [schema, setSchema] = useState(repSchema);
+	useEffect(() => {
+		const schemas: any = {
+			0: tab1Schema,
+			1: tab2Schema,
+		};
+		const newSchema = schemas[activeTab] || repSchema;
+		// console.log(newSchema === tab2Schema ? 'tab2Schema' : 'tab1Schema');
+		setSchema(newSchema);
+	}, [activeTab]);
+
+	// React-Hook-Form
 	const methods = useForm<Rep>({
-		resolver: zodResolver(repSchema),
+		resolver: zodResolver(schema),
 		mode: 'onChange',
 	});
 
@@ -48,6 +63,7 @@ const RepForm = ({ params }: { userId: string; params: any }) => {
 
 	// For debugging & troubleshooting. Remove this from rendering for Prod.
 	const onInvalid = (errors: any) => console.error(errors);
+	console.log(methods.getValues());
 
 	/**
 	 * Validation:
@@ -76,8 +92,6 @@ const RepForm = ({ params }: { userId: string; params: any }) => {
 		}
 	}, [isValid]);
 
-	console.log(methods.getValues());
-
 	return (
 		<FormProvider {...methods}>
 			<div className='size-full flex flex-col items-center justify-center'>
@@ -90,10 +104,10 @@ const RepForm = ({ params }: { userId: string; params: any }) => {
 					<form
 						className={'flex flex-col items-center justify-center w-1/2 h-3/4'}
 						onSubmit={methods.handleSubmit(processForm, onInvalid)}>
-						<input type='hidden' {...register('profileId')} value={params.id} />
+						<input type='hidden' {...register('profileId')} value={params.id as string} />
 						<input type='hidden' {...register('userId')} value={session.data?.user.id} />
 						{activeTab === 0 && <BasicForm></BasicForm>}
-						{/* {activeTab === 1 && <LogForm></LogForm>} */}
+						{activeTab === 1 && <LogForm></LogForm>}
 
 						<div className='w-full flex flex-row items-center justify-between gap-10 pt-20'>
 							<button
