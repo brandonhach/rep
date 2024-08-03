@@ -32,6 +32,7 @@ const BasicForm = () => {
 			<div className='px-2 flex flex-col gap-4 items-end w-full h-full'>
 				{/* Rating*/}
 				<div className='flex flex-row gap-4'>
+					{errors.rating?.message && <p className='text-sm text-red-400'>{String(errors.rating.message)}</p>}
 					<div className='form-control'>
 						<label className='label cursor-pointer'>
 							<span className='label-text text-xl font-semibold pr-4'>+rep</span>
@@ -40,7 +41,6 @@ const BasicForm = () => {
 								value={'true'}
 								className='radio checked:bg-green-500'
 								{...register('rating')}
-								defaultChecked
 							/>
 						</label>
 					</div>
@@ -71,35 +71,37 @@ const BasicForm = () => {
 
 				{/* KeywordList */}
 				<div className='w-full grid grid-cols-2 auto-rows-auto gap-4'>
-					{errors.keywords?.root?.message && (
+					{errors.keywords?.message && (
 						<p className='text-sm text-red-400'>{String(errors.keywords.message)}</p>
 					)}
+					{/* How in the world do you type this??? React Hook Form FieldError idk. */}
 					{fields.map((field, index) => {
 						return (
-							<section key={field.id}>
-								<div className='flex flex-row gap-1' key={index}>
-									<input
-										type='text'
-										className='input input-bordered min-w-44 w-44 rounded-md'
-										placeholder={`Keyword #${index + 1}`}
-										{...register(`keywords.${index}`, { required: true })}
-									/>
-									{index === fields.length - 1 && fields.length < 5 && (
-										<button type='button' className='btn rounded-xl' onClick={() => append('')}>
-											<IoIosAdd className='text-xl' />
-										</button>
-									)}
+							<div className='flex flex-row gap-1' key={field.id}>
+								{errors.keywords?.[index]?.message && (
+									<p className='text-sm text-red-400'>{errors.keywords[index]?.message}</p>
+								)}
+								<input
+									type='text'
+									className='input input-bordered min-w-44 w-44 rounded-md'
+									placeholder={`Keyword #${index + 1}`}
+									{...register(`keywords.${index}`, { required: true })}
+								/>
+								{index === fields.length - 1 && fields.length < 5 && (
+									<button type='button' className='btn rounded-xl' onClick={() => append('')}>
+										<IoIosAdd className='text-xl' />
+									</button>
+								)}
 
-									{fields.length > 1 && (
-										<button
-											type='button'
-											className='btn rounded-xl text-neutral-300'
-											onClick={() => remove(index)}>
-											<FaRegTrashCan className='text-xl' />
-										</button>
-									)}
-								</div>
-							</section>
+								{fields.length > 1 && (
+									<button
+										type='button'
+										className='btn rounded-xl text-neutral-300'
+										onClick={() => remove(index)}>
+										<FaRegTrashCan className='text-xl' />
+									</button>
+								)}
+							</div>
 						);
 					})}
 				</div>
