@@ -7,16 +7,26 @@ export const addRep = async (data: Rep) => {
 	const result = repSchema.safeParse(data);
 
 	if (!result.success) {
-		console.error('Validation error:', result.error.format());
+		// console.error('Validation error:', result.error.format());
 		return { error: result.error.format() };
 	} else {
-		await db.rep.create({
+		// Create rep object
+		const newRep = await db.rep.create({
 			data: {
 				userId: data.userId,
 				profileId: data.profileId,
 				description: data.description,
 				rating: data.rating === 'true' ? true : false,
 				keywords: data.keywords,
+			},
+		});
+
+		// Finally, create log object with reference to rep
+		await db.log.create({
+			data: {
+				title: data.log.title,
+				description: data.log.description,
+				repId: newRep.id,
 			},
 		});
 		revalidatePath(`/profile/${data.profileId}`);
