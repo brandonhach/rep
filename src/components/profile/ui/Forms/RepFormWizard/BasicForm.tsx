@@ -78,9 +78,13 @@ const BasicForm = () => {
 					{fields.map((field, index) => {
 						return (
 							<div className='flex flex-row gap-1' key={field.id}>
-								{errors.keywords?.[index]?.message && (
-									<p className='text-sm text-red-400'>{errors.keywords[index]?.message}</p>
-								)}
+								{errors.keywords &&
+									Array.isArray(errors.keywords) &&
+									errors.keywords[index]?.message && (
+										<p className='text-sm text-red-400'>
+											{(errors.keywords as any)[index]?.message}
+										</p>
+									)}
 								<input
 									type='text'
 									className='input input-bordered min-w-44 w-44 rounded-md'
