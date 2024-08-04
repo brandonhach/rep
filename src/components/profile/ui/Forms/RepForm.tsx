@@ -8,6 +8,7 @@ import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import BasicForm from './RepFormWizard/BasicForm';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import LogForm from './RepFormWizard/LogForm';
+import ConfirmForm from './RepFormWizard/ConfirmForm';
 
 const RepForm = ({ params }: { params: any }) => {
 	const session = useSession();
@@ -54,6 +55,10 @@ const RepForm = ({ params }: { params: any }) => {
 		trigger,
 	} = methods;
 
+	/**
+	 * Server Action
+	 * @param data
+	 */
 	const processForm: SubmitHandler<Rep> = async (data) => {
 		const result = addRep(data);
 		if ((await result).success) {
@@ -92,6 +97,9 @@ const RepForm = ({ params }: { params: any }) => {
 		}
 	}, [isValid]);
 
+	// Validation to disable submit button based on state of ConfirmForm.tsx
+	const [isConfirmValid, setConfirmValid] = useState(false);
+
 	return (
 		<FormProvider {...methods}>
 			<div className='size-full flex flex-col items-center justify-center'>
@@ -108,13 +116,17 @@ const RepForm = ({ params }: { params: any }) => {
 						<input type='hidden' {...register('userId')} value={session.data?.user.id} />
 						{activeTab === 0 && <BasicForm></BasicForm>}
 						{activeTab === 1 && <LogForm></LogForm>}
+						{activeTab === 2 && <ConfirmForm setConfirmValid={setConfirmValid}></ConfirmForm>}
 
 						<div className='w-full flex flex-row items-center justify-between gap-10 pt-20'>
 							<button
-								className={`btn-outline rounded-xl btn-lg flex flex-row items-center ${
+								className={`btn rounded-xl btn-lg flex flex-row items-center ${
 									activeTab === 0 ? 'invisible duration-0' : 'hover: duration-500'
 								} `}
-								onClick={handlePrevClick}
+								onClick={() => {
+									handlePrevClick();
+									setValidationFailed(false);
+								}}
 								type='button'>
 								<GrFormPrevious />
 								Prev
@@ -129,13 +141,15 @@ const RepForm = ({ params }: { params: any }) => {
 								Next <GrFormNext />
 							</button>
 							<button
-								className={`btn-outline rounded-xl btn-lg text-white hover: duration-500 hover:btn-success `}
-								hidden={activeTab !== 2}
+								className={`btn rounded-xl btn-lg text-white hover: duration-500 hover:btn-success ${
+									activeTab !== 2 ? 'hidden' : ''
+								}`}
 								type='submit'
 								onClick={() => {
 									(document.getElementById('rep_modal') as HTMLDialogElement).close();
 									setActiveTab(0);
-								}}>
+								}}
+								disabled={!isConfirmValid}>
 								Submit form
 							</button>
 						</div>
