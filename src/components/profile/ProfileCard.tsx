@@ -140,8 +140,8 @@ const ProfileCard = ({ profile, profileInfo, params }: any) => {
 
 				{/* rep modal */}
 				<dialog id='rep_modal' className='modal'>
-					<div className='modal-box rounded-md border-[1px] border-white max-w-none w-[75rem] h-[50rem]'>
-						<RepForm userId={profileInfo.userId} params={params}></RepForm>
+					<div className='modal-box rounded-md  max-w-none w-[75rem] h-[50rem]'>
+						<RepForm params={params}></RepForm>
 					</div>
 					<form method='dialog' className='modal-backdrop'>
 						<button>close</button>
