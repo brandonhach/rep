@@ -68,8 +68,8 @@ const RepForm = ({ params }: { params: any }) => {
 	};
 
 	// For debugging & troubleshooting. Remove this from rendering for Prod.
-	const onInvalid = (errors: any) => console.error(errors);
-	console.log(methods.getValues());
+	// const onInvalid = (errors: any) => console.error(errors);
+	// console.log(methods.getValues());
 
 	/**
 	 * Validation:
@@ -112,7 +112,7 @@ const RepForm = ({ params }: { params: any }) => {
 					</ul>
 					<form
 						className={'flex flex-col items-center justify-center w-1/2 h-3/4'}
-						onSubmit={methods.handleSubmit(processForm, onInvalid)}>
+						onSubmit={methods.handleSubmit(processForm)}>
 						<Toaster position='top-left' reverseOrder={false} />
 						<input type='hidden' {...register('profileId')} value={params.id as string} />
 						<input type='hidden' {...register('userId')} value={session.data?.user.id} />
