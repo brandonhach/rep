@@ -4,6 +4,7 @@ import { IoDocumentTextOutline } from 'react-icons/io5';
 import { PiThumbsUpLight } from 'react-icons/pi';
 import Image from 'next/image';
 import { TRep } from '@/types/types';
+import Link from 'next/link';
 
 const Rep = ({ reps }: { reps: TRep[] }) => {
 	return (
@@ -24,7 +25,9 @@ const Rep = ({ reps }: { reps: TRep[] }) => {
 							<>
 								<tr key={index}>
 									<td>
-										<div className='flex flex-row items-center justify-start gap-3 btn btn-ghost w-full h-16 rounded-xl'>
+										<Link
+											className='flex flex-row items-center justify-start gap-3 btn btn-ghost w-full h-16 rounded-xl'
+											href={`/profile/${rep.userId}`}>
 											<div className='avatar'>
 												<div className='avatar rounded-full w-14 ring-black ring-offset-black ring-offset-1'>
 													<Image
@@ -47,7 +50,7 @@ const Rep = ({ reps }: { reps: TRep[] }) => {
 													</div>
 												</div>
 											</div>
-										</div>
+										</Link>
 									</td>
 									<td>
 										<p>{rep.description}</p>

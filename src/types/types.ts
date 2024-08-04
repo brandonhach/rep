@@ -135,6 +135,7 @@ export type TRep = {
 		image: string;
 		country: string;
 	};
+	userId: string;
 };
 
 export type TProfileInfo = {
