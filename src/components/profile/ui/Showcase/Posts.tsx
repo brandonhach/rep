@@ -1,7 +1,7 @@
 'use client';
 // import { PostsConfig } from '@/config/site-config';
 // import Image from 'next/image';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import { DirectionAwareHover } from '@/components/ui/DirectionAwareHover';
 import {useSession} from "next-auth/react";
 import {MdAddBox, MdEditSquare} from "react-icons/md";
@@ -9,13 +9,14 @@ import {TTradePost} from "@/types/types";
 import {addTradePost} from "@/actions/trade-posts/add-trade-post";
 import {editTradePost} from "@/actions/trade-posts/edit-trade-post";
 import {deleteTradePost} from "@/actions/trade-posts/delete-trade-post";
+import {getTradePosts} from "@/actions/trade-posts/get-trade-posts";
 
 const TRADE_POSTS_PER_PAGE = 4;
 
 const Posts = ({ params, tradePosts }: any) => {
 	const session = useSession();
 	const [offset, setOffset] = useState(TRADE_POSTS_PER_PAGE);
-	const [posts, setPosts] = useState<TTradePost>(tradePosts);
+	const [posts, setPosts] = useState<TTradePost[]>(tradePosts);
 	const [hasMoreData, setHasMoreData] = useState(true);
 	const [selectedTradePost, setSelectedTradePost] = useState<TTradePost | null>(null);
 	const [newPostTitle, setNewPostTitle] = useState('')
@@ -24,12 +25,43 @@ const Posts = ({ params, tradePosts }: any) => {
 	const [newPostPrice, setNewPostPrice] = useState('')
 	const [newPostType, setNewPostType] = useState('')
 	const [postType, setPostType] = useState('');
+	const scrollTrigger = useRef(null);
+
+	const loadMorePosts = useCallback(async () => {
+		if (hasMoreData) {
+			const apiPosts = await getTradePosts(params.id, offset, TRADE_POSTS_PER_PAGE)
+
+			if (apiPosts.length == 0) {
+				setHasMoreData(false);
+			} else {
+				setPosts((prevPosts) => [...prevPosts, ...apiPosts]);
+				setOffset((prevOffset) => prevOffset + TRADE_POSTS_PER_PAGE);
+			}
+		}
+	}, [params.id, offset, hasMoreData]);
 
 	useEffect(() => {
-		if (selectedTradePost?.postType) {
-			setPostType(selectedTradePost.postType);
+		if (typeof window === "undefined" || !window.IntersectionObserver) {
+			return;
 		}
-	}, [selectedTradePost]);
+
+		const observer = new IntersectionObserver((entries) => {
+				if (entries[0].isIntersecting) {
+					loadMorePosts();
+				}
+			}, {threshold: 0.5}
+		);
+
+		if (scrollTrigger.current) {
+			observer.observe(scrollTrigger.current);
+		}
+
+		return () => {
+			if (scrollTrigger.current) {
+				observer.unobserve(scrollTrigger.current);
+			}
+		};
+	}, [loadMorePosts]);
 
 	const handleAddTradePost = () => {
 		const form = document.getElementById('addTradePost_form') as HTMLFormElement
