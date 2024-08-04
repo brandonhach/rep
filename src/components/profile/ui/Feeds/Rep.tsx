@@ -5,6 +5,8 @@ import { PiThumbsUpLight } from 'react-icons/pi';
 import Image from 'next/image';
 import { TRep } from '@/types/types';
 import Link from 'next/link';
+import LogButton from './Rep/LogBtn';
+import Log from './Rep/Log';
 
 const Rep = ({ reps }: { reps: TRep[] }) => {
 	return (
@@ -77,12 +79,16 @@ const Rep = ({ reps }: { reps: TRep[] }) => {
 										)}
 									</td>
 									<th className=''>
-										<button className='btn rounded-xl indicator' data-tip='Click to view logs'>
-											<span className='indicator-item badge badge-primary badge-xs rounded-xl z-0'>
-												Logs
-											</span>
-											<IoDocumentTextOutline className='text-2xl  ' />
-										</button>
+										<LogButton></LogButton>
+										{/* Log Button */}
+										<dialog id='log_modal' className='modal'>
+											<div className='modal-box rounded-md max-w-none w-[75rem] h-[50rem]'>
+												{/* <Log log={rep.logs.}></Log> */}
+											</div>
+											<form method='dialog' className='modal-backdrop'>
+												<button>close</button>
+											</form>
+										</dialog>
 									</th>
 								</tr>
 							</>
