@@ -334,3 +334,9 @@ export const SubscriptionPlansConfig = [
 		disabled: true,
 	},
 ];
+
+export const lorem = `By creating or submitting a reputation report on our platform, you agree to provide accurate and truthful information based on your genuine experiences and interactions. You acknowledge that any reputation or feedback you provide about a user or business must be a fair and honest reflection of your personal experience.
+
+We take the integrity of our reputation system seriously. Any attempt to submit false, misleading, or defamatory information will result in the immediate suspension or termination of your account. Furthermore, providing false information may also lead to other legal consequences as determined by applicable laws.
+
+By submitting your reputation report, you affirm that all information provided is accurate to the best of your knowledge. You also agree to cooperate with any investigations we may conduct regarding the authenticity of the information submitted. Our goal is to maintain a trustworthy and reliable platform, and your adherence to these principles is essential in achieving this.`;

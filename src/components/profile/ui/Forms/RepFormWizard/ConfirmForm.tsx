@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect } from 'react';
-import { lorem } from '@/config/site-config';
+import { termConfirmForm } from '@/config/site-config';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { RepConfirm, repConfirmSchema } from '@/types/schema';
@@ -29,7 +29,7 @@ const ConfirmForm = ({ setConfirmValid }: { setConfirmValid: React.Dispatch<Reac
 			<p className='text-lg pb-4'>User Reputation and Accuracy Agreement</p>
 			<div className=' flex flex-col gap-4 items-end w-full h-full'>
 				<div className='w-full h-1/2 overflow-y-auto px-1 whitespace-break-spaces'>
-					<p>{lorem}</p>
+					<p>{termConfirmForm}</p>
 				</div>
 				<label className='label cursor-pointer gap-2'>
 					{/* {errors.accuracy?.message && (
