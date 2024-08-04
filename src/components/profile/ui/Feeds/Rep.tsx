@@ -4,6 +4,9 @@ import { IoDocumentTextOutline } from 'react-icons/io5';
 import { PiThumbsUpLight } from 'react-icons/pi';
 import Image from 'next/image';
 import { TRep } from '@/types/types';
+import Link from 'next/link';
+import LogButton from './Rep/LogBtn';
+import Log from './Rep/Log';
 
 const Rep = ({ reps }: { reps: TRep[] }) => {
 	return (
@@ -24,7 +27,9 @@ const Rep = ({ reps }: { reps: TRep[] }) => {
 							<>
 								<tr key={index}>
 									<td>
-										<div className='flex flex-row items-center justify-start gap-3 btn btn-ghost w-full h-16 rounded-xl'>
+										<Link
+											className='flex flex-row items-center justify-start gap-3 btn btn-ghost w-full h-16 rounded-xl'
+											href={`/profile/${rep.userId}`}>
 											<div className='avatar'>
 												<div className='avatar rounded-full w-14 ring-black ring-offset-black ring-offset-1'>
 													<Image
@@ -47,7 +52,7 @@ const Rep = ({ reps }: { reps: TRep[] }) => {
 													</div>
 												</div>
 											</div>
-										</div>
+										</Link>
 									</td>
 									<td>
 										<p>{rep.description}</p>
@@ -74,12 +79,16 @@ const Rep = ({ reps }: { reps: TRep[] }) => {
 										)}
 									</td>
 									<th className=''>
-										<button className='btn rounded-xl indicator' data-tip='Click to view logs'>
-											<span className='indicator-item badge badge-primary badge-xs rounded-xl z-0'>
-												Logs
-											</span>
-											<IoDocumentTextOutline className='text-2xl  ' />
-										</button>
+										<LogButton></LogButton>
+										{/* Log Button */}
+										<dialog id='log_modal' className='modal'>
+											<div className='modal-box rounded-md max-w-none w-[75rem] h-[50rem]'>
+												{/* <Log log={rep.logs.}></Log> */}
+											</div>
+											<form method='dialog' className='modal-backdrop'>
+												<button>close</button>
+											</form>
+										</dialog>
 									</th>
 								</tr>
 							</>

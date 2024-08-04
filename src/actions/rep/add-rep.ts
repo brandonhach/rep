@@ -1,28 +1,35 @@
 'use server';
 import { db } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
+import { Rep, repSchema } from '@/types/schema';
 
-export const addRep = async (formData: FormData) => {
-	console.log(formData);
-	const profileId = formData.get('profileId') as string;
-	const userId = formData.get('userId') as string;
-	const description = formData.get('description') as string;
-	const rating = formData.get('rating') === 'true';
-	const keywordsString = formData.get('keywords') as string;
-	const keywords = keywordsString.split(',').map((keyword) => keyword.trim());
+export const addRep = async (data: Rep) => {
+	const result = repSchema.safeParse(data);
 
-	await db.rep.create({
-		data: {
-			userId: userId,
-			profileId: profileId,
-			description: description,
-			rating: rating,
-			keywords: keywords,
-		},
-	});
+	if (!result.success) {
+		// console.error('Validation error:', result.error.format());
+		return { error: result.error.format() };
+	} else {
+		// Create rep object
+		const newRep = await db.rep.create({
+			data: {
+				userId: data.userId,
+				profileId: data.profileId,
+				description: data.description,
+				rating: data.rating === 'true' ? true : false,
+				keywords: data.keywords,
+			},
+		});
 
-	revalidatePath(`/profile/${profileId}`);
-	return {
-		success: true,
-	};
+		// Finally, create log object with reference to rep
+		await db.log.create({
+			data: {
+				title: data.log.title,
+				description: data.log.description,
+				repId: newRep.id,
+			},
+		});
+		revalidatePath(`/profile/${data.profileId}`);
+		return { success: true };
+	}
 };
