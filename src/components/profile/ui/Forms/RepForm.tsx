@@ -9,6 +9,7 @@ import BasicForm from './RepFormWizard/BasicForm';
 import { GrFormNext, GrFormPrevious } from 'react-icons/gr';
 import LogForm from './RepFormWizard/LogForm';
 import ConfirmForm from './RepFormWizard/ConfirmForm';
+import { Toaster } from 'react-hot-toast';
 
 const RepForm = ({ params }: { params: any }) => {
 	const session = useSession();
@@ -112,6 +113,7 @@ const RepForm = ({ params }: { params: any }) => {
 					<form
 						className={'flex flex-col items-center justify-center w-1/2 h-3/4'}
 						onSubmit={methods.handleSubmit(processForm, onInvalid)}>
+						<Toaster position='top-left' reverseOrder={false} />
 						<input type='hidden' {...register('profileId')} value={params.id as string} />
 						<input type='hidden' {...register('userId')} value={session.data?.user.id} />
 						{activeTab === 0 && <BasicForm></BasicForm>}
