@@ -146,7 +146,7 @@ model Rep {
   id        String   @id @default(cuid())
   description String
   rating    Boolean
-  logs      Log?
+  log      Log?
   keywords  String[]
   createdAt DateTime @default(now())
   profileId String 
