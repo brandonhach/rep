@@ -6,10 +6,7 @@ const logSchema = z.object({
 });
 
 export const repSchema = z.object({
-	description: z
-		.string()
-		.min(1, 'Description is required.')
-		.max(120, 'Max length for description is 120 characters.'),
+	description: z.string().min(1, 'Description is required.').max(70, 'Max length for description is 70 characters.'),
 	rating: z.union([z.enum(['true', 'false']), z.literal(null)]).refine((val) => val !== null, {
 		message: 'Select a rating.',
 	}), // boolean type
@@ -25,3 +22,10 @@ export type Rep = z.infer<typeof repSchema>;
 
 export const tab1Schema = repSchema.omit({ log: true });
 export const tab2Schema = z.object({ log: logSchema });
+
+export const repConfirmSchema = z.object({
+	accuracy: z.boolean().refine((val) => val === true),
+	understanding: z.boolean().refine((val) => val === true),
+});
+
+export type RepConfirm = z.infer<typeof repConfirmSchema>;
