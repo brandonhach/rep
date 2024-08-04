@@ -10,11 +10,19 @@ import {addTradePost} from "@/actions/trade-posts/add-trade-post";
 import {editTradePost} from "@/actions/trade-posts/edit-trade-post";
 import {deleteTradePost} from "@/actions/trade-posts/delete-trade-post";
 
-const TRADE_POSTS_PER_PAGE = 8;
+const TRADE_POSTS_PER_PAGE = 4;
 
 const Posts = ({ params, tradePosts }: any) => {
 	const session = useSession();
+	const [offset, setOffset] = useState(TRADE_POSTS_PER_PAGE);
+	const [posts, setPosts] = useState<TTradePost>(tradePosts);
+	const [hasMoreData, setHasMoreData] = useState(true);
 	const [selectedTradePost, setSelectedTradePost] = useState<TTradePost | null>(null);
+	const [newPostTitle, setNewPostTitle] = useState('')
+	const [newPostImage, setNewPostImage] = useState('')
+	const [newPostDescription, setNewPostDescription] = useState('')
+	const [newPostPrice, setNewPostPrice] = useState('')
+	const [newPostType, setNewPostType] = useState('')
 	const [postType, setPostType] = useState('');
 
 	useEffect(() => {
