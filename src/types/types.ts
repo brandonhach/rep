@@ -127,7 +127,6 @@ export type TRep = {
 	id: string;
 	description: string;
 	rating: boolean;
-	logs: string;
 	keywords: string[];
 	createdAt: string;
 	user: {
@@ -136,6 +135,7 @@ export type TRep = {
 		country: string;
 	};
 	userId: string;
+	log: TLog;
 };
 
 export type TProfileInfo = {
@@ -150,4 +150,12 @@ export type TProfileInfo = {
 	status: StatusType;
 	createdAt?: Date;
 	updatedAt?: Date;
+};
+
+export type TLog = {
+	id: string;
+	title: string;
+	description: string;
+	repId: string;
+	rep: TRep;
 };
