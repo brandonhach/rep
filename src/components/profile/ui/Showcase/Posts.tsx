@@ -19,12 +19,13 @@ const Posts = ({ params, tradePosts }: any) => {
 	const [posts, setPosts] = useState<TTradePost[]>(tradePosts);
 	const [hasMoreData, setHasMoreData] = useState(true);
 	const [selectedTradePost, setSelectedTradePost] = useState<TTradePost | null>(null);
-	const [newPostTitle, setNewPostTitle] = useState('')
-	const [newPostImage, setNewPostImage] = useState('')
-	const [newPostDescription, setNewPostDescription] = useState('')
-	const [newPostPrice, setNewPostPrice] = useState('')
-	const [newPostType, setNewPostType] = useState('')
-	const [postType, setPostType] = useState('');
+	const [newPost, setNewPost] = useState({
+		title: '',
+		image: '',
+		description: '',
+		price: '',
+		postType: '',
+	})
 	const scrollTrigger = useRef(null);
 
 	const loadMorePosts = useCallback(async () => {
@@ -64,9 +65,8 @@ const Posts = ({ params, tradePosts }: any) => {
 	}, [loadMorePosts]);
 
 	const handleAddTradePost = () => {
-		const form = document.getElementById('addTradePost_form') as HTMLFormElement
+		setNewPost({title: '', image: '', description: '', price: '', postType: ''})
 		const modal = document.getElementById('addTradePost_modal') as HTMLDialogElement
-		form.reset();
 		modal.showModal();
 	}
 
@@ -74,6 +74,26 @@ const Posts = ({ params, tradePosts }: any) => {
 		setSelectedTradePost(tradePost);
 		(document.getElementById('editTradePost_modal') as HTMLDialogElement).showModal();
 	};
+
+	const handleSubmitPost = async (event: React.FormEvent) => {
+		event.preventDefault();
+		try {
+			const addPost: TTradePost = await addTradePost({
+				title: newPost.title,
+				image: newPost.image,
+				description: newPost.description,
+				price: newPost.price,
+				postType: newPost.postType,
+				profileId: params.id,
+				userId: session.data?.user.id!
+			});
+			setPosts((prevPosts) => [addPost, ...prevPosts]);
+			setNewPost({title: '', image: '', description: '', price: '', postType: ''});
+			(document.getElementById('addTradePost_modal') as HTMLDialogElement).close();
+		} catch (error) {
+			console.error('Failed to add trade post:', error);
+		}
+	}
 
 	return (
 		<div className='w-full h-full overflow-auto'>
@@ -118,7 +138,7 @@ const Posts = ({ params, tradePosts }: any) => {
 			{tradePosts.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? (
 				<dialog id='addTradePost_modal' className='modal'>
 					<div className='modal-box rounded-xl'>
-						<form id='addTradePost_form' action={addTradePost}
+						<form id='addTradePost_form' onSubmit={handleSubmitPost}
 							  className='px-2 flex flex-col gap-4 items-end size-full'>
 							<label className='form-control size-full gap-4'>
 								Create a new post:
@@ -129,14 +149,20 @@ const Posts = ({ params, tradePosts }: any) => {
 										<span className="label-text">Title</span>
 									</div>
 									<input type="text" name='title' placeholder="Enter title..."
-										   className="input input-bordered w-full rounded-xl"/>
+										   className="input input-bordered w-full rounded-xl"
+										   value={newPost.title}
+										   onChange={(e) => setNewPost(prev => ({ ...prev, title: e.target.value }))}
+									/>
 								</label>
 								<label className="form-control w-full">
 									<div className="label">
 										<span className="label-text">Image</span>
 									</div>
 									<input type="text" name='image' placeholder="Enter url..."
-										   className="input input-bordered w-full rounded-xl"/>
+										   className="input input-bordered w-full rounded-xl"
+										   value={newPost.image}
+										   onChange={(e) => setNewPost(prev => ({ ...prev, image: e.target.value }))}
+									/>
 								</label>
 								<label className="form-control w-full">
 									<div className="label">
@@ -145,14 +171,19 @@ const Posts = ({ params, tradePosts }: any) => {
 									<textarea name='description'
 											  className="textarea textarea-bordered text-base h-24 rounded-xl"
 											  placeholder="Enter description..."
-											  ></textarea>
+											  value={newPost.description}
+											  onChange={(e) => setNewPost(prev => ({ ...prev, description: e.target.value }))}
+									/>
 								</label>
 								<label className="form-control w-full">
 									<div className="label">
 										<span className="label-text">Price</span>
 									</div>
 									<input type="text" name='price' placeholder="Enter price..."
-										   className="input input-bordered w-full rounded-xl"/>
+										   className="input input-bordered w-full rounded-xl"
+										   value={newPost.price}
+										   onChange={(e) => setNewPost(prev => ({ ...prev, price: e.target.value }))}
+									/>
 								</label>
 								<div className='flex flex-row items-center justify-evenly py-4'>
 									<div className="form-control">
@@ -160,7 +191,10 @@ const Posts = ({ params, tradePosts }: any) => {
 											<span className="label-text">Selling</span>
 											<input type="radio" name="postType" defaultValue="Selling"
 												   className="radio"
-												   checked/>
+												   value={newPost.postType}
+												   onChange={(e) => setNewPost(prev => ({ ...prev, postType: e.target.value }))}
+												   checked
+											/>
 										</label>
 									</div>
 									<div className="form-control">
@@ -168,7 +202,10 @@ const Posts = ({ params, tradePosts }: any) => {
 											<span className="label-text">Buying</span>
 											<input type="radio" name="postType" defaultValue="Buying"
 												   className="radio"
-												   checked/>
+												   value={newPost.postType}
+												   onChange={(e) => setNewPost(prev => ({ ...prev, postType: e.target.value }))}
+												   checked
+											/>
 										</label>
 									</div>
 								</div>
@@ -187,7 +224,7 @@ const Posts = ({ params, tradePosts }: any) => {
 				</dialog>
 			) : null}
 
-			{tradePosts.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? (
+			{/*{tradePosts.length === 0 && params.id === session.data?.user.id || params.id === session.data?.user.id ? (
 				<dialog id='editTradePost_modal' className='modal'>
 					<div className='modal-box rounded-xl'>
 						<form action={editTradePost} className='px-2 flex flex-col gap-4 items-end size-full'>
@@ -275,7 +312,7 @@ const Posts = ({ params, tradePosts }: any) => {
 						<button>close</button>
 					</form>
 				</dialog>
-			) : null}
+			) : null}*/}
 		</div>
 	);
 };

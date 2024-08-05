@@ -4,14 +4,15 @@ import { db } from '@/lib/prisma';
 import { addTradePostSchema } from '@/types/types';
 import { revalidatePath } from 'next/cache';
 
-export const addTradePost = async (formData: FormData) => {
-    const profileId = formData.get('profileId');
-    const userId = formData.get('userId');
-    const title = formData.get('title');
-    const image = formData.get('image');
-    const description = formData.get('description');
-    const price = formData.get('price');
-    const postType = formData.get('postType');
+export const addTradePost = async (formData: { title: string; image: string; description: string; price: string;
+    postType: string; profileId: any; userId: any }) => {
+    const profileId = formData.profileId;
+    const userId = formData.userId;
+    const title = formData.title;
+    const image = formData.image;
+    const description = formData.description;
+    const price = formData.price;
+    const postType = formData.postType;
 
     await db.tradePost.create({
         data: {
