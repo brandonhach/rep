@@ -136,6 +136,12 @@ export type TRep = {
 	};
 	userId: string;
 	log: TLog;
+	profile: {
+		name: string;
+		image: string;
+		country: string;
+	};
+	profileId: string;
 };
 
 export type TProfileInfo = {

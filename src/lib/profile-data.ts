@@ -123,6 +123,12 @@ export async function getReps(profileId: string) {
 					image: true,
 				},
 			},
+			profile: {
+				select: {
+					name: true,
+					image: true,
+				},
+			},
 		},
 	});
 
