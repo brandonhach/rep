@@ -84,7 +84,7 @@ const Rep = ({ reps }: { reps: TRep[] }) => {
 										{/* Log Modal */}
 										<dialog id={`log_modal_${rep.id}`} className='modal'>
 											<div className='modal-box rounded-md max-w-none w-[75rem] h-[50rem]'>
-												<Log log={rep.log}></Log>
+												<Log log={rep.log} rep={rep}></Log>
 											</div>
 											<form method='dialog' className='modal-backdrop'>
 												<button>close</button>
