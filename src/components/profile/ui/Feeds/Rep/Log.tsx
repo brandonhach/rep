@@ -3,7 +3,7 @@ import { TLog, TRep } from '@/types/types';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const Log = ({ log, rep }: { log: TLog; rep: TRep }) => {
+const Log = ({ rep }: { rep: TRep }) => {
 	const imageClass = 'size-32 border-white border-[1px] hover:cursor-pointer rounded-md ';
 	return (
 		<div className='size-full flex flex-col items-start justify-start rounded-md gap-4'>
@@ -39,7 +39,7 @@ const Log = ({ log, rep }: { log: TLog; rep: TRep }) => {
 					{/* Title & keywords */}
 					<div>
 						<h1>
-							<span className='text-2xl font-bold'>{log.title}</span>
+							<span className='text-2xl font-bold'>{rep.log.title}</span>
 							<div>
 								{rep.keywords.map((item, index) => {
 									return (
@@ -76,15 +76,7 @@ const Log = ({ log, rep }: { log: TLog; rep: TRep }) => {
 				<div className='size-full pt-4 pb-12 '>
 					{/* Description */}
 					<div className='w-full h-full overflow-y-scroll overflow-x-hidden px-4 '>
-						<p className='font-normal text-lg whitespace-pre-line'>
-							{log.description}
-							{log.description}
-							{log.description}
-							{log.description}
-							{log.description}
-							{log.description}
-							{log.description}
-						</p>
+						<p className='font-normal text-lg whitespace-pre-line'>{rep.log.description}</p>
 					</div>
 				</div>
 			</div>
