@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { FaRegTrashCan } from 'react-icons/fa6';
 import { IoIosAdd } from 'react-icons/io';
-import { cToast } from './cToast';
+import { cToast } from '../../../../ui/cToast';
 
 const BasicForm = () => {
 	const {

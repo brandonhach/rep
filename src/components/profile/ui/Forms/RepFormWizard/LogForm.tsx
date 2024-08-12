@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { cToast } from './cToast';
+import { cToast } from '../../../../ui/cToast';
 
 const LogForm = () => {
 	const {
