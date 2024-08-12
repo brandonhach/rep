@@ -22,6 +22,16 @@ const Rep = ({ reps }: { reps: TRep[] }) => {
 					</tr>
 				</thead>
 				<tbody>
+					{reps.length === 0 && (
+						<tr>
+							<td colSpan={4} rowSpan={4} className='text-center'>
+								<div className='flex flex-col items-center justify-center h-full'>
+									<div className='w-1/2 h-1/2'></div>
+									<h1 className='font-normal'>No reputations made.</h1>
+								</div>
+							</td>
+						</tr>
+					)}
 					{reps.map((rep) => {
 						return (
 							<>
