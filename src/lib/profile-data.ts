@@ -116,7 +116,14 @@ export async function getReps(profileId: string) {
 			createdAt: 'desc',
 		},
 		include: {
+			log: true,
 			user: {
+				select: {
+					name: true,
+					image: true,
+				},
+			},
+			profile: {
 				select: {
 					name: true,
 					image: true,

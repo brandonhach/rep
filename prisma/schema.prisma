@@ -50,6 +50,7 @@ model User {
   moodboard     Moodboard[]
   tradePost     TradePost[]
   rep           Rep[]
+  profileUser   Rep[] @relation("profileUser")
 
   @@map("users")
 }
@@ -146,10 +147,11 @@ model Rep {
   id        String   @id @default(cuid())
   description String
   rating    Boolean
-  logs      Log?
+  log      Log?
   keywords  String[]
   createdAt DateTime @default(now())
-  profileId String 
+  profileId String   
+  profile   User     @relation(name: "profileUser", fields: [profileId], references: [id], onDelete: Cascade)
   userId    String   
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 

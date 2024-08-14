@@ -1,6 +1,6 @@
+'use client';
 import React from 'react';
 import Flag from 'react-world-flags';
-import { IoDocumentTextOutline } from 'react-icons/io5';
 import { PiThumbsUpLight } from 'react-icons/pi';
 import Image from 'next/image';
 import { TRep } from '@/types/types';
@@ -22,10 +22,20 @@ const Rep = ({ reps }: { reps: TRep[] }) => {
 					</tr>
 				</thead>
 				<tbody>
-					{reps.map((rep, index) => {
+					{reps.length === 0 && (
+						<tr>
+							<td colSpan={4} rowSpan={4} className='text-center'>
+								<div className='flex flex-col items-center justify-center h-full'>
+									<div className='w-1/2 h-1/2'></div>
+									<h1 className='font-normal'>No reputations made.</h1>
+								</div>
+							</td>
+						</tr>
+					)}
+					{reps.map((rep) => {
 						return (
 							<>
-								<tr key={index}>
+								<tr key={rep.id}>
 									<td>
 										<Link
 											className='flex flex-row items-center justify-start gap-3 btn btn-ghost w-full h-16 rounded-xl'
@@ -79,11 +89,12 @@ const Rep = ({ reps }: { reps: TRep[] }) => {
 										)}
 									</td>
 									<th className=''>
-										<LogButton></LogButton>
 										{/* Log Button */}
-										<dialog id='log_modal' className='modal'>
+										<LogButton id={rep.id}></LogButton>
+										{/* Log Modal */}
+										<dialog id={`log_modal_${rep.id}`} className='modal'>
 											<div className='modal-box rounded-md max-w-none w-[75rem] h-[50rem]'>
-												{/* <Log log={rep.logs.}></Log> */}
+												<Log rep={rep}></Log>
 											</div>
 											<form method='dialog' className='modal-backdrop'>
 												<button>close</button>

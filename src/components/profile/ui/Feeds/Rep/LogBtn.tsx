@@ -1,9 +1,15 @@
 'use client';
 import { IoDocumentTextOutline } from 'react-icons/io5';
 
-const LogButton = () => {
+interface LogButtonProps {
+	id: string;
+}
+const LogButton: React.FC<LogButtonProps> = ({ id }) => {
 	const handleLogButton = () => {
-		(document.getElementById('log_modal') as HTMLDialogElement).showModal();
+		const modal = document.getElementById(`log_modal_${id}`) as HTMLDialogElement;
+		if (modal) {
+			modal.showModal();
+		}
 	};
 
 	return (
