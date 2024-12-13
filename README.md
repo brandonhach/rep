@@ -27,6 +27,9 @@ Rep is a platform focused on helping people build track records & reducing fraud
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
+### Youtube Video
+[Click here to watch a demo on a recent release](https://www.youtube.com/watch?v=19nKQoN_Ghc)
+
 ## Team
 ![image](https://github.com/brandonhach/Rep/assets/58790036/f6e78ac1-86a6-4fef-9c4c-ac85c73712b8)
 
@@ -49,11 +52,10 @@ Rep is a platform focused on helping people build track records & reducing fraud
 <!-- LICENSE -->
 ## License
 
-![809959355772305418](https://github.com/ryanshz/project4/assets/58790036/de9aba98-6313-4e27-8434-f33ed5d5dc59)
-![809959355772305418](https://github.com/ryanshz/project4/assets/58790036/de9aba98-6313-4e27-8434-f33ed5d5dc59)
-![809959355772305418](https://github.com/ryanshz/project4/assets/58790036/de9aba98-6313-4e27-8434-f33ed5d5dc59)
-![809959355772305418](https://github.com/ryanshz/project4/assets/58790036/de9aba98-6313-4e27-8434-f33ed5d5dc59)
-![809959355772305418](https://github.com/ryanshz/project4/assets/58790036/de9aba98-6313-4e27-8434-f33ed5d5dc59)
-![809959355772305418](https://github.com/ryanshz/project4/assets/58790036/de9aba98-6313-4e27-8434-f33ed5d5dc59)
-![809959355772305418](https://github.com/ryanshz/project4/assets/58790036/de9aba98-6313-4e27-8434-f33ed5d5dc59)
-![809959355772305418](https://github.com/ryanshz/project4/assets/58790036/de9aba98-6313-4e27-8434-f33ed5d5dc59)
+![809959355772305418](https://i.imgur.com/8gMl1O2.png)
+![809959355772305418](https://i.imgur.com/8gMl1O2.png)
+![809959355772305418](https://i.imgur.com/8gMl1O2.png)
+![809959355772305418](https://i.imgur.com/8gMl1O2.png)
+![809959355772305418](https://i.imgur.com/8gMl1O2.png)
+![809959355772305418](https://i.imgur.com/8gMl1O2.png)
+![809959355772305418](https://i.imgur.com/8gMl1O2.png)
