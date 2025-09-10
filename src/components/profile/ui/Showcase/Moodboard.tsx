@@ -29,30 +29,31 @@ const Moodboard = ({ params, moodboards }: any) => {
 		}
 	}, [params.id, offset, hasMoreData]);
 
-	useEffect(() => {
-		if (typeof window === 'undefined' || !window.IntersectionObserver) {
-			return;
-		}
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries[0].isIntersecting) {
-					loadMoreMoods();
-				}
-			},
-			{ threshold: 0.5 }
-		);
-
-		if (scrollTrigger.current) {
-			observer.observe(scrollTrigger.current);
-		}
-
-		return () => {
-			if (scrollTrigger.current) {
-				observer.unobserve(scrollTrigger.current);
+    useEffect(() => {
+			if (typeof window === 'undefined' || !window.IntersectionObserver) {
+				return;
 			}
-		};
-	}, [loadMoreMoods]);
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					if (entries[0].isIntersecting) {
+						loadMoreMoods();
+					}
+				},
+				{ threshold: 0.5 }
+			);
+
+			const triggerNode = scrollTrigger.current;
+			if (triggerNode) {
+				observer.observe(triggerNode);
+			}
+
+			return () => {
+				if (triggerNode) {
+					observer.unobserve(triggerNode);
+				}
+			};
+		}, [loadMoreMoods]);
 
 	const handleAddMood = () => {
 		setNewMoodUrl('');

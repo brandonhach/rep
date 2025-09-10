@@ -2,6 +2,7 @@
 import React from 'react';
 import { LuBadgeCheck, LuBadge, LuBadgeX, LuBadgeAlert } from "react-icons/lu";
 import Flag from 'react-world-flags';
+import Image from 'next/image'
 
 const SearchResults = () => {
   const placeholderUserResults = [
@@ -95,7 +96,7 @@ const SearchResults = () => {
             <div className='w-3/4 flex border border-amber-200/90'>
               <div className="avatar px-2 py-2">
                 <div className="w-24 rounded-xl">
-                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                  <Image src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" width={150} height={150} alt="Pic"/>
                 </div>
               </div>
               <div className='flex flex-col justify-center'>

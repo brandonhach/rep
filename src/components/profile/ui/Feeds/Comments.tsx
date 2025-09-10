@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MdOutlineAddReaction } from 'react-icons/md';
 import useSWR, { mutate } from 'swr';
 import { TComment } from '@/types/types';
@@ -23,13 +23,17 @@ const Comments = ({ params, comments }: any) => {
 	const [userComments, setUserComments] = useState<TComment[]>(comments);
 	const [offset, setOffset] = useState(NUMBER_OF_COMMENTS_TO_FETCH); //Offset is max number of entries to be shown
 	const [hasMoreComments, setHasMoreComments] = useState(true); //Determines whether there are more comments to fetch.
-	const { ref, inView } = useInView(); //Used to detect when element "Ref" enters the viewport, inView will be true when element is in view which laods more comments
+	const { ref, inView } = useInView(); //Used to detect when element "Ref" enters the viewport, inView will be true when element is in view which loads more comments
 
-	const loadMoreComments = async () => {
+	const loadMoreComments = useCallback(async () => {
 		{
 			/*Fetching comments asynchronously from getComments functions in actions folder*/
 		}
-		const apiComments = await getComments(params.id, offset, NUMBER_OF_COMMENTS_TO_FETCH);
+		const apiComments = await getComments(
+			params.id,
+			offset,
+			NUMBER_OF_COMMENTS_TO_FETCH
+		);
 
 		{
 			/*Checks if number of comments fetched is less than 10, is so theres no more comments to load and set to false*/
@@ -38,9 +42,15 @@ const Comments = ({ params, comments }: any) => {
 			setHasMoreComments(false);
 		}
 
-		setUserComments((prevComments) => [...prevComments, ...apiComments]); //Concatenating new comments (apiComments) with previosu ones (prevComments) and sets comments
+		const sanitizedComments = apiComments.map(comment => ({
+		...comment,
+		user: comment.user ?? { name: '', image: '' }, // default values if user undefined
+		}));
+		setUserComments((prev) => [...prev, ...sanitizedComments]);
+
+		setUserComments((prevComments) => [...prevComments, ...apiComments]); //Concatenating new comments (apiComments) with previous ones (prevComments) and sets comments
 		setOffset((prevOffset) => prevOffset + NUMBER_OF_COMMENTS_TO_FETCH); //Update offset for next fetch so next batch of comments is fetched correctly.
-	};
+	}, [params.id, offset]);
 
 	//Asynchronously calls addComment(formData) to send formData to database
 	const handleAddComment = async (formData: FormData) => {
@@ -94,7 +104,7 @@ const Comments = ({ params, comments }: any) => {
 		if (inView && hasMoreComments) {
 			loadMoreComments(); //Calls this function when inView & hasMoreComments is true which fetches more comments
 		}
-	}, [inView, hasMoreComments]);
+	}, [inView, hasMoreComments, loadMoreComments]);
 
 	return (
 		<div className='w-full h-full overflow-auto'>
@@ -103,7 +113,11 @@ const Comments = ({ params, comments }: any) => {
 					<div className='w-full h-32 px-4 flex flex-row items-center justify-start gap-4'>
 						<h1 className='text-6xl font-bold'>No comments.</h1>
 						<div className='size-24 relative'>
-							<Image src={'/gif/why.gif'} className='object-cover rounded-t-xl' alt='' fill></Image>
+							<Image
+								src={'/gif/why.gif'}
+								className='object-cover rounded-t-xl'
+								alt=''
+								fill></Image>
 						</div>
 					</div>
 				) : (
@@ -132,12 +146,16 @@ const Comments = ({ params, comments }: any) => {
 							</div>
 							<div className='w-full h-auto px-4 flex flex-row items-start justify-between'>
 								<div className='w-2/3 h-auto'>
-									<p className='whitespace-pre-line w-full'>{comment.content}</p>
+									<p className='whitespace-pre-line w-full'>
+										{comment.content}
+									</p>
 								</div>
 								<div className='flex flex-row gap-2 items-end justify-start h-full'>
 									<div className='flex flex-row gap-1 size-full'>
 										{comment.emotes.map((emote, emoteIndex) => (
-											<span key={emoteIndex} className='text-xl'>
+											<span
+												key={emoteIndex}
+												className='text-xl'>
 												{emote}
 											</span>
 										))}
@@ -165,15 +183,31 @@ const Comments = ({ params, comments }: any) => {
 			<div className='w-full z-50 h-1/6 flex flex-row items-end justify-between px-3'>
 				<button
 					className='btn rounded-xl'
-					onClick={() => (document.getElementById('comment_modal') as HTMLDialogElement).showModal()}>
+					onClick={() =>
+						(
+							document.getElementById('comment_modal') as HTMLDialogElement
+						).showModal()
+					}>
 					Leave a comment
 				</button>
-				<dialog id='comment_modal' className='modal'>
+				<dialog
+					id='comment_modal'
+					className='modal'>
 					<div className='modal-box rounded-xl'>
-						<form onSubmit={handleSubmit} className='px-2 flex flex-col gap-4 items-end size-full'>
+						<form
+							onSubmit={handleSubmit}
+							className='px-2 flex flex-col gap-4 items-end size-full'>
 							<label className='form-control size-full'>
-								<input type='hidden' name='profileId' value={params.id} />
-								<input type='hidden' name='userId' value={session.data?.user.id!} />
+								<input
+									type='hidden'
+									name='profileId'
+									value={params.id}
+								/>
+								<input
+									type='hidden'
+									name='userId'
+									value={session.data?.user.id!}
+								/>
 								<textarea
 									className='textarea textarea-bordered w-full h-24 resize-none rounded-xl whitespace-pre-line'
 									name='content'
@@ -183,13 +217,19 @@ const Comments = ({ params, comments }: any) => {
 								className='btn btn-outline rounded-xl btn-sm'
 								type='submit'
 								onClick={() => {
-									(document.getElementById('comment_modal') as HTMLDialogElement).close();
+									(
+										document.getElementById(
+											'comment_modal'
+										) as HTMLDialogElement
+									).close();
 								}}>
 								Comment
 							</button>
 						</form>
 					</div>
-					<form method='dialog' className='modal-backdrop'>
+					<form
+						method='dialog'
+						className='modal-backdrop'>
 						<button>close</button>
 					</form>
 				</dialog>

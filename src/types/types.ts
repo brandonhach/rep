@@ -38,7 +38,7 @@ export type TComment = {
 	createdAt: string;
 	updatedAt: string;
 	image: string;
-	user: {
+	user?: {
 		name: string;
 		image: string;
 	};
