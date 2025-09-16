@@ -17,7 +17,7 @@ export const addRep = async (data: Rep) => {
 				profileId: data.profileId,
 				description: data.description,
 				rating: data.rating === 'true' ? true : false,
-				keywords: data.keywords,
+				keywords: Array.isArray(data.keywords) ? data.keywords : [data.keywords],
 			},
 		});
 

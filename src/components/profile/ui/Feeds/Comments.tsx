@@ -29,11 +29,7 @@ const Comments = ({ params, comments }: any) => {
 		{
 			/*Fetching comments asynchronously from getComments functions in actions folder*/
 		}
-		const apiComments = await getComments(
-			params.id,
-			offset,
-			NUMBER_OF_COMMENTS_TO_FETCH
-		);
+		const apiComments = await getComments(params.id, offset, NUMBER_OF_COMMENTS_TO_FETCH);
 
 		{
 			/*Checks if number of comments fetched is less than 10, is so theres no more comments to load and set to false*/
@@ -42,13 +38,7 @@ const Comments = ({ params, comments }: any) => {
 			setHasMoreComments(false);
 		}
 
-		const sanitizedComments = apiComments.map(comment => ({
-		...comment,
-		user: comment.user ?? { name: '', image: '' }, // default values if user undefined
-		}));
-		setUserComments((prev) => [...prev, ...sanitizedComments]);
-
-		setUserComments((prevComments) => [...prevComments, ...apiComments]); //Concatenating new comments (apiComments) with previous ones (prevComments) and sets comments
+		setUserComments((prevComments) => [...prevComments, ...apiComments]); //Concatenating new comments (apiComments) with previosu ones (prevComments) and sets comments
 		setOffset((prevOffset) => prevOffset + NUMBER_OF_COMMENTS_TO_FETCH); //Update offset for next fetch so next batch of comments is fetched correctly.
 	}, [params.id, offset]);
 
@@ -67,7 +57,6 @@ const Comments = ({ params, comments }: any) => {
 				id: response.comment.id,
 				name: response.comment.name ?? 'null', //In prisma name can be null so had to do this
 				content: response.comment.content,
-				emotes: response.comment.emotes,
 				userId: response.comment.userId,
 				createdAt: response.comment.createdAt.toISOString(), //Prisma createdAt is DateTime, but TComment is string had to convert
 				updatedAt: response.comment.updatedAt.toISOString(), //Prisma updatedAt is DateTime, but TComment is string had to convert
@@ -149,18 +138,6 @@ const Comments = ({ params, comments }: any) => {
 									<p className='whitespace-pre-line w-full'>
 										{comment.content}
 									</p>
-								</div>
-								<div className='flex flex-row gap-2 items-end justify-start h-full'>
-									<div className='flex flex-row gap-1 size-full'>
-										{comment.emotes.map((emote, emoteIndex) => (
-											<span
-												key={emoteIndex}
-												className='text-xl'>
-												{emote}
-											</span>
-										))}
-										<MdOutlineAddReaction className='text-2xl cursor-pointer' />
-									</div>
 								</div>
 							</div>
 						</div>

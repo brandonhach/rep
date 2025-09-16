@@ -2,7 +2,6 @@ import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { db } from './lib/prisma';
 import { getUserById } from './model/user';
-import { UserRole } from '@prisma/client';
 import Resend from 'next-auth/providers/resend';
 import Discord from 'next-auth/providers/discord';
 import Google from 'next-auth/providers/google';
@@ -36,7 +35,7 @@ export const {
 				session.user.id = token.sub;
 			}
 			if (token.role && session.user) {
-				session.user.role = token.role as UserRole;
+				session.user.role = token.role as 'USER';
 			}
 			return session;
 		},

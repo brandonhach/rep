@@ -33,7 +33,6 @@ export type TComment = {
 	id: string;
 	name: string;
 	content: string;
-	emotes: string[];
 	userId: string;
 	createdAt: string;
 	updatedAt: string;

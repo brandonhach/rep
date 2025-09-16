@@ -18,10 +18,10 @@ export const addComment = async (formData: FormData) => {
 	// });
 	const newComment = await db.comment.create({
 		data: {
-            profileId: profileId as string,
-            userId: userId as string,
-            content: content as string,
-        },
+			profileId: profileId as string,
+			userId: userId as string,
+			content: content as string,
+		},
 		include: {
 			user: true, //Include user related data to fetch user information associated with new comment
 		}
